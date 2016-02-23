@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder
 {
-    public class Class1
+    public interface IQueue<in T>
     {
     }
 }
