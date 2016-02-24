@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public interface IQueue
+    public interface IQueue<T>
     {
+        void Add(IMessage message);
 
+        T Toke();
+
+        void Clear();
     }
 }

@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
+
+    public interface IMessage<T> : IMessage
+    {
+        T Body { get; set; }
+    }
+
+
     public interface IMessage
     {
         string Id { get; set; }
@@ -14,8 +21,11 @@ namespace Plunder.Scheduler
 
         int Priority { get; set; }
 
+        string routeKey { get; set; }
+
         string HashCode { get; set; }
 
         string GetTypeName { get; set; }
     }
+
 }
