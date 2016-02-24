@@ -46,6 +46,10 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scheduler\IConsumer.cs" />
+    <Compile Include="Scheduler\IMessage.cs" />
+    <Compile Include="Scheduler\IProducer.cs" />
+    <Compile Include="Scheduler\IQueue.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
