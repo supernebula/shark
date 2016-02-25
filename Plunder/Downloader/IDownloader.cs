@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plunder.Scheduler
+namespace Plunder.Downloader
 {
-    public interface IConsumer
+    public interface IDownloader
     {
+        
+        void Download(Request request);
     }
 }

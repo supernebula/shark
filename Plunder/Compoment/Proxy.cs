@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plunder.Scheduler
+namespace Plunder.Compoment
 {
-    public interface IConsumer
+    public class Proxy
     {
+        public string Name { get; set; }
     }
 }

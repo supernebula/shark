@@ -8,5 +8,8 @@ namespace Plunder.Scheduler
 {
     public interface IScheduler
     {
+        void Push<T>(IMessage<T> message);
+
+        IMessage<T> Poll<T>();
     }
 }

@@ -21,7 +21,7 @@ namespace Plunder.Scheduler
 
         int Priority { get; set; }
 
-        string routeKey { get; set; }
+        string Topic { get; set; }
 
         string HashCode { get; set; }
 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plunder.Scheduler
+namespace Plunder
 {
-    public interface IConsumer
+    public class Request
     {
     }
 }
