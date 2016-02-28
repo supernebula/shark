@@ -62,8 +62,8 @@
     <Compile Include="Scheduler\IQueue.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
     <Compile Include="Scheduler\ICustomerPool.cs" />
-    <Compile Include="Scheduler\QueueScheduler.cs" />
     <Compile Include="Scheduler\RequestMessage.cs" />
+    <Compile Include="Scheduler\QueueScheduler.cs" />
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
   </ItemGroup>

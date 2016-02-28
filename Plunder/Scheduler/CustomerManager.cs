@@ -10,28 +10,32 @@ namespace Plunder.Scheduler
     public class CustomerManager
     {
         Dictionary<string, ICustomerPool<IDownloader>> _customerPoolGroup;
-        public CustomerManager()
+        IScheduler _scheduler;
+        public CustomerManager(IScheduler scheduler)
         {
+            _scheduler = scheduler;
             _customerPoolGroup = new Dictionary<string, ICustomerPool<IDownloader>>() {
-                { "Simple",new HttpSimpleDownloaderPool()},
-                { "Dynamic",new HttpDynamicDownloadPool()}
+                { "Topic.SimpleHtml",new HttpSimpleDownloaderPool()},
+                { "Topic.DynamicHtml",new HttpDynamicDownloadPool()}
             };
         }
 
-
-        public void PullMessage()
+        private void Consume(IMessage<Request> message)
         {
-            //pull message from queue
-            throw new NotImplementedException();
-
+            var pool = _customerPoolGroup[message.Topic];
+            IDownloader downloader = pool.Take();
+            downloader.Download(message.Body);
         }
 
-        private void Consume(IMessage<Request> messge)
+        private void RunConsume()
         {
-            
-            var pool = _customerPoolGroup[messge.Topic];
-            IDownloader downloader = pool.Take();
-            downloader.Download(messge.Body);
+            var message = _scheduler.Poll();
+            Consume((IMessage<Request>)message);
+        }
+
+        public void Run()
+        {
+            RunConsume();
         }
     }
 }

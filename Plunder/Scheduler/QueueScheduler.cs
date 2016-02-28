@@ -9,22 +9,26 @@ namespace Plunder.Scheduler
 {
     public class QueueScheduler : IScheduler
     {
-        BlockingCollection<IMessage> _messageQueue;
+        BlockingCollection<IMessage> _queue;
 
         public QueueScheduler()
         {
-            _messageQueue = new BlockingCollection<IMessage>(new ConcurrentQueue<IMessage>());
+            _queue = new BlockingCollection<IMessage>(new ConcurrentQueue<IMessage>());
         }
 
-        public IMessage Poll<T>()
+        public int MessageCount()
         {
-            return _messageQueue.Take();
-            throw new NotImplementedException();
+            return _queue.Count();
         }
 
-        public void Push<T>(IMessage<T> message)
+        public IMessage Poll()
         {
-            throw new NotImplementedException();  
+            return _queue.Take();
+        }
+
+        public void Push(IMessage message)
+        {
+            _queue.Add(message); 
         }
     }
 }

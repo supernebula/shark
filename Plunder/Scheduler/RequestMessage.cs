@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public class RequestMessage : AbstractMessage
+    public class RequestMessage : IMessage<Request>
     {
+        public string Id { get; set; }
+        public string Topic { get; set; }
+
+        public object Content { get; set; }
+
+        public string GetTypeName { get; set; }
+
+        public string HashCode { get; set; }
+
+        public Request MessageBody { get; }
+
+        public int Priority { get; set; }
+
+        public DateTime Timestamp { get; set; }
+
+
     }
 }
