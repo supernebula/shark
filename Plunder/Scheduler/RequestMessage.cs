@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public interface IScheduler
+    public class RequestMessage : AbstractMessage
     {
-        void Push<T>(IMessage<T> message);
-
-        IMessage Poll<T>();
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="IQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="Scheduler\AbstractMessage.cs" />
     <Compile Include="Scheduler\CustomerManager.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Scheduler\IScheduler.cs" />
     <Compile Include="Scheduler\ICustomerPool.cs" />
     <Compile Include="Scheduler\QueueScheduler.cs" />
+    <Compile Include="Scheduler\RequestMessage.cs" />
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
   </ItemGroup>
