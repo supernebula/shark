@@ -71,6 +71,7 @@
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
+    <Compile Include="Spider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipeline\" />

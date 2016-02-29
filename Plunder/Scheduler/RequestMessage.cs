@@ -24,6 +24,5 @@ namespace Plunder.Scheduler
 
         public DateTime Timestamp { get; set; }
 
-
     }
 }
