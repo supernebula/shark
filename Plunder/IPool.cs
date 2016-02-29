@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder
 {
-    public class Request
+    public interface IPool
     {
     }
 }

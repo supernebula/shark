@@ -51,11 +51,15 @@
     <Compile Include="Downloader\HttpDynamicDownloader.cs" />
     <Compile Include="Downloader\HttpSimpleDownloader.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
+    <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request.cs" />
+    <Compile Include="Proxy\HttpProxy.cs" />
+    <Compile Include="Proxy\ProxyPool.cs" />
+    <Compile Include="Compoment\Request.cs" />
+    <Compile Include="Scheduler\AbstractConsumer.cs" />
     <Compile Include="Scheduler\AbstractMessage.cs" />
-    <Compile Include="Scheduler\CustomerManager.cs" />
+    <Compile Include="Scheduler\ConsumerManager.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
     <Compile Include="Scheduler\IProducer.cs" />
@@ -66,11 +70,11 @@
     <Compile Include="Scheduler\QueueScheduler.cs" />
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
+    <Compile Include="Compoment\Site.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pipeline\" />
     <Folder Include="Processor\" />
-    <Folder Include="Proxy\" />
     <Folder Include="Thread\" />
     <Folder Include="Utility\" />
   </ItemGroup>

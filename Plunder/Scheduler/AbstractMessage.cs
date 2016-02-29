@@ -8,82 +8,21 @@ namespace Plunder.Scheduler
 {
     public class AbstractMessage : IMessage
     {
-        public string GetTypeName
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public string Id { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string Topic { get; set; }
 
-        public string HashCode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public int Priority { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public object Content { get; set; }
 
-        public string Id
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+        public string GetTypeName { get; set; }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public string HashCode { get; set; }
 
-        public int Priority
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public DateTime Timestamp { get; set; }
 
-        public DateTime Timestamp
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string Topic
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        
     }
 }

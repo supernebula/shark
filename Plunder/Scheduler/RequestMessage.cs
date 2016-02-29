@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plunder.Compoment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Plunder.Scheduler
 
         public string HashCode { get; set; }
 
-        public Request MessageBody { get; }
+        public Request Body { get; }
 
         public int Priority { get; set; }
 

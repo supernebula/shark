@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-
+    [Obsolete]
     public interface ICustomerPool<T> : ICustomerPool
     {
         T Take();
