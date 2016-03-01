@@ -14,7 +14,7 @@ namespace Plunder.Test
             Trace.WriteLine(String.Format("CLR Version: {0}", Environment.Version));
 
             int wThreads, cpThreads;
-            ThreadPool.GetMaxThreads(out wThreads, out cpThreads);
+            ThreadPool.GetMaxThreads(out wThreads, out cpThreads); 
             //ThreadPool.UnsafeQueueUserWorkItem();
 
 
