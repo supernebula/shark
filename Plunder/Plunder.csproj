@@ -46,8 +46,6 @@
   <ItemGroup>
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
-    <Compile Include="Downloader\HttpDynamicDownloadPool.cs" />
-    <Compile Include="Downloader\HttpSimpleDownloaderPool.cs" />
     <Compile Include="Downloader\HttpDynamicDownloader.cs" />
     <Compile Include="Downloader\HttpSimpleDownloader.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
@@ -58,14 +56,12 @@
     <Compile Include="Proxy\ProxyPool.cs" />
     <Compile Include="Compoment\Request.cs" />
     <Compile Include="Scheduler\AbstractConsumer.cs" />
-    <Compile Include="Scheduler\AbstractMessage.cs" />
-    <Compile Include="Scheduler\ConsumerManager.cs" />
+    <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
     <Compile Include="Scheduler\IProducer.cs" />
     <Compile Include="Scheduler\IQueue.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
-    <Compile Include="Scheduler\ICustomerPool.cs" />
     <Compile Include="Scheduler\RequestMessage.cs" />
     <Compile Include="Scheduler\QueueScheduler.cs" />
     <Compile Include="Selector\ISelector.cs" />

@@ -9,12 +9,17 @@ namespace Plunder.Scheduler
     public abstract class AbstractConsumer : IConsumer
     {
         public Guid Id { get; set; }
-        
+
+        public int IdleGeneration { get; set; }
 
         public bool IsBusy { get; set; }
 
 
         public string Topic { get; set; }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

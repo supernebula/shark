@@ -11,6 +11,11 @@ namespace Plunder.Downloader
 {
     public class HttpDynamicDownloader : AbstractConsumer, IDownloader
     {
+        public HttpDynamicDownloader(Guid id)
+        {
+            Id = id;
+        }
+
         public void Init(IMessage<Request> request, HttpProxy proxy)
         {
             throw new NotImplementedException();

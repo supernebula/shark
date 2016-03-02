@@ -15,6 +15,12 @@ namespace Plunder.Downloader
         private IMessage<Request> _message;
         private Request _reqeust;
         private HttpProxy _proxy;
+
+        public HttpSimpleDownloader(Guid id)
+        {
+            Id = id;
+        }
+
         public void Init(IMessage<Request> requestMessage, HttpProxy proxy)
         {
             _message = requestMessage;
