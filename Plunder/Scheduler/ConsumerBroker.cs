@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,7 +53,6 @@ namespace Plunder.Scheduler
                 var downloader2 = CreateDownloader("dynamicDownload");
                 _activityConsumers.TryAdd(downloader.Id, downloader2);
             }
-
             _backupConsumers = new ConcurrentDictionary<Guid, IDownloader>();
         }
 
@@ -74,8 +72,6 @@ namespace Plunder.Scheduler
                 _activityConsumers.TryRemove(id, out temp);
                 _backupConsumers.TryAdd(temp.Id, temp);
             }
-
-
         }
 
         private List<Guid> CanClearIds(ConcurrentDictionary<Guid, IDownloader> dic, int idleGeneration)
