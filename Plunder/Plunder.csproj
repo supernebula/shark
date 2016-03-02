@@ -60,7 +60,6 @@
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
     <Compile Include="Scheduler\IProducer.cs" />
-    <Compile Include="Scheduler\IQueue.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
     <Compile Include="Scheduler\RequestMessage.cs" />
     <Compile Include="Scheduler\QueueScheduler.cs" />
