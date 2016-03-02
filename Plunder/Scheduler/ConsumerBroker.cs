@@ -103,12 +103,13 @@ namespace Plunder.Scheduler
             Consume(message as IMessage<Request>); 
         }
 
-        private void Consume(IMessage<Request> message)
+        private async void Consume(IMessage<Request> message)
         {
             var downloader = FetchDownloader(message.Topic);
             downloader.Init(message, ProxyPool.Instance.Random());
-            var task = downloader.Download();
-            Task.WhenAny(task);
+            var task = await downloader.Download();
+            downloader.IdleGeneration = IdleGeneration.JUST_FINISHED;
+            PullMessage(null);
         }
 
         #endregion

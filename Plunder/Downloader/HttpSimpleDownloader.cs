@@ -36,11 +36,10 @@ namespace Plunder.Downloader
         }
 
 
-        public async Task Download()
+        public async Task<bool> Download()
         {
-
-            var task = await Client().GetAsync(_reqeust.Uri);
-            if (!task.IsSuccessStatusCode)
+            //var task = await Client().GetAsync(_reqeust.Uri);
+            //if (!task.IsSuccessStatusCode)
             
             throw new NotImplementedException();
         }

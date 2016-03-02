@@ -20,7 +20,7 @@ namespace Plunder.Downloader
         {
             throw new NotImplementedException();
         }
-        public async Task Download()
+        public async Task<bool> Download()
         {
             throw new NotImplementedException();
         }

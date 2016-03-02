@@ -9,6 +9,6 @@ namespace Plunder.Downloader
     {
         void Init(IMessage<Request> requestMessage, HttpProxy proxy);
 
-        Task Download();
+        Task<bool> Download();
     }
 }
