@@ -60,6 +60,13 @@ namespace Plunder.Scheduler
 
         private void GcConsumer(object state)
         {
+            var _backupGCIds = CanClearIds(_backupConsumers, IdleGeneration.VERY_IDLE);
+            foreach (var id in _backupGCIds)
+            {
+                IDownloader temp;
+                _backupConsumers.TryRemove(id, out temp);
+            }
+
             var _activityGCIds = CanClearIds(_activityConsumers, IdleGeneration.IDLE);
             foreach (var id in _activityGCIds)
             {
@@ -68,12 +75,7 @@ namespace Plunder.Scheduler
                 _backupConsumers.TryAdd(temp.Id, temp);
             }
 
-            var _backupGCIds = CanClearIds(_backupConsumers, IdleGeneration.VERY_IDLE);
-            foreach (var id in _backupGCIds)
-            {
-                IDownloader temp;
-                _activityConsumers.TryRemove(id, out temp);
-            }
+
         }
 
         private List<Guid> CanClearIds(ConcurrentDictionary<Guid, IDownloader> dic, int idleGeneration)
