@@ -57,12 +57,16 @@
     <Compile Include="Compoment\Request.cs" />
     <Compile Include="Scheduler\AbstractConsumer.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
+    <Compile Include="Scheduler\DuplicateRemovedScheduler.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
+    <Compile Include="Scheduler\IMonitorableBroker.cs" />
+    <Compile Include="Scheduler\IMonitorableScheduler.cs" />
     <Compile Include="Scheduler\IProducer.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
+    <Compile Include="Scheduler\LineScheduler.cs" />
+    <Compile Include="Scheduler\PriorityScheduler.cs" />
     <Compile Include="Scheduler\RequestMessage.cs" />
-    <Compile Include="Scheduler\QueueScheduler.cs" />
     <Compile Include="Selector\ISelector.cs" />
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />

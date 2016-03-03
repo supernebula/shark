@@ -9,9 +9,9 @@ using Plunder.Proxy;
 
 namespace Plunder.Scheduler
 {
-    public class ConsumerBroker : IDisposable
+    public class ConsumerBroker : IMonitorableBroker, IDisposable
     {
-        private readonly IScheduler _scheduler;
+        private readonly IMonitorableScheduler _scheduler;
 
         private readonly ConcurrentDictionary<Guid, IDownloader> _backupConsumers;
 
@@ -27,7 +27,7 @@ namespace Plunder.Scheduler
 
         #region Initialization
 
-        public ConsumerBroker(IScheduler scheduler, int minConsumerNumber, int maxConsumerNumber)
+        public ConsumerBroker(IMonitorableScheduler scheduler, int minConsumerNumber, int maxConsumerNumber)
         {
             if (minConsumerNumber > maxConsumerNumber)
                 throw new ArgumentException("参数 maxConsumerNumber 必须大于或等于 minConsumerNumber");
@@ -105,7 +105,7 @@ namespace Plunder.Scheduler
             var d = _activityConsumers.FirstOrDefault(e => !e.Value.IsBusy).Value;
             if(d == null)
                 d = _backupConsumers.FirstOrDefault().Value;
-            if ((_activityConsumers.Count + _backupConsumers.Count) >= +_maxConsumerNumber)
+            if ((_activityConsumers.Count + _backupConsumers.Count) >= _maxConsumerNumber)
                 return null;
             if (d == null)
                 d = CreateDownloader(topic);
@@ -140,6 +140,16 @@ namespace Plunder.Scheduler
         {
             _gcTimer.Dispose();
             _messagePullTimer.Dispose();
+        }
+
+        public int BusyWorkerNumber()
+        {
+            return _activityConsumers.Values.Count(e => e.IsBusy);
+        }
+
+        public int AllWorkerNumber()
+        {
+            return _activityConsumers.Count + _backupConsumers.Count;
         }
     }
 }

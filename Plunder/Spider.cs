@@ -12,8 +12,8 @@ namespace Plunder
 {
     public class Spider
     {
-        private IScheduler _scheduler;
-        public Spider(IScheduler scheduler)
+        private IMonitorableScheduler _scheduler;
+        public Spider(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
         }

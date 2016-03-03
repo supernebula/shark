@@ -14,8 +14,8 @@ namespace PlunderConsole
 
         static void Main(string[] args)
         {
-            _spider = new Spider(new QueueScheduler());
+            _spider = new Spider(new LineScheduler());
             _spider.Run();
         }
     }
-}
+}   
