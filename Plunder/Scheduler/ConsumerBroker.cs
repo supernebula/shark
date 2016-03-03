@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Downloader;
 using Plunder.Proxy;
@@ -11,21 +9,21 @@ using Plunder.Proxy;
 
 namespace Plunder.Scheduler
 {
-    public class ConsumerBroker
+    public class ConsumerBroker : IDisposable
     {
-        IScheduler _scheduler;
+        private readonly IScheduler _scheduler;
 
-        ConcurrentDictionary<Guid, IDownloader> _backupConsumers; 
+        private readonly ConcurrentDictionary<Guid, IDownloader> _backupConsumers;
 
-        ConcurrentDictionary<Guid, IDownloader> _activityConsumers; 
+        private readonly ConcurrentDictionary<Guid, IDownloader> _activityConsumers;
 
-        Timer _gcTimer;
-        Timer _messagePullTimer;
+        private readonly Timer _gcTimer;
+        private readonly Timer _messagePullTimer;
 
-        bool _pulling = false;
+        private bool _pulling;
 
-        int _minConsumerNumber;
-        int _maxConsumerNumber;
+        private readonly int _minConsumerNumber;
+        private readonly int _maxConsumerNumber;
 
         #region Initialization
 
@@ -40,11 +38,7 @@ namespace Plunder.Scheduler
             _gcTimer = new Timer(GcConsumer, null, 60 * 1000, 10 * 1000);
             _messagePullTimer = new Timer(PullMessage, null, 0, 1000);
 
-            InitConsumers();
-        }
-
-        private void InitConsumers()
-        {
+            //Init Consumers 
             _activityConsumers = new ConcurrentDictionary<Guid, IDownloader>();
             for (int i = 0; i < _minConsumerNumber; i++)
             {
@@ -59,34 +53,24 @@ namespace Plunder.Scheduler
 
         private void GcConsumer(object state)
         {
-            var _backupGCIds = CanClearIds(_backupConsumers, IdleGeneration.VERY_IDLE);
-            foreach (var id in _backupGCIds)
+            IDownloader temp;
+            foreach (var item in _backupConsumers.Values)
             {
-                IDownloader temp;
-                _backupConsumers.TryRemove(id, out temp);
+                if (!item.IsBusy)
+                    item.IdleGeneration++;
+                if(item.IdleGeneration >= IdleGeneration.VERY_IDLE)
+                    _backupConsumers.TryRemove(item.Id, out temp);
             }
 
-            var _activityGCIds = CanClearIds(_activityConsumers, IdleGeneration.IDLE);
-            foreach (var id in _activityGCIds)
+            if (_activityConsumers.Count <= _minConsumerNumber)
+                return;
+            foreach (var item in _activityConsumers.Values)
             {
-                IDownloader temp;
-                _activityConsumers.TryRemove(id, out temp);
-                _backupConsumers.TryAdd(temp.Id, temp);
+                if (!item.IsBusy)
+                    item.IdleGeneration++;
+                if (item.IdleGeneration >= IdleGeneration.IDLE && _activityConsumers.TryRemove(item.Id, out temp))
+                    _backupConsumers.TryAdd(temp.Id, temp);
             }
-        }
-
-        private List<Guid> CanClearIds(ConcurrentDictionary<Guid, IDownloader> dic, int idleGeneration)
-        {
-            var ids = new List<Guid>();
-            foreach (IConsumer item in dic.Values)
-            {
-                if (item.IsBusy)
-                    continue;
-                item.IdleGeneration++;
-                if (item.IdleGeneration >= idleGeneration)
-                    ids.Add(item.Id);
-            }
-            return ids;
         }
 
         #endregion
@@ -106,8 +90,10 @@ namespace Plunder.Scheduler
         private async void Consume(IMessage<Request> message)
         {
             var downloader = FetchDownloader(message.Topic);
+            if (downloader == null)
+                return;
             downloader.Init(message, ProxyPool.Instance.Random());
-            var task = await downloader.Download();
+            await downloader.Download();
             downloader.IdleGeneration = IdleGeneration.JUST_FINISHED;
             PullMessage(null);
         }
@@ -119,6 +105,8 @@ namespace Plunder.Scheduler
             var d = _activityConsumers.FirstOrDefault(e => !e.Value.IsBusy).Value;
             if(d == null)
                 d = _backupConsumers.FirstOrDefault().Value;
+            if ((_activityConsumers.Count + _backupConsumers.Count) >= +_maxConsumerNumber)
+                return null;
             if (d == null)
                 d = CreateDownloader(topic);
             d.IdleGeneration = IdleGeneration.ACTIVE;
@@ -146,6 +134,12 @@ namespace Plunder.Scheduler
         public void Start()
         {
             PullMessage(null);
+        }
+
+        public void Dispose()
+        {
+            _gcTimer.Dispose();
+            _messagePullTimer.Dispose();
         }
     }
 }
