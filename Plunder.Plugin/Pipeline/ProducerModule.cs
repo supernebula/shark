@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Pipeline;
 
-namespace Plunder.Pipeline
+namespace Plunder.Plugin.Pipeline
 {
-    public class ConsoleModule : IPageResultModule
+    public class ProducerModule : IPageResultModule
     {
         public string ModuleName
         {
             get
             {
-                return "控制台模块";
+                return "生产者模块";
             }
         }
 
@@ -21,7 +22,7 @@ namespace Plunder.Pipeline
         {
             get
             {
-                return "输出信息到控制台";
+                return "从结果中发现新的url并封装为请求消息，交付给调度器消息队列";
             }
         }
 

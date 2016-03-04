@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Pipeline;
 
-namespace Plunder.Pipeline
+namespace Plunder.Plugin.Pipeline
 {
-    public class StorageModule : IPageResultModule
+    public class FileModule : IPageResultModule
     {
         public string ModuleName
         {
             get
             {
-                return "仓储模块";
+                return "文件存储模块";
             }
         }
 
@@ -17,7 +22,7 @@ namespace Plunder.Pipeline
         {
             get
             {
-                return "数据持久化到数据库，如：SqlServer、MySql、NoSql....";
+                return "数据持久化到文件";
             }
         }
 

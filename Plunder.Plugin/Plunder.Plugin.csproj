@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00D14A01-8E50-4F73-AE88-6A1180777F88}</ProjectGuid>
+    <ProjectGuid>{74951C1E-DC33-45C6-A8EB-536FF0D0F596}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Plunder</RootNamespace>
-    <AssemblyName>Plunder</AssemblyName>
+    <RootNamespace>Plunder.Plugin</RootNamespace>
+    <AssemblyName>Plunder.Plugin</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSoup, Version=0.8.0.0, Culture=neutral, PublicKeyToken=6d44e53f0a65e802, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSoup.0.8.0\lib\net40\NSoup.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,43 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyze\PageAnalyzer.cs" />
-    <Compile Include="Compoment\IPageResult.cs" />
-    <Compile Include="Compoment\Proxy.cs" />
-    <Compile Include="Compoment\UserAgent.cs" />
-    <Compile Include="Downloader\HttpDynamicDownloader.cs" />
-    <Compile Include="Downloader\HttpSimpleDownloader.cs" />
-    <Compile Include="Downloader\IDownloader.cs" />
-    <Compile Include="IPool.cs" />
-    <Compile Include="IQueue.cs" />
-    <Compile Include="Pipeline\IPageResultModule.cs" />
+    <Compile Include="Pipeline\ConsoleModule.cs" />
+    <Compile Include="Pipeline\FileModule.cs" />
+    <Compile Include="Pipeline\ProducerModule.cs" />
+    <Compile Include="Pipeline\StorageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proxy\HttpProxy.cs" />
-    <Compile Include="Proxy\ProxyPool.cs" />
-    <Compile Include="Compoment\Request.cs" />
-    <Compile Include="Scheduler\AbstractConsumer.cs" />
-    <Compile Include="Scheduler\ConsumerBroker.cs" />
-    <Compile Include="Scheduler\DuplicateRemovedScheduler.cs" />
-    <Compile Include="Scheduler\IConsumer.cs" />
-    <Compile Include="Scheduler\IMessage.cs" />
-    <Compile Include="Scheduler\IMonitorableBroker.cs" />
-    <Compile Include="Scheduler\IMonitorableScheduler.cs" />
-    <Compile Include="Scheduler\IProducer.cs" />
-    <Compile Include="Scheduler\IScheduler.cs" />
-    <Compile Include="Scheduler\LineScheduler.cs" />
-    <Compile Include="Scheduler\PriorityScheduler.cs" />
-    <Compile Include="Scheduler\RequestMessage.cs" />
-    <Compile Include="Selector\ISelector.cs" />
-    <Compile Include="Selector\XPathSelector.cs" />
-    <Compile Include="Compoment\Site.cs" />
-    <Compile Include="Spider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Thread\" />
-    <Folder Include="Utility\" />
+    <ProjectReference Include="..\Plunder\Plunder.csproj">
+      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
+      <Name>Plunder</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Folder Include="Downloader\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

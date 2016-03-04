@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plunder.Scheduler;
 using Plunder;
-using Plunder.Pipeline;
+using Plunder.Plugin.Pipeline;
 
 namespace PlunderConsole
 {

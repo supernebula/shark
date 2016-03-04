@@ -4,16 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Pipeline;
 
-namespace Plunder.Pipeline
+namespace Plunder.Plugin.Pipeline
 {
-    public class FileModule : IPageResultModule
+    public class ConsoleModule : IPageResultModule
     {
         public string ModuleName
         {
             get
             {
-                return "文件存储模块";
+                return "控制台模块";
             }
         }
 
@@ -21,7 +22,7 @@ namespace Plunder.Pipeline
         {
             get
             {
-                return "数据持久化到文件";
+                return "输出信息到控制台";
             }
         }
 

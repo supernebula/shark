@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Pipeline;
 
-namespace Plunder.Pipeline
+namespace Plunder.Plugin.Pipeline
 {
-    public class ProducerModule : IPageResultModule
+    public class StorageModule : IPageResultModule
     {
         public string ModuleName
         {
             get
             {
-                return "生产者模块";
+                return "仓储模块";
             }
         }
 
@@ -21,7 +18,7 @@ namespace Plunder.Pipeline
         {
             get
             {
-                return "从结果中发现的新的url并封装为请求消息，交付给调度器";
+                return "数据持久化到数据库，如：SqlServer、MySql、NoSql....";
             }
         }
 
