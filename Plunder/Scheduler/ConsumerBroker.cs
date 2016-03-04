@@ -1,17 +1,20 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using Plunder.Compoment;
 using Plunder.Downloader;
 using Plunder.Proxy;
-
+using System.Collections.Generic;
 
 namespace Plunder.Scheduler
 {
     public class ConsumerBroker : IMonitorableBroker, IDisposable
     {
         private readonly IMonitorableScheduler _scheduler;
+
+        private readonly Dictionary<string, Type> DownloaderTopicType;
 
         private readonly ConcurrentDictionary<Guid, IDownloader> _backupConsumers;
 
@@ -116,14 +119,16 @@ namespace Plunder.Scheduler
 
         private IDownloader CreateDownloader(string topic)
         {
+
+            
             IDownloader downloader;
             switch (topic)
             {
                 case "simpleDownload":
-                    downloader = new HttpSimpleDownloader(Guid.NewGuid());
+                    downloader = (IDownloader)TypeDescriptor.CreateInstance(null, DownloaderTopicType["simpleDownload"], null, null);
                     break;
                 case "dynamicDownload":
-                    downloader = new HttpSimpleDownloader(Guid.NewGuid());
+                    downloader = (IDownloader)TypeDescriptor.CreateInstance(null, DownloaderTopicType["dynamicDownload"], null, null);
                     break;
                 default:
                     throw new InvalidCastException("无效的topic");                    

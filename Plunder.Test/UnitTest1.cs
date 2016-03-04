@@ -9,6 +9,8 @@ namespace Plunder.Test
         [TestMethod]
         public void TestMethod1()
         {
+            
+
             //var phantomJS = new PhantomJS();
             //phantomJS.OutputReceived += (sender, e) => {
             //    Console.WriteLine("PhantomJS output: {0}", e.Data);

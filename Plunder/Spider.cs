@@ -27,7 +27,15 @@ namespace Plunder
             _moduleList.AddRange(module);
         }
 
+        public void RegisterDownloader(string topic, Type downloaderType)
+        {
 
+        }
+
+        public void RegisterDownloader<DT>(string topic)
+        {
+
+        }
 
         public void Start()
         {
