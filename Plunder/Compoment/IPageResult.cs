@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
-    public class Request
+    public interface IPageResult
     {
-        public Site Site { get; set; }
-
-        public string Uri { get; set; }
-
-        public int AllowedRetryCount { get; set; }
     }
 }

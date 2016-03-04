@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Plunder.Scheduler
 {
@@ -31,6 +32,11 @@ namespace Plunder.Scheduler
         }
 
         public void Push(IMessage message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Push(IEnumerable<IMessage> message)
         {
             throw new NotImplementedException();
         }

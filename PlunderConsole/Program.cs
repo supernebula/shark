@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plunder.Scheduler;
 using Plunder;
+using Plunder.Pipeline;
 
 namespace PlunderConsole
 {
@@ -15,7 +16,8 @@ namespace PlunderConsole
         static void Main(string[] args)
         {
             _spider = new Spider(new LineScheduler());
-            _spider.Run();
+            _spider.AddPipeLineModule(new ProducerModule(), new ConsoleModule());
+            _spider.Start();
         }
     }
 }   
