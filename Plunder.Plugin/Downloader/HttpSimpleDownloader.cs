@@ -7,14 +7,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Plunder.Downloader;
 
-namespace Plunder.Downloader
+namespace Plunder.Plugin.Downloader
 {
     public class HttpSimpleDownloader : AbstractConsumer, IDownloader
     {
         private IMessage<Request> _message;
         private Request _reqeust;
         private HttpProxy _proxy;
+
+        public Site Site { get; set; }
 
         public HttpSimpleDownloader(Guid id)
         {
@@ -36,7 +39,7 @@ namespace Plunder.Downloader
         }
 
 
-        public async Task<bool> Download()
+        public Task<bool> DownloadAsync()
         {
             //var task = await Client().GetAsync(_reqeust.Uri);
             //if (!task.IsSuccessStatusCode)
@@ -44,6 +47,14 @@ namespace Plunder.Downloader
             throw new NotImplementedException();
         }
 
+        public void SetProxy(HttpProxy proxy)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

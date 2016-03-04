@@ -93,7 +93,7 @@ namespace Plunder.Scheduler
             if (downloader == null)
                 return;
             downloader.Init(message, ProxyPool.Instance.Random());
-            await downloader.Download();
+            await downloader.DownloadAsync();
             downloader.IdleGeneration = IdleGeneration.JUST_FINISHED;
             PullMessage(null);
         }

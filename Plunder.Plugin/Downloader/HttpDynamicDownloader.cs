@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plunder.Downloader;
 
-namespace Plunder.Downloader
+namespace Plunder.Plugin.Downloader
 {
     public class HttpDynamicDownloader : AbstractConsumer, IDownloader
     {
+        public Site Site { get; set; }
+
         public HttpDynamicDownloader(Guid id)
         {
             Id = id;
@@ -20,11 +23,19 @@ namespace Plunder.Downloader
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> Download()
+        public Task<bool> DownloadAsync()
         {
             throw new NotImplementedException();
         }
 
+        public void SetProxy(HttpProxy proxy)
+        {
+            throw new NotImplementedException();
+        }
 
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

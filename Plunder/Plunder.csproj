@@ -48,8 +48,6 @@
     <Compile Include="Compoment\IPageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
-    <Compile Include="Downloader\HttpDynamicDownloader.cs" />
-    <Compile Include="Downloader\HttpSimpleDownloader.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
