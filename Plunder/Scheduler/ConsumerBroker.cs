@@ -14,7 +14,7 @@ namespace Plunder.Scheduler
     {
         private readonly IMonitorableScheduler _scheduler;
 
-        private readonly Dictionary<string, Type> DownloaderTopicType;
+        private readonly Dictionary<string, Type> DownloaderType;
 
         private readonly ConcurrentDictionary<Guid, IDownloader> _backupConsumers;
 
@@ -105,9 +105,9 @@ namespace Plunder.Scheduler
 
         private IDownloader FetchDownloader(string topic)
         {
-            var d = _activityConsumers.FirstOrDefault(e => !e.Value.IsBusy).Value;
+            var d = _activityConsumers.FirstOrDefault(e => !e.Value.IsBusy && e.Value.Topic.Equals(topic)).Value;
             if(d == null)
-                d = _backupConsumers.FirstOrDefault().Value;
+                d = _backupConsumers.FirstOrDefault(e => e.Value.Topic.Equals(topic)).Value;
             if ((_activityConsumers.Count + _backupConsumers.Count) >= _maxConsumerNumber)
                 return null;
             if (d == null)
@@ -120,19 +120,11 @@ namespace Plunder.Scheduler
         private IDownloader CreateDownloader(string topic)
         {
 
-            
-            IDownloader downloader;
-            switch (topic)
-            {
-                case "simpleDownload":
-                    downloader = (IDownloader)TypeDescriptor.CreateInstance(null, DownloaderTopicType["simpleDownload"], null, null);
-                    break;
-                case "dynamicDownload":
-                    downloader = (IDownloader)TypeDescriptor.CreateInstance(null, DownloaderTopicType["dynamicDownload"], null, null);
-                    break;
-                default:
-                    throw new InvalidCastException("无效的topic");                    
-            }
+            var type = DownloaderType[topic];
+            if(type == null)
+                throw new ArgumentException("未注册此topic对应的Downloader:" + topic);
+            var downloader = (IDownloader)TypeDescriptor.CreateInstance(null, type, null, null);
+            downloader.Topic = topic;
             return downloader;
         }
 

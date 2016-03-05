@@ -9,7 +9,7 @@ namespace Plunder.Scheduler
     public interface IConsumer : IDisposable
     {
         Guid Id { get; set; }
-        string Topic { get; set; }
+        string Topic { get; }
 
         int IdleGeneration { get; set; }
 

@@ -19,13 +19,14 @@ namespace Plunder.Plugin.Downloader
 
         public Site Site { get; set; }
 
-        public HttpSimpleDownloader(Guid id)
+        public HttpSimpleDownloader(string topic)
         {
-            Id = id;
+            Topic = topic;
         }
 
-        public void Init(IMessage<Request> requestMessage, HttpProxy proxy)
+        public void Init(Guid id, IMessage<Request> requestMessage, HttpProxy proxy)
         {
+            Id = id;
             _message = requestMessage;
             _reqeust = _message.Body;
             _proxy = proxy;

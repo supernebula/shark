@@ -1,4 +1,4 @@
-﻿using System.Data;
+﻿using System;
 using Plunder.Proxy;
 using Plunder.Compoment;
 using Plunder.Scheduler;
@@ -10,7 +10,8 @@ namespace Plunder.Downloader
     {
         Site Site { get; set; }
 
-        void Init(IMessage<Request> requestMessage, HttpProxy proxy);
+
+        void Init(Guid id, IMessage<Request> requestMessage, HttpProxy proxy);
 
         Task<bool> DownloadAsync();
 

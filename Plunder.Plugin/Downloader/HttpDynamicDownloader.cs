@@ -12,14 +12,17 @@ namespace Plunder.Plugin.Downloader
 {
     public class HttpDynamicDownloader : AbstractConsumer, IDownloader
     {
+
+
+
         public Site Site { get; set; }
 
-        public HttpDynamicDownloader(Guid id)
+        public HttpDynamicDownloader(string topic)
         {
-            Id = id;
+            Topic = topic;
         }
 
-        public void Init(IMessage<Request> request, HttpProxy proxy)
+        public void Init(Guid id, IMessage<Request> request, HttpProxy proxy)
         {
             throw new NotImplementedException();
         }

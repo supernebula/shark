@@ -48,6 +48,7 @@
     <Compile Include="Compoment\IPageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
+    <Compile Include="Downloader\DownloadFactory.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
