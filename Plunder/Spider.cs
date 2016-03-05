@@ -27,14 +27,19 @@ namespace Plunder
             _moduleList.AddRange(module);
         }
 
-        public void RegisterDownloader(string topic, Type downloaderType)
+        public void RegisterDownloader(string topic, Func<string, IDownloader> downloaderCreateFunc)
         {
-
+            DownloaderFactory.RegisterCreator(topic, downloaderCreateFunc);
         }
 
         public void RegisterDownloader<DT>(string topic)
         {
 
+        }
+
+        public bool CheckConfig()
+        {
+            return true;
         }
 
         public void Start()

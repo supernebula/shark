@@ -95,7 +95,7 @@ namespace Plunder.Scheduler
             var downloader = FetchDownloader(message.Topic);
             if (downloader == null)
                 return;
-            downloader.Init(message, ProxyPool.Instance.Random());
+            downloader.Init(Guid.NewGuid(), message, ProxyPool.Instance.Random());
             await downloader.DownloadAsync();
             downloader.IdleGeneration = IdleGeneration.JUST_FINISHED;
             PullMessage(null);
@@ -124,7 +124,6 @@ namespace Plunder.Scheduler
             if(type == null)
                 throw new ArgumentException("未注册此topic对应的Downloader:" + topic);
             var downloader = (IDownloader)TypeDescriptor.CreateInstance(null, type, null, null);
-            downloader.Topic = topic;
             return downloader;
         }
 
