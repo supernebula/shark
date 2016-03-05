@@ -53,7 +53,9 @@
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
-    <Compile Include="Pipeline\IPageResultModule.cs" />
+    <Compile Include="Pipeline\IPipelineModule.cs" />
+    <Compile Include="Pipeline\ProducerModule.cs" />
+    <Compile Include="Pipeline\ResultPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\HttpProxy.cs" />
     <Compile Include="Proxy\ProxyPool.cs" />

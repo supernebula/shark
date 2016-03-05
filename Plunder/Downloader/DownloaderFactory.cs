@@ -24,9 +24,9 @@ namespace Plunder.Downloader
             return func.Invoke(topic);
         }
 
-        public static bool Validate()
+        public static int Count()
         {
-            return _creatorDic.Count > 0;
+            return _creatorDic.Count();
         }
 
         public static void RegisterCreator(string topic, Func<string, IDownloader> createFunc)

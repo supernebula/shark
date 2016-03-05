@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Plunder.Compoment;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using Plunder.Compoment;
 
 namespace Plunder.Pipeline
 {
-    public interface IPageResultModule : IDisposable
+    public interface IResultPipelineModule<T> : IDisposable
     {
         string ModuleName { get; }
 
@@ -16,7 +15,7 @@ namespace Plunder.Pipeline
 
         void Init(object context);
 
-        void Process(IPageResult result);
+        void Process(PageResult<T> result);
 
     }
 }

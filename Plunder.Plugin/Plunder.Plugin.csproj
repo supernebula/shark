@@ -44,7 +44,6 @@
     <Compile Include="Downloader\HttpSimpleDownloader.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
-    <Compile Include="Pipeline\ProducerModule.cs" />
     <Compile Include="Pipeline\StorageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

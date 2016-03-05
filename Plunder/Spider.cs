@@ -14,17 +14,23 @@ namespace Plunder
     public class Spider
     {
         private readonly IMonitorableScheduler _scheduler;
-        private readonly List<IPageResultModule> _moduleList; 
+        private readonly Dictionary<Type, IResultPipelineModule> _moduleDic;
+        private readonly ResultPipeline _resultPipeline;
 
         public Spider(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
-            _moduleList = new List<IPageResultModule>();
+            _moduleDic = new Dictionary<Type, IResultPipelineModule>();
+            _moduleDic.Add(typeof(ProducerModule), new ProducerModule());
+            _resultPipeline = new ResultPipeline();
         }
 
-        public void AddPipeLineModule(params IPageResultModule[] module)
+        public void RegisterPipeModule(params IResultPipelineModule[] modules)
         {
-            _moduleList.AddRange(module);
+            foreach (var module in modules)
+            {
+                _moduleDic.Add(module.GetType(), module);
+            }
         }
 
         public void RegisterDownloader(string topic, Func<string, IDownloader> downloaderCreateFunc)
@@ -32,15 +38,15 @@ namespace Plunder
             DownloaderFactory.RegisterCreator(topic, downloaderCreateFunc);
         }
 
-        public void RegisterDownloader<DT>(string topic)
+        public void RegisterPageAnalyzer(object analyzer)
         {
-
+            
         }
 
         public bool CheckConfig()
         {
 
-            if (DownloaderFactory.Validate())
+            if (DownloaderFactory.Count() > 0)
                 return false;
                 
             return true;

@@ -21,7 +21,7 @@ namespace PlunderConsole
 
             _spider.RegisterDownloader("simpleDownload", (topic) => new HttpSimpleDownloader("simpleDownload"));
             _spider.RegisterDownloader("dynamicDownload", (topic) => new HttpDynamicDownloader("dynamicDownload"));
-            _spider.AddPipeLineModule(new ProducerModule(), new ConsoleModule()); 
+            _spider.RegisterPipeModule(new ConsoleModule()); 
             _spider.Start();
         }
 

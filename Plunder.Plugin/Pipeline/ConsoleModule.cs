@@ -8,7 +8,7 @@ using Plunder.Pipeline;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class ConsoleModule : IPageResultModule
+    public class ConsoleModule : IResultPipelineModule
     {
         public string ModuleName
         {
