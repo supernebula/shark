@@ -39,11 +39,17 @@ namespace Plunder
 
         public bool CheckConfig()
         {
+
+            if (DownloaderFactory.Validate())
+                return false;
+                
             return true;
         }
 
         public void Start()
         {
+            if (!CheckConfig())
+                return;
             _scheduler.Push(new RequestMessage());
         }
     }
