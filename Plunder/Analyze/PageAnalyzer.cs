@@ -8,9 +8,9 @@ using Plunder.Scheduler;
 
 namespace Plunder.Analyze
 {
-    public class PageAnalyzer : IProducer
+    public class PageAnalyzer
     {
-        public IMessage<IEnumerable<Request>> Deliver()
+        public Response Process()
         {
             throw new NotImplementedException();
         }

@@ -47,6 +47,7 @@
     <Compile Include="Analyze\PageAnalyzer.cs" />
     <Compile Include="Compoment\IPageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />
+    <Compile Include="Compoment\Response.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
     <Compile Include="Downloader\DownloaderFactory.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
