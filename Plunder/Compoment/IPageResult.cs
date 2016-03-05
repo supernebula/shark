@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
-    public interface IPageResult
+    public class PageResult<T> where T : new()
     {
+        List<Request> NewRequest { get; set; }
+
+        T Model { get; set; }
     }
 }

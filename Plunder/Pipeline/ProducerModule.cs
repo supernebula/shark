@@ -4,26 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
-using Plunder.Pipeline;
 
-namespace Plunder.Plugin.Pipeline
+namespace Plunder.Pipeline
 {
-    public class ProducerModule : IPageResultModule
+    public class ProducerModule : IResultPipelineModule
     {
         public string ModuleName
         {
-            get
-            {
-                return "生产者模块";
-            }
+            get { return "生产者模块"; }
         }
 
         public string ModuleDescription
         {
-            get
-            {
-                return "从结果中发现新的url并封装为请求消息，交付给调度器消息队列";
-            }
+            get { return "从结果中发现新的url并封装为请求消息，交付给调度器消息队列"; }
         }
 
         public void Dispose()
@@ -36,7 +29,7 @@ namespace Plunder.Plugin.Pipeline
             throw new NotImplementedException();
         }
 
-        public void Process(IPageResult result)
+        public void Process(PageResult result)
         {
             throw new NotImplementedException();
         }

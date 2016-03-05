@@ -4,7 +4,7 @@ using Plunder.Pipeline;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class StorageModule : IPageResultModule
+    public class StorageModule : IResultPipelineModule
     {
         public string ModuleName
         {
