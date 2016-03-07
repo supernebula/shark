@@ -63,16 +63,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Plunder.Plugin\Plunder.Plugin.csproj">
-      <Project>{74951c1e-dc33-45c6-a8eb-536ff0d0f596}</Project>
-      <Name>Plunder.Plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plunder\Plunder.csproj">
-      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
-      <Name>Plunder</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
