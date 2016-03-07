@@ -13,6 +13,9 @@ namespace Plunder
 {
     public class Spider
     {
+
+
+
         private readonly IMonitorableScheduler _scheduler;
         private readonly Dictionary<Type, IResultPipelineModule> _moduleDic;
         private readonly ResultPipeline _resultPipeline;
