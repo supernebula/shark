@@ -19,9 +19,9 @@ namespace Plunder.Plugin.Downloader
 
         public Site Site { get; set; }
 
-        public HttpSimpleDownloader(string topic)
+        public HttpSimpleDownloader()
         {
-            Topic = topic;
+            Topic = TopicType.STATIC_HTML;
         }
 
         public void Init(Guid id, IMessage<Request> requestMessage, HttpProxy proxy)

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Downloader\HttpDynamicDownloader.cs" />
     <Compile Include="Downloader\HttpSimpleDownloader.cs" />
+    <Compile Include="Downloader\TopicType.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
     <Compile Include="Pipeline\StorageModule.cs" />

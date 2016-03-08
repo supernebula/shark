@@ -17,9 +17,9 @@ namespace Plunder.Plugin.Downloader
 
         public Site Site { get; set; }
 
-        public HttpDynamicDownloader(string topic)
+        public HttpDynamicDownloader()
         {
-            Topic = topic;
+            Topic = TopicType.DYNAMIC_HTML;
         }
 
         public void Init(Guid id, IMessage<Request> request, HttpProxy proxy)

@@ -8,6 +8,7 @@ namespace Plunder.Compoment
 {
     public class PageResult<T>
     {
+        public Site Site { get; set; }
         public List<Request> NewRequest { get; set; }
 
         public T Model { get; set; }
