@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public class RequestMessage : IMessage<Request>
+    public class RequestMessage
     {
 
         public Guid Id { get; set; }
         public string Topic { get; set; }
 
-        public object Content { get; set; }
-
-        public string GetTypeName { get; set; }
-
-
-
-        public Request Body { get; }
+        public Request Request { get; set; }
 
         public int Priority { get; set; }
 
@@ -29,7 +23,7 @@ namespace Plunder.Scheduler
         {
             get
             {
-                return Body.Uri.GetHashCode().ToString().ToLower();
+                return Request.Uri.GetHashCode().ToString().ToLower();
             }
         }
 

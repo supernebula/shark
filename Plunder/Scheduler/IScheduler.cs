@@ -6,10 +6,10 @@ namespace Plunder.Scheduler
 {
     public interface IScheduler
     {
-        Task PushAsync(IMessage message);
-        Task PushAsync(IEnumerable<IMessage> message);
+        Task PushAsync(RequestMessage message);
+        Task PushAsync(IEnumerable<RequestMessage> message);
 
-        IMessage Poll();
+        RequestMessage Poll();
 
     }
 }

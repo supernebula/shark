@@ -1,45 +1,54 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Plunder.Storage;
 
 namespace Plunder.Scheduler
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     {
-        //protected abstract void AddToHistory(IMessage message);
 
-        //protected abstract void IsExitInHistory(IMessage message);
-
-        protected BlockingCollection<IMessage> Queue { get; set; }
+        protected BlockingCollection<RequestMessage> Queue { get; set; }
 
         protected int AccumulatedMessageTotal { get; set; }
 
         protected DuplicateRemovedScheduler()
         {
-            Queue = new BlockingCollection<IMessage>(new ConcurrentQueue<IMessage>());
+            Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             AccumulatedMessageTotal = 0;
         }
 
 
 
-        public IMessage Poll()
+        public RequestMessage Poll()
         {
             AccumulatedMessageTotal++;
             var message = Queue.Take();
-            //AddToHistory(message);
             return message;
-            throw new NotImplementedException();
         }
 
-        public Task PushAsync(IMessage message)
+        public Task PushAsync(RequestMessage message)
         {
-            throw new NotImplementedException();
+            return Task.Run(() =>
+            {
+                if(!MessageRecord.IsExist(message.HashCode))
+                    MessageRecord.Add(message.HashCode, message.Request.Uri);
+            });
+            
         }
 
-        public Task PushAsync(IEnumerable<IMessage> message)
+        public Task PushAsync(IEnumerable<RequestMessage> messages)
         {
-            throw new NotImplementedException();
+            return Task.Run(() =>
+            {
+                messages.ToList().ForEach(e =>
+                {
+                    if (!MessageRecord.IsExist(e.HashCode))
+                        MessageRecord.Add(e.HashCode, e.Request.Uri);
+                });
+            });
         }
 
 

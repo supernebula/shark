@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyze\PageAnalyzer.cs" />
+    <Compile Include="Storage\MessageRecord.cs" />
     <Compile Include="Compoment\IPageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\Response.cs" />
