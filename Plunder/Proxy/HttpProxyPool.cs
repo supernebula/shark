@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Plunder.Proxy
 {
-    public class ProxyPool : IPool
+    public class HttpProxyPool : IPool
     {
-        private static ProxyPool _instance;
-        public static ProxyPool Instance
+        private static HttpProxyPool _instance;
+        public static HttpProxyPool Instance
         {
             get
             {
                 if (_instance == null)
-                    _instance = new ProxyPool();
+                    _instance = new HttpProxyPool();
                 return _instance;
             }
         }

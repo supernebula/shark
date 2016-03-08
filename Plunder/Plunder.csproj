@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Analyze\PageAnalyzer.cs" />
     <Compile Include="Storage\MessageRecord.cs" />
-    <Compile Include="Compoment\IPageResult.cs" />
+    <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="Pipeline\ResultPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\HttpProxy.cs" />
-    <Compile Include="Proxy\ProxyPool.cs" />
+    <Compile Include="Proxy\HttpProxyPool.cs" />
     <Compile Include="Compoment\Request.cs" />
     <Compile Include="Scheduler\AbstractConsumer.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
