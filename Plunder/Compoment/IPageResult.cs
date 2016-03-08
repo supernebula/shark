@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
-    public class PageResult<T> where T : new()
+    public class PageResult<T>
     {
-        List<Request> NewRequest { get; set; }
+        public List<Request> NewRequest { get; set; }
 
-        T Model { get; set; }
+        public T Model { get; set; }
     }
 }

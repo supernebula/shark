@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Scheduler;
 
 namespace Plunder.Pipeline
 {
     public class ProducerModule : IResultPipelineModule
     {
+
+        public ProducerModule(IScheduler scheduler)
+        {
+            _scheduler = scheduler;
+        }
+
+        private IScheduler _scheduler;
+
         public string ModuleName
         {
             get { return "生产者模块"; }
@@ -29,9 +36,11 @@ namespace Plunder.Pipeline
             throw new NotImplementedException();
         }
 
-        public void Process(PageResult result)
+        public async Task ProcessAsync<T>(PageResult<T> result)
         {
             throw new NotImplementedException();
+
+            await _scheduler.PushAsync(result.NewRequest.Select(e => new RequestMessage()));
         }
     }
 }

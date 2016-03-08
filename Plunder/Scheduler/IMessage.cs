@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Plunder.Scheduler
 {
@@ -14,8 +11,8 @@ namespace Plunder.Scheduler
 
     public interface IMessage
     {
+        Guid Id { get; set; }
         object Content { get; set; }
-        string Id { get; set; }
 
         DateTime Timestamp { get; set; }
 
@@ -23,7 +20,7 @@ namespace Plunder.Scheduler
 
         string Topic { get; set; }
 
-        string HashCode { get; set; }
+        string HashCode { get; }
 
         string GetTypeName { get; set; }
     }

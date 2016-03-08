@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
 
@@ -32,7 +33,7 @@ namespace Plunder.Plugin.Pipeline
             throw new NotImplementedException();
         }
 
-        public void Process(IPageResult result)
+        public Task ProcessAsync<T>(PageResult<T> data)
         {
             throw new NotImplementedException();
         }

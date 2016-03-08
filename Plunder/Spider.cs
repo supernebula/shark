@@ -17,23 +17,19 @@ namespace Plunder
 
 
         private readonly IMonitorableScheduler _scheduler;
-        private readonly Dictionary<Type, IResultPipelineModule> _moduleDic;
-        private readonly ResultPipeline _resultPipeline;
+        private ResultPipeline _resultPipeline;
 
         public Spider(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
-            _moduleDic = new Dictionary<Type, IResultPipelineModule>();
-            _moduleDic.Add(typeof(ProducerModule), new ProducerModule());
             _resultPipeline = new ResultPipeline();
+            _resultPipeline.RegisterModule(new ProducerModule(_scheduler));
+            
         }
 
         public void RegisterPipeModule(params IResultPipelineModule[] modules)
         {
-            foreach (var module in modules)
-            {
-                _moduleDic.Add(module.GetType(), module);
-            }
+            _resultPipeline.RegisterModule(modules);
         }
 
         public void RegisterDownloader(string topic, Func<string, IDownloader> downloaderCreateFunc)
@@ -59,7 +55,7 @@ namespace Plunder
         {
             if (!CheckConfig())
                 return;
-            _scheduler.Push(new RequestMessage());
+            _scheduler.PushAsync(new RequestMessage());
         }
     }
 }

@@ -1,24 +1,44 @@
 ﻿using Plunder.Compoment;
-using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Plunder.Pipeline
 {
     public class ResultPipeline
     {
-        List<IResultPipelineModule> _modules;
+        private readonly ConcurrentBag<IResultPipelineModule> _modules;
+
+
+        public ResultPipeline()
+        {
+            _modules = new ConcurrentBag<IResultPipelineModule>();
+        }
 
         public ResultPipeline(IEnumerable<IResultPipelineModule> modules)
         {
-            _modules.AddRange(modules);
+            _modules = new ConcurrentBag<IResultPipelineModule>(modules);
         }
 
-        public void Inject<T>(PageResult<T> result)
+        public void RegisterModule(IResultPipelineModule module)
         {
-                
+            if (_modules.Any(e => e.GetType() == module.GetType()))
+                return;
+            _modules.Add(module);
+        }
+
+        public void RegisterModule(IEnumerable<IResultPipelineModule> modules)
+        {
+            modules.ToList().ForEach(e => RegisterModule(e));
+        }
+
+        public void Inject<T>(PageResult<T> data)
+        {
+            foreach (IResultPipelineModule module in _modules)
+            {
+                module.ProcessAsync(data);
+            }
         }
     }
 }
