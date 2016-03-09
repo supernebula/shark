@@ -36,9 +36,9 @@ namespace Plunder.Pipeline
             throw new NotImplementedException();
         }
 
-        public async Task ProcessAsync<T>(PageResult<T> result)
+        public async Task ProcessAsync(PageResult result)
         {
-            await _scheduler.PushAsync(result.NewRequest.Select(e => new RequestMessage()
+            await _scheduler.PushAsync(result.NewRequests.Select(e => new RequestMessage()
             {
                 Id = Guid.NewGuid(),
                 Topic = "simple",

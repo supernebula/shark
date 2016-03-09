@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyze\UsashopcnPageAnalyzer.cs" />
     <Compile Include="Downloader\HttpDynamicDownloader.cs" />
     <Compile Include="Downloader\HttpSimpleDownloader.cs" />
     <Compile Include="Downloader\TopicType.cs" />

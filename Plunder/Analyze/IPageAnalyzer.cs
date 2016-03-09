@@ -8,11 +8,11 @@ using Plunder.Scheduler;
 
 namespace Plunder.Analyze
 {
-    public class PageAnalyzer
+    public interface IPageAnalyzer
     {
-        public Response Process()
-        {
-            throw new NotImplementedException();
-        }
+        Guid Id { get; set; }
+        Task<PageResult> AnalyzeAsync(Response response);
+
+
     }
 }

@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyze\PageAnalyzer.cs" />
+    <Compile Include="Analyze\IPageAnalyzer.cs" />
     <Compile Include="Storage\MessageRecord.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />

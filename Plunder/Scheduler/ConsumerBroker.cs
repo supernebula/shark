@@ -95,7 +95,7 @@ namespace Plunder.Scheduler
             var downloader = FetchDownloader(message.Topic);
             if (downloader == null)
                 return;
-            downloader.Init(Guid.NewGuid(), message, ProxyPool.Instance.Random());
+            downloader.Init(Guid.NewGuid(), message, HttpProxyPool.Instance.Random());
             await downloader.DownloadAsync();
             downloader.IdleGeneration = IdleGeneration.JUST_FINISHED;
             PullMessage(null);

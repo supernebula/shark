@@ -15,7 +15,7 @@ namespace Plunder.Pipeline
 
         void Init(object context);
 
-        Task ProcessAsync<T>(PageResult<T> result);
+        Task ProcessAsync(PageResult result);
 
     }
 }

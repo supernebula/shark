@@ -33,7 +33,7 @@ namespace Plunder.Pipeline
             modules.ToList().ForEach(e => RegisterModule(e));
         }
 
-        public void Inject<T>(PageResult<T> data)
+        public void Inject(PageResult data)
         {
             foreach (IResultPipelineModule module in _modules)
             {

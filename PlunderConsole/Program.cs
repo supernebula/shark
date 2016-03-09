@@ -56,8 +56,8 @@ namespace PlunderConsole
             Spider _spider;
             _spider = new Spider(new LineScheduler());
 
-            _spider.RegisterDownloader("simpleDownload", (topic) => new HttpSimpleDownloader("simpleDownload"));
-            _spider.RegisterDownloader("dynamicDownload", (topic) => new HttpDynamicDownloader("dynamicDownload"));
+            _spider.RegisterDownloader("simpleDownload", (topic) => new HttpSimpleDownloader());
+            _spider.RegisterDownloader("dynamicDownload", (topic) => new HttpDynamicDownloader());
             _spider.RegisterPipeModule(new ConsoleModule());
             _spider.Start();
         }

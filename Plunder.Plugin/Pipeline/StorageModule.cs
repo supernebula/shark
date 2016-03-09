@@ -33,7 +33,7 @@ namespace Plunder.Plugin.Pipeline
             throw new NotImplementedException();
         }
 
-        public Task ProcessAsync<T>(PageResult<T> data)
+        public Task ProcessAsync(PageResult data)
         {
             throw new NotImplementedException();
         }

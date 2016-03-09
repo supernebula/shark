@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
-    public class PageResult<T>
+    public class PageResult
     {
         public Site Site { get; set; }
         public List<Request> NewRequests { get; set; }
 
-        public T Model { get; set; }
+        public Dictionary<string, string> Result { get; set; }
+
 
         public string Content { get; set; }
 
