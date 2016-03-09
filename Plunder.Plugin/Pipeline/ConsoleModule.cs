@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
@@ -38,7 +39,15 @@ namespace Plunder.Plugin.Pipeline
 
         public Task ProcessAsync<T>(PageResult<T> data)
         {
-            throw new NotImplementedException();
+            return Execute(data);
+        }
+
+        private async Task Execute<T>(PageResult<T> data)
+        {
+            await Task.Run(() =>
+            {
+                Console.WriteLine("");
+            });
         }
     }
 }
