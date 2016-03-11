@@ -12,7 +12,8 @@ namespace Plunder.Compoment
 
         static UserAgent()
         {
-
+            UserAgents = new List<KeyValuePair<string, string>>();
+            UserAgents.Add(new KeyValuePair<string, string>());
 
             var a = @"PC端：
 
