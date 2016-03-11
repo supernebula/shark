@@ -13,6 +13,6 @@ namespace Plunder.Analyze
         Guid Id { get; set; }
         Task<PageResult> AnalyzeAsync(Response response);
 
-
+        Site Site { get; set; }
     }
 }

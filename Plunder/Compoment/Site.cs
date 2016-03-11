@@ -1,15 +1,19 @@
-﻿using Plunder.Compoment;
-using Plunder.Proxy;
+﻿using Plunder.Proxy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+
 
 namespace Plunder.Compoment
 {
     public class Site
     {
+
+
+        #region Property
+
+        public static Site Default => new Site();
+
         public string Domain { get; set; }
 
         public string UserAgent { get; set; }
@@ -41,10 +45,22 @@ namespace Plunder.Compoment
 
         public bool UseGzip { get; set; }
 
+        #endregion
+
+        static Site DefaultSite()
+        {
+            return new Site()
+            {
+                AcceptHttpStatCode = new List<int> { 200 },
+                UserAgent = 
+
+            };
+        }
+
 
         public Site()
         {
-            AcceptHttpStatCode = new List<int> { 200 };
+            
         }
 
         public void AddCookie(string name, string value)

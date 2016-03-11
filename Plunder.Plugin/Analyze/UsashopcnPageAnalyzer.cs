@@ -12,6 +12,8 @@ namespace Plunder.Plugin.Analyze
     {
         public Guid Id { get; set; }
 
+        public Site Site { get; set; }
+
         public async Task<PageResult> AnalyzeAsync(Response response)
         {
             return await ExecuteAsync(response);

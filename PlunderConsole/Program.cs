@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Plunder;
 using Plunder.Scheduler;
 using Plunder.Downloader;
+using Plunder.Plugin.Analyze;
 using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Downloader;
 
@@ -56,10 +57,14 @@ namespace PlunderConsole
             Spider _spider;
             _spider = new Spider(new LineScheduler());
 
+            _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>("usashopcn");
             _spider.RegisterDownloader("simpleDownload", (topic) => new HttpSimpleDownloader());
             _spider.RegisterDownloader("dynamicDownload", (topic) => new HttpDynamicDownloader());
-            _spider.RegisterPipeModule(new ConsoleModule());
+            _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
+
             _spider.Start();
+
+            var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
         }
 
     }
