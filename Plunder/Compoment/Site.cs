@@ -51,8 +51,7 @@ namespace Plunder.Compoment
         {
             return new Site()
             {
-                AcceptHttpStatCode = new List<int> { 200 },
-                UserAgent = 
+                AcceptHttpStatCode = new List<int> { 200 }
 
             };
         }
