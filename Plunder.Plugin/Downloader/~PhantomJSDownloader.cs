@@ -10,14 +10,15 @@ using Plunder.Downloader;
 
 namespace Plunder.Plugin.Downloader
 {
-    public class HttpDynamicDownloader : AbstractConsumer, IDownloader
+    [Obsolete]
+    public class PhantomJSDownloaderBak : AbstractConsumerBak, IDownloaderBak
     {
 
 
 
         public Site Site { get; set; }
 
-        public HttpDynamicDownloader()
+        public PhantomJSDownloaderBak()
         {
             Topic = TopicType.DYNAMIC_HTML;
         }
@@ -26,7 +27,7 @@ namespace Plunder.Plugin.Downloader
         {
             throw new NotImplementedException();
         }
-        public Task<bool> DownloadAsync()
+        public Task<string> DownloadAsync()
         {
             throw new NotImplementedException();
         }

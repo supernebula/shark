@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyze\UsashopcnPageAnalyzer.cs" />
-    <Compile Include="Downloader\HttpDynamicDownloader.cs" />
-    <Compile Include="Downloader\HttpSimpleDownloader.cs" />
+    <Compile Include="Downloader\HttpClientBuilder.cs" />
+    <Compile Include="Downloader\HttpClientDownloader.cs" />
+    <Compile Include="Downloader\~PhantomJSDownloader.cs" />
+    <Compile Include="Downloader\~HttpClientDownloader.cs" />
     <Compile Include="Downloader\TopicType.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />

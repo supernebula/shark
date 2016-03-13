@@ -36,7 +36,7 @@ namespace Plunder
             _resultPipeline.RegisterModule(modules);
         }
 
-        public void RegisterDownloader(string topic, Func<string, IDownloader> downloaderCreateFunc)
+        public void RegisterDownloader(string topic, Func<string, IDownloaderBak> downloaderCreateFunc)
         {
             DownloaderFactory.RegisterCreator(topic, downloaderCreateFunc);
         }

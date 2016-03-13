@@ -11,7 +11,8 @@ using Plunder.Downloader;
 
 namespace Plunder.Plugin.Downloader
 {
-    public class HttpSimpleDownloader : AbstractConsumer, IDownloader
+    [Obsolete]
+    public class HttpClientDownloaderBak : AbstractConsumerBak, IDownloaderBak
     {
         private IMessage<Request> _message;
         private Request _reqeust;
@@ -19,7 +20,7 @@ namespace Plunder.Plugin.Downloader
 
         public Site Site { get; set; }
 
-        public HttpSimpleDownloader()
+        public HttpClientDownloaderBak()
         {
             Topic = TopicType.STATIC_HTML;
         }
@@ -40,7 +41,7 @@ namespace Plunder.Plugin.Downloader
         }
 
 
-        public Task<bool> DownloadAsync()
+        public Task<string> DownloadAsync()
         {
             //var task = await Client().GetAsync(_reqeust.Uri);
             //if (!task.IsSuccessStatusCode)

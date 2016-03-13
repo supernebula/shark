@@ -10,13 +10,13 @@ namespace Plunder.Downloader
     internal static class DownloaderFactory
     {
 
-        private static Dictionary<string, Func<string, IDownloader>> _creatorDic;
+        private static Dictionary<string, Func<string, IDownloaderBak>> _creatorDic;
 
         static DownloaderFactory()
         {
-            _creatorDic = new Dictionary<string, Func<string, IDownloader>>();
+            _creatorDic = new Dictionary<string, Func<string, IDownloaderBak>>();
         }
-        public static IDownloader Create(string topic)
+        public static IDownloaderBak Create(string topic)
         {
             var func = _creatorDic[topic];
             if (func == null)
@@ -29,7 +29,7 @@ namespace Plunder.Downloader
             return _creatorDic.Count();
         }
 
-        public static void RegisterCreator(string topic, Func<string, IDownloader> createFunc)
+        public static void RegisterCreator(string topic, Func<string, IDownloaderBak> createFunc)
         {
             _creatorDic.Add(topic, createFunc);
         }

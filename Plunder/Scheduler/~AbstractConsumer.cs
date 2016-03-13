@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public abstract class AbstractConsumer : IConsumer
+    [Obsolete]
+    public abstract class AbstractConsumerBak : IConsumerBak
     {
         public Guid Id { get; set; }
 

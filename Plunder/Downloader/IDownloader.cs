@@ -1,25 +1,19 @@
-﻿using System;
-using Plunder.Proxy;
-using Plunder.Compoment;
+﻿using Plunder.Compoment;
 using Plunder.Scheduler;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Plunder.Downloader
 {
-    public interface IDownloader : IConsumer
+    public interface IDownloader
     {
-        Site Site { get; set; }
+        string Topic { get; }
 
+        bool IsAllowDownload();
 
-        void Init(Guid id, IMessage<Request> requestMessage, HttpProxy proxy);
-
-        Task<bool> DownloadAsync();
-
-        void SetProxy(HttpProxy proxy);
-
-
-        void Reset();
-
-
+        Task<string> DownloadAsync(Request request);
     }
 }
