@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Pipeline
 {
-    public interface IResultPipelineModule: IDisposable
+    public interface IResultPipelineModule
     {
         string ModuleName { get; }
 

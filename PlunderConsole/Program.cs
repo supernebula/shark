@@ -15,7 +15,7 @@ namespace PlunderConsole
 {
     public class Program
     {
-
+        static Spider _spider;
         static void Main(string[] args)
         {
             ConsoleMultiAreaTest();
@@ -54,15 +54,16 @@ namespace PlunderConsole
 
         static void RunSpider()
         {
-            Spider _spider;
-            _spider = new Spider(new LineScheduler());
+            
+            var downloaders = new List<IDownloader>();
+            var pageAnalyzerTypes = new List<KeyValuePair<string, Type>>();
+            _spider = new Spider(new LineScheduler(), downloaders);
 
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>("usashopcn");
-            _spider.RegisterDownloader("simpleDownload", (topic) => new HttpClientDownloaderBak());
-            _spider.RegisterDownloader("dynamicDownload", (topic) => new PhantomJSDownloaderBak());
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
 
-            _spider.Start();
+            var seedRequests = new List<RequestMessage>();
+            _spider.Start(seedRequests);
 
             var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
         }

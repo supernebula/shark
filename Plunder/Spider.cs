@@ -1,46 +1,40 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Plunder.Analyze;
 using Plunder.Scheduler;
-using Plunder.Compoment;
 using Plunder.Downloader;
 using Plunder.Pipeline;
-using Plunder.Proxy;
 
 namespace Plunder
 {
     public class Spider
     {
-
-        private readonly List<KeyValuePair<string, string>> _initErrors;
-
         #region Required Unit
 
         private readonly IMonitorableScheduler _scheduler;
         private readonly ConsumerBroker _consumerBroker;
-        private ResultPipeline _resultPipeline;
+        private readonly ResultPipeline _resultPipeline;
+        private IEnumerable<RequestMessage> _seedRequests;
+        private readonly ConcurrentDictionary<string, Type> pageAnalyzerTypes;
 
         #endregion
 
         #region Initialization
 
-        public Spider(IMonitorableScheduler scheduler)
+        public Spider(IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders)
         {
-            _initErrors = new List<KeyValuePair<string, string>>();
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();
-            _resultPipeline.RegisterModule(new ProducerModule(_scheduler));
-
+            _resultPipeline.RegisterModule(new ProducerModule(_scheduler)); //ProducerModule is required
+            _consumerBroker = new ConsumerBroker(10, _scheduler, downloaders, _resultPipeline, pageAnalyzerTypes);
+            
         }
 
         private bool CheckConfig()
         {
-            if (DownloaderFactory.Count() > 0)
-                return false;
+            //if (DownloaderFactory.Count() > 0)
+            //    return false;
             return true;
         }
 
@@ -48,23 +42,19 @@ namespace Plunder
 
         #region addition
 
-        private readonly ConcurrentDictionary<string, Type> _pageAnalyzerDic;
+        
 
         public void RegisterPipeModule(params IResultPipelineModule[] modules)
         {
             _resultPipeline.RegisterModule(modules);
         }
 
-        public void RegisterDownloader(string topic, Func<string, IDownloaderBak> downloaderCreateFunc)
-        {
-            DownloaderFactory.RegisterCreator(topic, downloaderCreateFunc);
-        }
 
 
         public void RegisterPageAnalyzer<T>(string name) where T : IPageAnalyzer
         {
 
-            _pageAnalyzerDic.TryAdd(name, typeof(T));
+            pageAnalyzerTypes.TryAdd(name, typeof(T));
         }
 
         #endregion
@@ -79,11 +69,12 @@ namespace Plunder
         #endregion
 
 
-        public void Start()
+        public void Start(IEnumerable<RequestMessage> seedRequests)
         {
+            _seedRequests = seedRequests;
             if (!CheckConfig())
                 return;
-            _scheduler.PushAsync(new RequestMessage());
+            _scheduler.PushAsync(_seedRequests);
         }
 
 

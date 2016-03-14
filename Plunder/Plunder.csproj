@@ -68,7 +68,6 @@
     <Compile Include="Scheduler\~AbstractConsumer.cs" />
     <Compile Include="Scheduler\~ConsumerBroker.cs" />
     <Compile Include="Scheduler\DuplicateRemovedScheduler.cs" />
-    <Compile Include="Scheduler\~IConsumer.cs" />
     <Compile Include="Scheduler\IMessage.cs" />
     <Compile Include="Scheduler\IMonitorableBroker.cs" />
     <Compile Include="Scheduler\IMonitorableScheduler.cs" />

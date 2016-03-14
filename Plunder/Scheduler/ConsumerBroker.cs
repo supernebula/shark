@@ -16,7 +16,7 @@ namespace Plunder.Scheduler
     {
         private readonly IMonitorableScheduler _scheduler;
         private readonly Dictionary<string, IDownloader> _downloaders;
-        private readonly ConcurrentDictionary<string, Type> _pageAnalyzers;
+        private readonly ConcurrentDictionary<string, Type> _pageAnalyzerTypes;
         private readonly ResultPipeline _resultPipeline;
         private readonly int _maxDownloadThreadNumber;
 
@@ -24,13 +24,15 @@ namespace Plunder.Scheduler
 
         private bool _pulling;
 
-        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultPipeline resultPipeline)
+        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultPipeline resultPipeline, IEnumerable<KeyValuePair<string, Type>> pageAnalyzerTypes)
         {
             _maxDownloadThreadNumber = maxDownloadThreadNumber;
             _scheduler = scheduler;
             _downloaders = new Dictionary<string, IDownloader>();
             downloaders.ToList().ForEach(d => _downloaders.Add(d.Topic, d));
             _resultPipeline = resultPipeline;
+            _pageAnalyzerTypes = new ConcurrentDictionary<string, Type>();
+            pageAnalyzerTypes.ToList().ForEach(t => _pageAnalyzerTypes.TryAdd(t.Key, t.Value));
             _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 5000);
            
         }
@@ -38,7 +40,7 @@ namespace Plunder.Scheduler
         private IPageAnalyzer GeneratePageAnalyzer(Site site)
         {
             Type analyzerType;
-            _pageAnalyzers.TryGetValue(site.Domain, out analyzerType);
+            _pageAnalyzerTypes.TryGetValue(site.Domain, out analyzerType);
             if (analyzerType == null || analyzerType.BaseType != typeof (IPageAnalyzer))
                 return null;
             return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
