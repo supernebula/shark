@@ -8,7 +8,7 @@ using Plunder.Compoment;
 
 namespace Plunder.Plugin.Analyze
 {
-    public class UsashopcnPageAnalyzer : IPageAnalyzer
+    public class UsashopcnPageAnalyzer : IPageAnalyzer 
     {
         public Guid Id { get; set; }
 

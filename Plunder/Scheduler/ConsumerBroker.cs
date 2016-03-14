@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using Plunder.Analyze;
+using Plunder.Compoment;
 using Plunder.Downloader;
-
+using Plunder.Pipeline;
 
 
 namespace Plunder.Scheduler
@@ -11,19 +16,37 @@ namespace Plunder.Scheduler
     {
         private readonly IMonitorableScheduler _scheduler;
         private readonly Dictionary<string, IDownloader> _downloaders;
-        private readonly int _maxDownloaderNumber;
+        private readonly ConcurrentDictionary<string, Type> _pageAnalyzers;
+        private readonly ResultPipeline _resultPipeline;
+        private readonly int _maxDownloadThreadNumber;
 
         private readonly Timer _messagePullTimer;
 
         private bool _pulling;
 
-        public ConsumerBroker(IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, int maxDownloaderNumber)
+        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultPipeline resultPipeline)
         {
+            _maxDownloadThreadNumber = maxDownloadThreadNumber;
             _scheduler = scheduler;
             _downloaders = new Dictionary<string, IDownloader>();
             downloaders.ToList().ForEach(d => _downloaders.Add(d.Topic, d));
+            _resultPipeline = resultPipeline;
+            _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 5000);
+           
+        }
 
-            _maxDownloaderNumber = maxDownloaderNumber;
+        private IPageAnalyzer GeneratePageAnalyzer(Site site)
+        {
+            Type analyzerType;
+            _pageAnalyzers.TryGetValue(site.Domain, out analyzerType);
+            if (analyzerType == null || analyzerType.BaseType != typeof (IPageAnalyzer))
+                return null;
+            return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
+        }
+
+        private int CurrentDownloadThreadCount()
+        {
+            return _downloaders.ToList().Sum(e => e.Value.ThreadCount());
         }
 
         public void StartConsume()
@@ -33,6 +56,8 @@ namespace Plunder.Scheduler
 
         private void PullMessage()
         {
+            if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber)
+                return;
             if (_pulling)
                 return;
             _pulling = true;
@@ -47,7 +72,10 @@ namespace Plunder.Scheduler
             _downloaders.TryGetValue(message.Topic, out downloader);
             if (downloader == null)
                 return;
-            await downloader.DownloadAsync(message.Request);
+            var response = await downloader.DownloadAsync(message.Request);
+            var pageAnalyzer = GeneratePageAnalyzer(message.Request.Site);
+            var pageResult = await pageAnalyzer.AnalyzeAsync(response);
+            _resultPipeline.Inject(pageResult);
             PullMessage();
         }
     }

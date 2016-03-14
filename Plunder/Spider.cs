@@ -18,9 +18,15 @@ namespace Plunder
 
         private readonly List<KeyValuePair<string, string>> _initErrors;
 
+        #region Required Unit
+
         private readonly IMonitorableScheduler _scheduler;
-        private readonly ConcurrentDictionary<string, Type> _pageAnalyzerDic;
+        private readonly ConsumerBroker _consumerBroker;
         private ResultPipeline _resultPipeline;
+
+        #endregion
+
+        #region Initialization
 
         public Spider(IMonitorableScheduler scheduler)
         {
@@ -28,8 +34,21 @@ namespace Plunder
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();
             _resultPipeline.RegisterModule(new ProducerModule(_scheduler));
-            
+
         }
+
+        private bool CheckConfig()
+        {
+            if (DownloaderFactory.Count() > 0)
+                return false;
+            return true;
+        }
+
+        #endregion
+
+        #region addition
+
+        private readonly ConcurrentDictionary<string, Type> _pageAnalyzerDic;
 
         public void RegisterPipeModule(params IResultPipelineModule[] modules)
         {
@@ -45,20 +64,20 @@ namespace Plunder
         public void RegisterPageAnalyzer<T>(string name) where T : IPageAnalyzer
         {
 
-            _pageAnalyzerDic.TryAdd(name, typeof (T));
+            _pageAnalyzerDic.TryAdd(name, typeof(T));
         }
 
-        private bool CheckConfig()
-        {
-            if (DownloaderFactory.Count() > 0)
-                return false;
-            return true;
-        }
+        #endregion
+
+        #region Running and Monitoring
 
         public string RunStatusInfo()
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
 
         public void Start()
         {

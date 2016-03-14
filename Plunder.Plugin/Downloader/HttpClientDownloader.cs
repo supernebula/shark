@@ -32,17 +32,22 @@ namespace Plunder.Plugin.Downloader
         }
 
 
-        public async Task<string> DownloadAsync(Request request)
+        public async Task<Response> DownloadAsync(Request request)
         {
-            string result = null;
+            var result = new Response() {Request = request};
             await _ctnLock.WaitAsync();
             try
             {
                 var client = _httpClientBuilder.GeClient(request.Site);
                 _currentTaskNumber++;
-                var resposne = await client.GetAsync(request.Uri);
-                if (resposne.IsSuccessStatusCode)
-                    result = await resposne.Content.ReadAsStringAsync();
+                var resposneMessage = await client.GetAsync(request.Uri);
+                result.HttpStatusCode = resposneMessage.StatusCode;
+                result.IsSuccessCode = resposneMessage.IsSuccessStatusCode;
+                result.ReasonPhrase = resposneMessage.ReasonPhrase;
+                if (resposneMessage.IsSuccessStatusCode)
+                {
+                    result.Content = await resposneMessage.Content.ReadAsStringAsync();
+                }
                 _currentTaskNumber--;
             }
             finally
