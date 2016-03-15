@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Plunder.Compoment;
 using Plunder.Test.Pipeline;
 
 namespace Plunder.Test
@@ -13,7 +14,7 @@ namespace Plunder.Test
         {
             Trace.WriteLine("#start statment");
             var pipeline = new ExecutePipeline();
-            pipeline.Inject(new DataResult());
+            pipeline.Inject(new PageResult());
             Trace.WriteLine("#end statment");
         }
     }

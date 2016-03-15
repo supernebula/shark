@@ -33,7 +33,7 @@ namespace Plunder.Scheduler
             _resultPipeline = resultPipeline;
             _pageAnalyzerTypes = new ConcurrentDictionary<string, Type>();
             pageAnalyzerTypes.ToList().ForEach(t => _pageAnalyzerTypes.TryAdd(t.Key, t.Value));
-            _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 5000);
+            _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 2000);
            
         }
 
@@ -41,7 +41,7 @@ namespace Plunder.Scheduler
         {
             Type analyzerType;
             _pageAnalyzerTypes.TryGetValue(site.Domain, out analyzerType);
-            if (analyzerType == null || analyzerType.BaseType != typeof (IPageAnalyzer))
+            if (analyzerType == null || analyzerType.GetInterface(typeof (IPageAnalyzer).Name) == null)
                 return null;
             return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plunder.Compoment;
 
 namespace Plunder.Test.Pipeline
 {
@@ -19,7 +20,7 @@ namespace Plunder.Test.Pipeline
 
         }
 
-        public void Inject(DataResult data)
+        public void Inject(PageResult data)
         {
             var i = 1;
             foreach (IPipelineModule module in _modules)

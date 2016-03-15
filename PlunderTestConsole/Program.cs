@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Test.Pipeline;
+using Plunder.Compoment;
 
 namespace PlunderTestConsole
 {
@@ -14,7 +15,7 @@ namespace PlunderTestConsole
         {
             Trace.WriteLine("#start statment");
             var pipeline = new ExecutePipeline();
-            pipeline.Inject(new DataResult());
+            pipeline.Inject(new PageResult());
             Trace.WriteLine("#end statment");
 
             Console.ReadKey();

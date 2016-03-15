@@ -10,13 +10,13 @@ namespace Plunder.Scheduler
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     {
 
-        protected BlockingCollection<RequestMessage> Queue { get; set; }
+        private readonly BlockingCollection<RequestMessage> _queue;
 
         protected int AccumulatedMessageTotal { get; set; }
 
         protected DuplicateRemovedScheduler()
         {
-            Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
+            _queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             AccumulatedMessageTotal = 0;
         }
 
@@ -25,25 +25,25 @@ namespace Plunder.Scheduler
         public RequestMessage Poll()
         {
             AccumulatedMessageTotal++;
-            var message = Queue.Take();
+            var message = _queue.Take();
             return message;
         }
 
         public bool Push(RequestMessage message)
         {
-            return Queue.TryAdd(message);
+            return _queue.TryAdd(message);
         }
 
         public async Task<bool> PushAsync(RequestMessage message)
         {
-            return await Task.Run(() => Queue.TryAdd(message));
+            return await Task.Run(() => _queue.TryAdd(message));
         }
 
         public void Push(IEnumerable<RequestMessage> messages)
         {
             foreach (var message in messages)
             {
-                Queue.TryAdd(message);
+                _queue.TryAdd(message);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Plunder.Scheduler
             {
                 foreach (var message in messages)
                 {
-                    Queue.TryAdd(message);
+                    _queue.TryAdd(message);
                 }
             });
         }
@@ -63,7 +63,7 @@ namespace Plunder.Scheduler
 
         public int CurrentQueueCount()
         {
-            return Queue.Count;
+            return _queue.Count;
         }
 
         public int AccumulatedTotal()
@@ -77,7 +77,7 @@ namespace Plunder.Scheduler
 
         public void Dispose()
         {
-            Queue.Dispose();
+            _queue.Dispose();
         }
     }
 }
