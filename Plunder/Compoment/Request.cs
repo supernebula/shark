@@ -8,7 +8,6 @@ namespace Plunder.Compoment
 {
     public class Request
     {
-        public string Topic { get; set; }
         public Site Site { get; set; }
 
         public string Uri { get; set; }

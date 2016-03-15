@@ -29,25 +29,32 @@ namespace Plunder.Scheduler
             return message;
         }
 
-        public Task PushAsync(RequestMessage message)
+        public bool Push(RequestMessage message)
         {
-            return Task.Run(() =>
-            {
-                if(!MessageRecord.IsExist(message.HashCode))
-                    MessageRecord.Add(message.HashCode, message.Request.Uri);
-            });
-            
+            return Queue.TryAdd(message);
         }
 
-        public Task PushAsync(IEnumerable<RequestMessage> messages)
+        public async Task<bool> PushAsync(RequestMessage message)
         {
-            return Task.Run(() =>
+            return await Task.Run(() => Queue.TryAdd(message));
+        }
+
+        public void Push(IEnumerable<RequestMessage> messages)
+        {
+            foreach (var message in messages)
             {
-                messages.ToList().ForEach(e =>
+                Queue.TryAdd(message);
+            }
+        }
+
+        public async Task PushAsync(IEnumerable<RequestMessage> messages)
+        {
+            await Task.Run(() =>
+            {
+                foreach (var message in messages)
                 {
-                    if (!MessageRecord.IsExist(e.HashCode))
-                        MessageRecord.Add(e.HashCode, e.Request.Uri);
-                });
+                    Queue.TryAdd(message);
+                }
             });
         }
 
@@ -64,6 +71,13 @@ namespace Plunder.Scheduler
             return AccumulatedMessageTotal;
         }
 
+
+
         #endregion
+
+        public void Dispose()
+        {
+            Queue.Dispose();
+        }
     }
 }
