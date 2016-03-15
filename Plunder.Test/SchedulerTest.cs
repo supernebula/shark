@@ -77,7 +77,7 @@ namespace Plunder.Test
         #region Production Test
 
         [TestMethod]
-        [Description("")]
+        [Description("测试生产，向队列中同步推送单条消息")]
         public void ProductionTest()
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
@@ -90,7 +90,7 @@ namespace Plunder.Test
         }
 
         [TestMethod]
-        [Description("")]
+        [Description("测试生产，向队列中异步推送单条消息")]
         public void ProductionAsyncTest()
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
@@ -104,7 +104,7 @@ namespace Plunder.Test
         }
 
         [TestMethod]
-        [Description("")]
+        [Description("测试生产，向队列中同步推送多条消息")]
         public void ProductionMultiTest()
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
@@ -117,7 +117,7 @@ namespace Plunder.Test
         }
 
         [TestMethod]
-        [Description("")]
+        [Description("测试生产，向队列中异步推送多条消息")]
         public void ProductionMultiAsyncTest()
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
@@ -192,6 +192,7 @@ namespace Plunder.Test
 
 
         [TestMethod]
+        [Description("测试消费者")]
         public void ConsumeTest()
         {
             var site = new Site() {Domain = "www.usashopcn.com"};
