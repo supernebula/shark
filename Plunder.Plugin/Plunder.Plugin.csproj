@@ -50,6 +50,11 @@
     <Compile Include="Pipeline\FileModule.cs" />
     <Compile Include="Pipeline\StorageModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\UsashopcnSlector.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsashopcnSlector.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Plunder\Plunder.csproj">
@@ -57,7 +62,12 @@
       <Name>Plunder</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\UsashopcnSlector.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsashopcnSlector.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

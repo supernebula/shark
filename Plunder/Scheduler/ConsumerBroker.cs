@@ -65,10 +65,10 @@ namespace Plunder.Scheduler
             _pulling = true;
             var message = _scheduler.Poll();
             _pulling = false;
-            Consume(message);
+            Consume(message , PullMessage);
         }
 
-        private async void Consume(RequestMessage message)
+        private async void Consume(RequestMessage message, Action callback)
         {
             IDownloader downloader;
             _downloaders.TryGetValue(message.Topic, out downloader);
@@ -78,7 +78,7 @@ namespace Plunder.Scheduler
             var pageAnalyzer = GeneratePageAnalyzer(message.Request.Site);
             var pageResult = await pageAnalyzer.AnalyzeAsync(response);
             _resultPipeline.Inject(pageResult);
-            PullMessage();
+            callback();
         }
     }
 }

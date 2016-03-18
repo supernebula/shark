@@ -16,12 +16,23 @@ namespace Plunder.Plugin.Analyze
 
         public async Task<PageResult> AnalyzeAsync(Response response)
         {
-            return await ExecuteAsync(response);
+            await Task.Run(() =>
+            {
+                return null;
+
+            });
         }
 
-        public Task<PageResult> ExecuteAsync(Response response)
+        public Task<PageResult> Xpath(string html, IEnumerable<FieldSelector> xpathSelector)
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class FieldSelector
+    {
+        public string Name { get; set; }
+
+        public string Selector { get; set; }
     }
 }

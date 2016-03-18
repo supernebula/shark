@@ -19,7 +19,7 @@ namespace Plunder.Proxy
             }
         }
 
-        public HttpProxy Random()
+        public HttpProxy RandomProxy()
         {
             throw new NotImplementedException();
         }
