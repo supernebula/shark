@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Plunder.Analyze;
 using Plunder.Compoment;
 using Plunder.Downloader;
