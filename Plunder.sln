@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Plugin", "Plunder.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlunderTestConsole", "PlunderTestConsole\PlunderTestConsole.csproj", "{9ED59D00-99A3-4C64-AA0D-01286406D7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage", "Plunder.Storage\Plunder.Storage.csproj", "{210F0D36-D8F7-4A22-A4BC-E891E96927F4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
