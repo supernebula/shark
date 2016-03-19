@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Plunder.Storage;
 
 namespace Plunder.Scheduler
 {
@@ -25,8 +23,25 @@ namespace Plunder.Scheduler
         public RequestMessage Poll()
         {
             AccumulatedMessageTotal++;
-            var message = _queue.Take();
+            RequestMessage message;
+            _queue.TryTake(out message, 0);
             return message;
+        }
+
+        public List<RequestMessage> Poll(int size)
+        {
+            var result = new List<RequestMessage>();
+            while (size > 0)
+            {
+                RequestMessage message;
+                if (_queue.TryTake(out message, 0))
+                {
+                    result.Add(message);
+                    AccumulatedMessageTotal++;
+                }
+                size--;
+            }
+            return result;
         }
 
         public bool Push(RequestMessage message)

@@ -12,5 +12,7 @@ namespace Plunder.Scheduler
 
         RequestMessage Poll();
 
+        List<RequestMessage> Poll(int size);
+
     }
 }

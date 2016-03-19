@@ -59,15 +59,33 @@ namespace Plunder.Scheduler
 
         private void PullMessage()
         {
-            if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber)
-                return;
-            if (_pulling)
-                return;
+            if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber) return;
+            if (_pulling)  return;
             _pulling = true;
             var message = _scheduler.Poll();
             _pulling = false;
-            Consume(message , PullMessage);
+
+            if(message == null) return;
+            var task1 = Task.Run(() => Consume(message, () => { }));
         }
+
+
+        private void PullMessage(int size)
+        {
+            if (_pulling) return;
+            _pulling = true;
+            var messages = _scheduler.Poll(size);
+            _pulling = false;
+
+            var tasks = new List<Task>();
+            messages.ForEach((m) =>
+            {
+                tasks.Add(Task.Run(() => { Consume(m, PullMessage); }));
+            });
+
+            Task.WhenAll(tasks);
+        }
+
 
         private async void Consume(RequestMessage message, Action callback)
         {
