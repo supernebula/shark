@@ -164,10 +164,10 @@ namespace Plunder.Test
 
             public Site Site { get; set; }
 
-            public async Task<PageResult> AnalyzeAsync(Response response)
+            public PageResult Analyze(Response response)
             {
                 Trace.WriteLine("分析正文:" + response.Content);
-                return await Task.Run(() => new PageResult() {});
+                return new PageResult();
             }
         }
 
@@ -184,7 +184,7 @@ namespace Plunder.Test
             public async Task ProcessAsync(PageResult result)
             {
                 Trace.WriteLine("处理PageResult");
-                await Task.Run(() => result.Result.Count);
+                await Task.Run(() => result.Result);
             }
         }
 

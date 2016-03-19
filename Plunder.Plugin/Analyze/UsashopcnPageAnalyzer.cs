@@ -14,25 +14,37 @@ namespace Plunder.Plugin.Analyze
 
         public Site Site { get; set; }
 
-        public async Task<PageResult> AnalyzeAsync(Response response)
+        public PageResult Analyze(Response response)
         {
-            await Task.Run(() =>
+            var pageResult = XpathSelect(response.Content, null, null);
+            pageResult.HttpStatCode = response.HttpStatusCode;
+            pageResult.Site = Site;
+            return pageResult;
+        }
+
+        private PageResult XpathSelect(string html, IEnumerable<FieldSelector> selectors,string newUrlRegex)
+        {
+            var fields = new List<ResultField>();
+            foreach (var selector in selectors)
             {
-                return null;
+                // fields.Add(func(html, selector));
+            }
 
-            });
+            var newRequests = new List<Request>();
+            //var urls = $(html).Select("a");
+            //foreach (var url in urls)
+            //{
+            //    if (Regex.IsMatch(newUrlRegex))
+            //        newUrls.Add(url);
+            //newRequests.Add(new Request() { Uri = url, Site = Site, Method = "GET" });
+
+            //}
+
+            return new PageResult() { Content = html, Result = fields, NewRequests = newRequests };
         }
 
-        public Task<PageResult> Xpath(string html, IEnumerable<FieldSelector> xpathSelector)
-        {
-            throw new NotImplementedException();
-        }
     }
 
-    public class FieldSelector
-    {
-        public string Name { get; set; }
 
-        public string Selector { get; set; }
-    }
+
 }

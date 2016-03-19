@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analyze\FieldSelector.cs" />
     <Compile Include="Analyze\IPageAnalyzer.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />

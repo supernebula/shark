@@ -76,7 +76,7 @@ namespace Plunder.Scheduler
                 return;
             var response = await downloader.DownloadAsync(message.Request);
             var pageAnalyzer = GeneratePageAnalyzer(message.Request.Site);
-            var pageResult = await pageAnalyzer.AnalyzeAsync(response);
+            var pageResult = pageAnalyzer.Analyze(response);
             _resultPipeline.Inject(pageResult);
             callback();
         }

@@ -11,7 +11,7 @@ namespace Plunder.Analyze
     public interface IPageAnalyzer
     {
         Guid Id { get; set; }
-        Task<PageResult> AnalyzeAsync(Response response);
+        PageResult Analyze(Response response);
 
         Site Site { get; set; }
     }
