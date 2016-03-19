@@ -8,9 +8,9 @@ namespace Plunder.Analyze
 {
     public class FieldSelector
     {
-        public string Field { get; set; }
+        public string FieldName { get; set; }
 
-        public string Selector { get; set; }
+        public string XpathSelector { get; set; }
 
     }
 }

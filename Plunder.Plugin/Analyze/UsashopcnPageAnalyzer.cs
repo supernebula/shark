@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using HtmlAgilityPack;
 
 namespace Plunder.Plugin.Analyze
 {
@@ -16,31 +17,38 @@ namespace Plunder.Plugin.Analyze
 
         public PageResult Analyze(Response response)
         {
-            var pageResult = XpathSelect(response.Content, null, null);
+            var pageResult = XpathSelect(response, null, null);
             pageResult.HttpStatCode = response.HttpStatusCode;
             pageResult.Site = Site;
             return pageResult;
         }
 
-        private PageResult XpathSelect(string html, IEnumerable<FieldSelector> selectors,string newUrlRegex)
+
+        private PageResult XpathSelect(Response response, IEnumerable<FieldSelector> selectors,string newUrlRegex)
         {
-            var fields = new List<ResultField>();
+
+            var doc = new HtmlDocument();
+            doc.Load(response.Content);
+
+            var fields = new List<ResultField>().ToList();
             foreach (var selector in selectors)
             {
-                // fields.Add(func(html, selector));
+                var node = doc.DocumentNode.SelectSingleNode(selector.XpathSelector);
+                fields.Add(new ResultField { Name = selector.FieldName, Value = node.InnerText.Trim() });
             }
 
             var newRequests = new List<Request>();
-            //var urls = $(html).Select("a");
-            //foreach (var url in urls)
-            //{
-            //    if (Regex.IsMatch(newUrlRegex))
-            //        newUrls.Add(url);
-            //newRequests.Add(new Request() { Uri = url, Site = Site, Method = "GET" });
+            var links = doc.DocumentNode.Descendants("a").ToList();
+            links.ForEach((n) =>
+            {
+                var href = n.GetAttributeValue("href", String.Empty);
+                if (href.Trim().StartsWith("http")) // && Regex.IsMatch(newUrlRegex)
+                    newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
 
-            //}
+            });
+           
 
-            return new PageResult() { Content = html, Result = fields, NewRequests = newRequests };
+            return new PageResult() { Content = response.Content, Result = fields, NewRequests = newRequests };
         }
 
     }
