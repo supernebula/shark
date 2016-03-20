@@ -12,6 +12,8 @@ namespace Plunder.Compoment
         public Site Site { get; set; }
         public IEnumerable<Request> NewRequests { get; set; }
 
+        public string Channel { get; set; }
+
         public IEnumerable<ResultField> Result { get; set; }
 
 
