@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Plugin.Storage.Repositories
 {
-    public interface IRepository
+    public class BasicRepository
     {
-        Guid Insert<T>(T model);
     }
 }
