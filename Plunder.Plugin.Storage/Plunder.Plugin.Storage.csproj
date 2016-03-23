@@ -50,11 +50,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BasicEntity.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BasicEntityFrameworkRepository.cs" />
     <Compile Include="Repositories\IBasicRepository.cs" />
+    <Compile Include="Repositories\Interface\IProductRepository.cs" />
     <Compile Include="Repositories\PlunderDbContext.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="StorageModule.cs" />
   </ItemGroup>
   <ItemGroup>
