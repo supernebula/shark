@@ -15,6 +15,24 @@ namespace Plunder.Plugin.Analyze
 
         public Site Site { get; set; }
 
+        private Dictionary<string, string> _nameXpath;
+
+        public UsashopcnPageAnalyzer()
+        {
+            _nameXpath = new Dictionary<string, string> {
+                { "Title","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/h2[1]"},
+                { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},
+                { "Description","/html[1]/body[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]"},
+                { "PicUri","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]/@src[1]"},
+                { "Uri",""},
+                { "CommentCount",""},
+                { "SiteName",""},
+                { "SiteDomain",""},
+                { "ElapsedSecond",""},
+                { "Downloader",""}
+            };
+        }
+
         public PageResult Analyze(Response response)
         {
             var pageResult = XpathSelect(response, null, null);
