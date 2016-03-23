@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Plugin.Storage.Repositories
 {
-    public interface IBasicRepository<T>
+    public interface IBasicRepository<T> : IDisposable where T : class 
     {
         IQueryable<T> Query();
         void Insert(T item);
@@ -20,8 +20,13 @@ namespace Plunder.Plugin.Storage.Repositories
 
         Task<T> FetchAsync(Guid id);
 
-        IEnumerable<T> Retrieve(Expression<Func<T, bool>> condition);
+        IEnumerable<T> Retrieve(Expression<Func<T, bool>> predicate);
 
-        Task<IEnumerable<T>> RetrieveAsync(Expression<Func<T, bool>> condition);
+        Task<IEnumerable<T>> RetrieveAsync(Expression<Func<T, bool>> predicate);
+
+        bool Any(Expression<Func<T, bool>> predicate);
+
+        IEnumerable<T> Paged(Expression<Func<T, bool>> predicate, int pageIndex, int pageSize);
+
     }
 }

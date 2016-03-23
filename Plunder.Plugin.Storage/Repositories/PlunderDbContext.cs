@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Plunder.Plugin.Storage.Repositories
 {
-    public class ProductRepository : IRepository
+    public class PlunderDbContext : DbContext
     {
-        public Guid Insert<Product>(Product model)
+        public PlunderDbContext() : base("name=PlunderDBContext")
         {
-            throw new NotImplementedException();
         }
     }
 }
