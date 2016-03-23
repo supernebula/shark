@@ -12,6 +12,6 @@ namespace Plunder.Plugin.Storage.Models
 
         DateTime CreateTime { get; set; }
 
-        DateTime UpdateTime { get; set; }
+        DateTime? UpdateTime { get; set; }
     }
 }

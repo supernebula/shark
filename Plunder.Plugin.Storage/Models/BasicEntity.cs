@@ -12,6 +12,6 @@ namespace Plunder.Plugin.Storage.Models
 
         public Guid Id { get; set; }
 
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
     }
 }

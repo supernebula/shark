@@ -51,6 +51,14 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Migrations\201603230807413_Create-Database.cs" />
+    <Compile Include="Migrations\201603230807413_Create-Database.Designer.cs">
+      <DependentUpon>201603230807413_Create-Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603230824141_Update-Table-Product.cs" />
+    <Compile Include="Migrations\201603230824141_Update-Table-Product.Designer.cs">
+      <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BasicEntity.cs" />
     <Compile Include="Models\IEntity.cs" />
@@ -72,6 +80,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603230807413_Create-Database.resx">
+      <DependentUpon>201603230807413_Create-Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603230824141_Update-Table-Product.resx">
+      <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

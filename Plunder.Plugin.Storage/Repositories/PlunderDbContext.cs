@@ -12,7 +12,7 @@ namespace Plunder.Plugin.Storage.Repositories
 {
     public class PlunderDbContext : DbContext
     {
-        public PlunderDbContext() : base("name=PlunderDBContext")
+        public PlunderDbContext() : base("name=PlunderDbContext")
         {
             Configuration.LazyLoadingEnabled = false;
         }
