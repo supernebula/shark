@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Plunder.Plugin.Storage.Models;
 using Plunder.Plugin.Storage.Repositories;
@@ -29,6 +30,15 @@ namespace Plunder.Test.Storage
             var repo = new ProductRepository();
 
             repo.Insert(product);
+        }
+
+        [TestMethod]
+        public void NumberMaxTest()
+        {
+            Trace.WriteLine("int.MaxValue:" + int.MaxValue);
+            Trace.WriteLine("uint.MaxValue:" + uint.MaxValue);
+            Trace.WriteLine("long.MaxValue:" + long.MaxValue);
+            Trace.WriteLine("ulong.MaxValue:" + ulong.MaxValue);
         }
     }
 }
