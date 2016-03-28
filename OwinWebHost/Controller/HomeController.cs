@@ -15,7 +15,14 @@ namespace Plunder.WebHost.Controller
         [HttpGet]
         public IHttpActionResult Default()
         {
-            return Json(new {Name = "Hello", First = "World"});
+            return Json(new {Name = "Hello", First = "World Default" });
+        }
+
+        //GET api/default
+        [HttpGet]
+        public IHttpActionResult Index()
+        {
+            return Json(new { Name = "Hello", First = "World Index" });
         }
     }
 }

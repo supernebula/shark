@@ -16,8 +16,8 @@ namespace Plunder.WebHost
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
                     name : "DefaultApi",
-                    routeTemplate: "api/{controller}/{id}",
-                    defaults:new {id = RouteParameter.Optional}
+                    routeTemplate: "api/{controller}/{action}/{id}",
+                    defaults:new { controller = "Home", action = "Default", id = RouteParameter.Optional}
                 );
 
             appBuilder.UseWebApi(config);

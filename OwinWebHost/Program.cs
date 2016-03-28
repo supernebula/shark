@@ -7,7 +7,7 @@ using Microsoft.Owin.Hosting;
 
 namespace Plunder.WebHost
 {
-    class Program
+    public class ProgramApp
     {
         static void Main(string[] args)
         {

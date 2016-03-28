@@ -55,8 +55,6 @@
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
-    <Compile Include="Downloader\~DownloaderFactory.cs" />
-    <Compile Include="Downloader\~IDownloader.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IPipelineModule.cs" />
