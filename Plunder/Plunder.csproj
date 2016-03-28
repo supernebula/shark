@@ -79,7 +79,8 @@
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="Utility\RandomUnitily.cs" />
+    <Compile Include="Utilities\BloomFilter.cs" />
+    <Compile Include="Utilities\RandomUnitily.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Thread\" />

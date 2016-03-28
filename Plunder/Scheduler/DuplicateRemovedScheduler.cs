@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Plunder.Utilities;
 
 namespace Plunder.Scheduler
 {
@@ -10,15 +11,16 @@ namespace Plunder.Scheduler
 
         private readonly BlockingCollection<RequestMessage> _queue;
 
+        private readonly BloomFilter<string> _bloomFilter; 
+
         protected int AccumulatedMessageTotal { get; set; }
 
         protected DuplicateRemovedScheduler()
         {
+            _bloomFilter  = new BloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             _queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             AccumulatedMessageTotal = 0;
         }
-
-
 
         public RequestMessage Poll()
         {
@@ -46,7 +48,12 @@ namespace Plunder.Scheduler
 
         public bool Push(RequestMessage message)
         {
-            return _queue.TryAdd(message);
+            if (_bloomFilter.Contains(message.Request.Uri))
+                return false;
+            if (!_queue.TryAdd(message))
+                return false;
+            _bloomFilter.Add(message.Request.Uri);
+            return true;
         }
 
         public async Task<bool> PushAsync(RequestMessage message)
