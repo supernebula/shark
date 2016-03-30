@@ -48,6 +48,27 @@ namespace PlunderTestConsole
                 Console.WriteLine(@"6.ConsumerBroker End");
             });
             thread.Start();
+
+        }
+
+
+        static void NLoopConsumeTest()
+        {
+            AutoResetEvent autoResetEvent = new AutoResetEvent(false); //声明 false， WaitOne时线程等待
+            while (true)
+            {
+                autoResetEvent.Reset(); //WaitOne时，使线程等待
+                //todo：从队列取数据
+
+                //消费者
+                Task.Run(() => 
+                {
+                    //todo:处理数据
+                    autoResetEvent.Set(); //消费完成，允许线程继续
+                });
+                autoResetEvent.WaitOne(); //等待某个消费者空闲，线程等待
+                
+            }
         }
     }
 }
