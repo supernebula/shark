@@ -68,5 +68,7 @@ namespace PlunderConsole
             var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
         }
 
+
+
     }
 }   

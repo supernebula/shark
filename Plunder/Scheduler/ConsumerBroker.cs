@@ -22,6 +22,7 @@ namespace Plunder.Scheduler
         private readonly int _maxDownloadThreadNumber;
 
         private readonly Timer _messagePullTimer;
+        public AutoResetEvent MessagePullAutoResetEvent { get; private set; }
 
         private bool _pulling;
 
@@ -34,8 +35,10 @@ namespace Plunder.Scheduler
             _resultPipeline = resultPipeline;
             _pageAnalyzerTypes = new ConcurrentDictionary<string, Type>();
             pageAnalyzerTypes.ToList().ForEach(t => _pageAnalyzerTypes.TryAdd(t.Key, t.Value));
-            _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 2000);
-           
+            //_messagePullTimer = new Timer((state) => PullMessage(), null, 0, 2000);
+            MessagePullAutoResetEvent = new AutoResetEvent(false);
+
+
         }
 
         private IPageAnalyzer GeneratePageAnalyzer(Site site)
@@ -59,6 +62,7 @@ namespace Plunder.Scheduler
 
         private void PullMessage()
         {
+            MessagePullAutoResetEvent.WaitOne();
             if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber) return;
             if (_pulling)  return;
             _pulling = true;
@@ -67,6 +71,7 @@ namespace Plunder.Scheduler
 
             if(message == null) return;
             var task1 = Task.Run(() => Consume(message, () => { }));
+            MessagePullAutoResetEvent.Reset();
         }
 
 
