@@ -13,7 +13,7 @@ using Plunder.Pipeline;
 
 namespace Plunder.Scheduler
 {
-    public class ConsumerBroker
+    public class ConsumerBroker : IDisposable
     {
         private readonly IMonitorableScheduler _scheduler;
         private readonly Dictionary<string, IDownloader> _downloaders;
@@ -60,18 +60,26 @@ namespace Plunder.Scheduler
             PullMessage();
         }
 
+        private bool _stopPull = false;
+
         private void PullMessage()
         {
-            MessagePullAutoResetEvent.WaitOne();
-            if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber) return;
-            if (_pulling)  return;
-            _pulling = true;
-            var message = _scheduler.Poll();
-            _pulling = false;
+            while (true)
+            {
+                MessagePullAutoResetEvent.WaitOne();
+                if(_stopPull)
+                    break;
+                if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber) return;
+                if (_pulling) return;
+                _pulling = true;
+                var message = _scheduler.Poll();
+                _pulling = false;
 
-            if(message == null) return;
-            var task1 = Task.Run(() => Consume(message, () => { }));
-            MessagePullAutoResetEvent.Reset();
+                if (message == null) return;
+                var task1 = Task.Run(() => Consume(message, () => { }));
+                MessagePullAutoResetEvent.Reset();
+            }
+
         }
 
 
@@ -103,6 +111,13 @@ namespace Plunder.Scheduler
             var pageResult = pageAnalyzer.Analyze(response);
             _resultPipeline.Inject(pageResult);
             callback();
+        }
+
+        public void Dispose()
+        {
+            MessagePullAutoResetEvent.Set();
+            _stopPull = true;
+            Thread.EndThreadAffinity();
         }
     }
 }
