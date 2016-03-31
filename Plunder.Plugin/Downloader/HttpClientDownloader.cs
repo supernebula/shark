@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,48 @@ namespace Plunder.Plugin.Downloader
         private HttpProxyPool _proxyPool;
 
         public string Topic => _topic;
+        private List<int> _doingTask;
+
+        public int DownloadingTaskCount
+        {
+            get { return _doingTask.Count; }
+        }
 
         public HttpClientDownloader(string topic, int maxTaskNumber, HttpProxyPool proxyPool)
         {
             _topic = topic;
             _maxTaskNumber = maxTaskNumber;
             _proxyPool = proxyPool;
+            _doingTask = new List<int>();
+        }
+
+
+        public void DownloadAsync(IEnumerable<Request> requests, Action<Response> singleContinueWith)
+        {
+            foreach (Request req in requests)
+            {
+                var task = Task.Run(async () =>
+                {
+                    var client = HttpClientBuilder.GetClient(req.Site);
+                    var resp = await client.GetAsync(req.Uri);
+                    var result = new Response()
+                    {
+                        Request = req,
+                        HttpStatusCode = resp.StatusCode,
+                        IsSuccessCode = resp.IsSuccessStatusCode,
+                        ReasonPhrase = resp.ReasonPhrase,
+                        Content = resp.IsSuccessStatusCode ? await resp.Content.ReadAsStringAsync() : null
+                    };
+                    return result;
+
+                }).ContinueWith((t) =>
+                {
+                    _doingTask.Remove(t.Id);
+                    singleContinueWith(t.Result);
+                });
+                _doingTask.Add(task.Id);
+
+            }
         }
 
 

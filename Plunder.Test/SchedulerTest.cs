@@ -138,6 +138,14 @@ namespace Plunder.Test
 
         public class TestDownloader : IDownloader
         {
+            public int DownloadingTaskCount
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public string Topic => TopicType.STATIC_HTML;
 
             public async Task<Response> DownloadAsync(Request request)
@@ -145,6 +153,11 @@ namespace Plunder.Test
                 Trace.WriteLine("start download:" + request.Uri);
                 return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Uri, HttpStatusCode = HttpStatusCode.OK, MillisecondTime = 1, ReasonPhrase = "TestReasonPhrase" });
 
+            }
+
+            public void DownloadAsync(IEnumerable<Request> requests, Action<Response> singleContinueWith)
+            {
+                throw new NotImplementedException();
             }
 
             public bool IsAllowDownload()
@@ -207,7 +220,7 @@ namespace Plunder.Test
             var pageAnalyzers = new List<KeyValuePair<string, Type>>();
             pageAnalyzers.Add(new KeyValuePair<string, Type>(site.Domain, typeof(TestPageAnalyzer)));
             var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloader>() {new TestDownloader()}, new ResultPipeline(), pageAnalyzers);
-            consumerBroker.StartConsume();
+            consumerBroker.Start();
 
             var timer = new Timer((state) =>
             {
