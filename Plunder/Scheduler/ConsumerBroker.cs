@@ -71,19 +71,24 @@ namespace Plunder.Scheduler
                 if (_stopPull)
                     break;
                 _messagePullAutoResetEvent.WaitOne();
-                if (_pulling)
+                if (_pulling || DownloadingTaskCount() >= _maxDownloadThreadNumber)
+                {
+                    _messagePullAutoResetEvent.Reset();
                     continue;
-                if (DownloadingTaskCount() >= _maxDownloadThreadNumber)
-                    continue;
+                }
+
                 _pulling = true;
                 var message = _scheduler.Poll();
                 _pulling = false;
+
                 if (message == null)
+                {
+                    _messagePullAutoResetEvent.Reset();
                     continue;
+                }
                 Consume(message);
                 _messagePullAutoResetEvent.Reset();
             }
-
         }
 
 
