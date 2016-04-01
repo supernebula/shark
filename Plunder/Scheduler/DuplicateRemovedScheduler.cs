@@ -22,6 +22,12 @@ namespace Plunder.Scheduler
             AccumulatedMessageTotal = 0;
         }
 
+        public RequestMessage WaitUntillPoll()
+        {
+            AccumulatedMessageTotal++;
+            return _queue.Take();
+        }
+
         public RequestMessage Poll()
         {
             AccumulatedMessageTotal++;

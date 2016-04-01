@@ -80,10 +80,7 @@ namespace Plunder.Scheduler
                 _pulling = false;
 
                 if (message == null)
-                {
-                    _messagePullAutoResetEvent.Reset();
-                    continue;
-                }
+                    message = _scheduler.WaitUntillPoll();
                 Consume(message);
                 _messagePullAutoResetEvent.Reset();
             }
