@@ -23,7 +23,7 @@ namespace Plunder.Pipeline
 
         public string ModuleDescription
         {
-            get { return "从结果中发现新的url并封装为请求消息，交付给调度器消息队列"; }
+            get { return "从结果中发现新的url并封装为请求消息，交付给队列"; }
         }
 
         public void Dispose()

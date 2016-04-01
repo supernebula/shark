@@ -10,7 +10,7 @@ namespace Plunder.Analyze
     {
         public string FieldName { get; set; }
 
-        public string XpathSelector { get; set; }
+        public string Selector { get; set; }
 
     }
 }

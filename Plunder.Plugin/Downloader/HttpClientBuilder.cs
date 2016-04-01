@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Plunder.Proxy;
 
 namespace Plunder.Plugin.Downloader
 {
@@ -16,11 +17,12 @@ namespace Plunder.Plugin.Downloader
 
         }
 
-        public static HttpClient GetClient(Site site)
+        public static HttpClient GetClient(Site site, HttpProxyPool httpProxyPool = null)
         {
             var httpClientHandler = new HttpClientHandler();
             httpClientHandler.CookieContainer = new CookieContainer() {};
-            httpClientHandler.Proxy = site.HttpProxyPool.RandomProxy();
+            if(site.IsUseProxy && httpProxyPool != null)
+                httpClientHandler.Proxy = httpProxyPool.RandomProxy();
             httpClientHandler.UseProxy = true;
             httpClientHandler.UseCookies = true;
             return new HttpClient(httpClientHandler);

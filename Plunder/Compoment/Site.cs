@@ -41,8 +41,10 @@ namespace Plunder.Compoment
 
         public Dictionary<string, string> Headers { get; set; }
 
-        public HttpProxy HttpProxy { get; set; }
-        public HttpProxyPool HttpProxyPool { get; set; }
+        public bool IsUseProxy { get; set; }
+
+        //public HttpProxy HttpProxy { get; set; }
+        //public HttpProxyPool HttpProxyPool { get; set; }
 
         public bool UseGzip { get; set; }
 

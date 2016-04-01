@@ -32,15 +32,13 @@ namespace Plunder.Scheduler
             _downloaders.GroupBy(e => e.Topic).ToList().ForEach(g =>
             {
                 if (g.Count() > 1)
-                    throw new ArgumentException("downloader.Topic不能重复", "downloaders");
+                    throw new ArgumentException("downloader.Topic不能重复", nameof(downloaders));
             });
 
             _resultPipeline = resultPipeline;
             _pageAnalyzerTypes = new ConcurrentDictionary<string, Type>();
             pageAnalyzerTypes.ToList().ForEach(t => _pageAnalyzerTypes.TryAdd(t.Key, t.Value));
             _messagePullAutoResetEvent = new AutoResetEvent(false);
-
-
         }
 
         private IPageAnalyzer GeneratePageAnalyzer(Site site)
@@ -62,7 +60,7 @@ namespace Plunder.Scheduler
             PullMessage();
         }
 
-        private bool _stopPull = false;
+        private bool _stopPull;
 
         private void PullMessage()
         {
@@ -97,7 +95,7 @@ namespace Plunder.Scheduler
             _downloaders.ForEach(downloader =>
             {
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request);
-                downloader.DownloadAsync(reqs, (resp) =>
+                downloader.DownloadAsync(reqs, resp =>
                 {
                     _messagePullAutoResetEvent.Set();
                     var pageAnalyzer = GeneratePageAnalyzer(resp.Request.Site);

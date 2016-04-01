@@ -95,10 +95,5 @@ namespace Plunder.Plugin.Downloader
         {
             return _maxTaskNumber > _currentTaskNumber;
         }
-
-        public int ThreadCount()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
