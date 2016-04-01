@@ -86,7 +86,6 @@ namespace Plunder.Scheduler
             }
         }
 
-
         private void Consume(params RequestMessage[] messages)
         {
             _downloaders.ForEach(downloader =>
