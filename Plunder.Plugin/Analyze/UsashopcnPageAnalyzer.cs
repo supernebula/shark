@@ -12,15 +12,15 @@ namespace Plunder.Plugin.Analyze
 {
     public class UsashopcnPageAnalyzer : IPageAnalyzer 
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        public Site Site { get; set; }
+        public Site Site { get; private set; }
 
-        private IEnumerable<FieldSelector> _fieldSelectors;
+        private readonly IEnumerable<FieldSelector> _fieldXPaths;
 
         public UsashopcnPageAnalyzer()
         {
-            _fieldSelectors = new Dictionary<string, string> {
+            _fieldXPaths = new Dictionary<string, string> {
                 { "Title","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/h2[1]"},
                 { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},
                 { "Description","/html[1]/body[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]"},
@@ -33,7 +33,7 @@ namespace Plunder.Plugin.Analyze
             var doc = new HtmlDocument();
             doc.Load(response.Content);
 
-            var resultFields = XpathSelect(doc, _fieldSelectors);
+            var resultFields = XpathSelect(doc, _fieldXPaths);
             var newRequests = FindNewRequest(doc, null); // todo:newUrlPattern
             resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
             resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
@@ -81,8 +81,6 @@ namespace Plunder.Plugin.Analyze
                 var node = doc.DocumentNode.SelectSingleNode(selector.Selector);
                 fields.Add(new ResultField { Name = selector.FieldName, Value = node.InnerText.Trim() });
             }
-
-
             return fields;
         }
     }
