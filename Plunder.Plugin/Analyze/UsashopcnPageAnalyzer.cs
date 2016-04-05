@@ -6,7 +6,9 @@ using System.Text.RegularExpressions;
 using Plunder.Compoment;
 using Plunder.Analyze;
 using HtmlAgilityPack;
+
 using Plunder.Plugin.Compoment;
+using Site = Plunder.Compoment.Site;
 
 namespace Plunder.Plugin.Analyze
 {
@@ -34,7 +36,7 @@ namespace Plunder.Plugin.Analyze
             doc.Load(response.Content);
 
             var resultFields = XpathSelect(doc, _fieldXPaths);
-            var newRequests = FindNewRequest(doc, null); // todo:newUrlPattern
+            var newRequests = FindNewRequest(doc, request, null);
             resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
             resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
             resultFields.Add(new ResultField() { Name = "SiteDomain", Value = request.Site.Domain });
@@ -45,18 +47,18 @@ namespace Plunder.Plugin.Analyze
             {
                 Request = request,
                 Response = response,
-                NewRequests = newRequests, //todo: 查找所有链接，正则筛选
+                NewRequests = newRequests,
                 Channel = Channel.Product,
                 Data = resultFields
             };
-            throw new NotImplementedException("newUrlPattern未实现。。。");
             return pageResult;
         }
 
-        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, string newUrlPattern)
+        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, Request request, string newUrlPattern)
         {
             var regex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
             var newRequests = new List<Request>();
+            var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase); 
 
             foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
             {
@@ -64,6 +66,10 @@ namespace Plunder.Plugin.Analyze
                 if (String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
                     continue;
                 if (!String.IsNullOrWhiteSpace(newUrlPattern) && !regex.IsMatch(href))
+                    continue;
+                if(href.Equals(request.Uri))
+                    continue;
+                if(dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
             }
