@@ -18,6 +18,6 @@ namespace Plunder.Compoment
 
         public bool UseProxy { get; set; }
 
-        public string Downloader { get; set; }
+
     }
 }

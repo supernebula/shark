@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Plunder;
+using Plunder.Compoment;
 using Plunder.Scheduler;
 using Plunder.Downloader;
 using Plunder.Plugin.Analyze;
@@ -62,7 +63,7 @@ namespace PlunderConsole
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>("usashopcn");
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
 
-            var seedRequests = new List<RequestMessage>();
+            var seedRequests = new List<RequestMessage>() {new RequestMessage() {Id = Guid.NewGuid(), Topic = TopicType.STATIC_HTML, Request = new Request()} };
             _spider.Start(seedRequests);
 
             var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);

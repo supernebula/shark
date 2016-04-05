@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,19 +28,19 @@ namespace Plunder.Plugin.Pipeline
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Init(object context)
         {
             throw new NotImplementedException();
         }
 
-        public Task ProcessAsync(PageResult data)
+        public async Task ProcessAsync(PageResult data)
         {
-            throw new NotImplementedException();
+            await Task.Run(() =>
+            {
+                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                File.AppendAllLines(baseDir + "page_result.txt", new List<string>() { String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Uri, data.Response.HttpStatusCode, data.NewRequests.Count()) }, Encoding.UTF8);
+            });
+            
         }
     }
 }

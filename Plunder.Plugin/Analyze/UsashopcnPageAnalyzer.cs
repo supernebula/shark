@@ -41,7 +41,7 @@ namespace Plunder.Plugin.Analyze
             resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
             resultFields.Add(new ResultField() { Name = "SiteDomain", Value = request.Site.Domain });
             resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
-            resultFields.Add(new ResultField() { Name = "Downloader", Value = request.Downloader });
+            resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
             resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
             var pageResult = new PageResult
             {
