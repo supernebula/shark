@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Plunder.Compoment;
 using Plunder.Analyze;
 using HtmlAgilityPack;
+using Plunder.Plugin.Compoment;
 
 namespace Plunder.Plugin.Analyze
 {
@@ -29,7 +30,11 @@ namespace Plunder.Plugin.Analyze
 
         public PageResult Analyze(Request request, Response response)
         {
-            var resultFields = XpathSelect(response, _fieldSelectors, null);
+            var doc = new HtmlDocument();
+            doc.Load(response.Content);
+
+            var resultFields = XpathSelect(doc, _fieldSelectors);
+            var newRequests = FindNewRequest(doc, null); // todo:newUrlPattern
             resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
             resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
             resultFields.Add(new ResultField() { Name = "SiteDomain", Value = request.Site.Domain });
@@ -38,20 +43,36 @@ namespace Plunder.Plugin.Analyze
             resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
             var pageResult = new PageResult
             {
-                Result = resultFields,
-                HttpStatCode = response.HttpStatusCode,
-                Site = request.Site
+                Request = request,
+                Response = response,
+                NewRequests = newRequests, //todo: 查找所有链接，正则筛选
+                Channel = Channel.Product,
+                Data = resultFields
             };
-
+            throw new NotImplementedException("newUrlPattern未实现。。。");
             return pageResult;
         }
 
-
-        private List<ResultField> XpathSelect(Response response, IEnumerable<FieldSelector> selectors,string newUrlPattern)
+        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, string newUrlPattern)
         {
-            var doc = new HtmlDocument();
-            doc.Load(response.Content);
+            var regex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
+            var newRequests = new List<Request>();
 
+            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
+            {
+                var href = link.GetAttributeValue("href", String.Empty);
+                if (String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
+                    continue;
+                if (!String.IsNullOrWhiteSpace(newUrlPattern) && !regex.IsMatch(href))
+                    continue;
+                newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
+            }
+            return newRequests;
+        }
+
+
+        private List<ResultField> XpathSelect(HtmlDocument doc, IEnumerable<FieldSelector> selectors)
+        {
             var fields = new List<ResultField>().ToList();
             foreach (var selector in selectors)
             {
@@ -61,18 +82,7 @@ namespace Plunder.Plugin.Analyze
                 fields.Add(new ResultField { Name = selector.FieldName, Value = node.InnerText.Trim() });
             }
 
-            var newRequests = new List<Request>();
-            var hrefs = doc.DocumentNode.Descendants("a").ToList().Select(a => a.GetAttributeValue("href", String.Empty).Trim());
 
-            var regex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
-            foreach (string href in hrefs)
-            {
-                if(String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
-                    continue;
-                if(!String.IsNullOrWhiteSpace(newUrlPattern) && !regex.IsMatch(href))
-                    continue;
-                newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
-            }
             return fields;
         }
     }

@@ -41,7 +41,7 @@ namespace Plunder.Pipeline
             await _scheduler.PushAsync(result.NewRequests.Select(e => new RequestMessage()
             {
                 Id = Guid.NewGuid(),
-                Topic = "simple",
+                Topic = e.Topic,
                 Request = e
             }));
         }

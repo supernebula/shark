@@ -34,7 +34,7 @@ namespace Plunder.Plugin.Storage
             await Task.Run(() => {
                 if ("product".Equals(pageResult.Channel))
                 {
-                    var product = ModelBuilder<Product>(pageResult.Result);
+                    var product = ModelBuilder<Product>(pageResult.Data);
                     var repository = new ProductRepository();
                     repository.Insert(product);
                 }

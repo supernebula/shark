@@ -37,28 +37,28 @@ namespace Plunder.Plugin.Downloader
         }
 
 
-        public void DownloadAsync(IEnumerable<Request> requests, Action<Response> singleContinueWith)
+        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
         {
             foreach (Request req in requests)
             {
                 var task = Task.Run(async () =>
                 {
                     var client = HttpClientBuilder.GetClient(req.Site);
-                    var resp = await client.GetAsync(req.Uri);
-                    var result = new Response()
+                    var httpResp = await client.GetAsync(req.Uri);
+                    var resp = new Response()
                     {
                         Request = req,
-                        HttpStatusCode = resp.StatusCode,
-                        IsSuccessCode = resp.IsSuccessStatusCode,
-                        ReasonPhrase = resp.ReasonPhrase,
-                        Content = resp.IsSuccessStatusCode ? await resp.Content.ReadAsStringAsync() : null
+                        HttpStatusCode = httpResp.StatusCode,
+                        IsSuccessCode = httpResp.IsSuccessStatusCode,
+                        ReasonPhrase = httpResp.ReasonPhrase,
+                        Content = httpResp.IsSuccessStatusCode ? await httpResp.Content.ReadAsStringAsync() : null
                     };
-                    return result;
+                    return new Tuple<Request, Response>(req, resp);
 
                 }).ContinueWith((t) =>
                 {
                     _doingTask.Remove(t.Id);
-                    singleContinueWith(t.Result);
+                    onDownloadComplete(t.Result.Item1, t.Result.Item2);
                 });
                 _doingTask.Add(task.Id);
 

@@ -155,10 +155,11 @@ namespace Plunder.Test
 
             }
 
-            public void DownloadAsync(IEnumerable<Request> requests, Action<Response> singleContinueWith)
+            public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> singleContinueWith)
             {
                 throw new NotImplementedException();
             }
+
 
             public bool IsAllowDownload()
             {
@@ -197,7 +198,7 @@ namespace Plunder.Test
             public async Task ProcessAsync(PageResult result)
             {
                 Trace.WriteLine("处理PageResult");
-                await Task.Run(() => result.Result);
+                await Task.Run(() => result.Data);
             }
         }
 

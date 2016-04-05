@@ -16,7 +16,7 @@ namespace Plunder.Downloader
 
         int DownloadingTaskCount { get; }
 
-        void DownloadAsync(IEnumerable<Request> requests, Action<Response> singleContinueWith);
+        void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> singleContinueWith);
 
         Task<Response> DownloadAsync(Request request);
     }

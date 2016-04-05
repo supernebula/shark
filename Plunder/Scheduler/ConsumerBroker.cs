@@ -91,11 +91,11 @@ namespace Plunder.Scheduler
             _downloaders.ForEach(downloader =>
             {
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request);
-                downloader.DownloadAsync(reqs, resp =>
+                downloader.DownloadAsync(reqs, (req, resp) =>
                 {
                     _messagePullAutoResetEvent.Set();
-                    var pageAnalyzer = GeneratePageAnalyzer(resp.Request.Site);
-                    var pageResult = pageAnalyzer.Analyze(resp.Request, resp);
+                    var pageAnalyzer = GeneratePageAnalyzer(req.Site);
+                    var pageResult = pageAnalyzer.Analyze(req, resp);
                     _resultPipeline.Inject(pageResult);
                 });
             });

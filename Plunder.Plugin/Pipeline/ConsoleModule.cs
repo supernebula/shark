@@ -62,8 +62,13 @@ namespace Plunder.Plugin.Pipeline
         {
             await Task.Run(() =>
             {
-                Console.WriteLine("");
+                WriteLine();
             });
+        }
+
+        private void WriteLine()
+        {
+            Console.WriteLine("");
         }
     }
 }
