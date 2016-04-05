@@ -95,7 +95,7 @@ namespace Plunder.Scheduler
                 {
                     _messagePullAutoResetEvent.Set();
                     var pageAnalyzer = GeneratePageAnalyzer(resp.Request.Site);
-                    var pageResult = pageAnalyzer.Analyze(resp);
+                    var pageResult = pageAnalyzer.Analyze(resp.Request, resp);
                     _resultPipeline.Inject(pageResult);
                 });
             });

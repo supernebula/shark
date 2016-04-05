@@ -1,11 +1,10 @@
-﻿using Plunder.Analyze;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Analyze;
 using HtmlAgilityPack;
 
 namespace Plunder.Plugin.Analyze
@@ -25,25 +24,30 @@ namespace Plunder.Plugin.Analyze
                 { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},
                 { "Description","/html[1]/body[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]"},
                 { "PicUri","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]/@src[1]"},
-                { "Uri",""},
-                { "CommentCount",""},
-                { "SiteName",""},
-                { "SiteDomain",""},
-                { "ElapsedSecond",""},
-                { "Downloader",""}
             }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value });
         }
 
-        public PageResult Analyze(Response response)
+        public PageResult Analyze(Request request, Response response)
         {
-            var pageResult = XpathSelect(response, _fieldSelectors, null);
-            pageResult.HttpStatCode = response.HttpStatusCode;
-            pageResult.Site = Site;
+            var resultFields = XpathSelect(response, _fieldSelectors, null);
+            resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
+            resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
+            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = request.Site.Domain });
+            resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
+            resultFields.Add(new ResultField() { Name = "Downloader", Value = request.Downloader });
+            resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
+            var pageResult = new PageResult
+            {
+                Result = resultFields,
+                HttpStatCode = response.HttpStatusCode,
+                Site = request.Site
+            };
+
             return pageResult;
         }
 
 
-        private PageResult XpathSelect(Response response, IEnumerable<FieldSelector> selectors,string newUrlPattern)
+        private List<ResultField> XpathSelect(Response response, IEnumerable<FieldSelector> selectors,string newUrlPattern)
         {
             var doc = new HtmlDocument();
             doc.Load(response.Content);
@@ -51,6 +55,8 @@ namespace Plunder.Plugin.Analyze
             var fields = new List<ResultField>().ToList();
             foreach (var selector in selectors)
             {
+                if(String.IsNullOrWhiteSpace(selector.Selector))
+                    continue;
                 var node = doc.DocumentNode.SelectSingleNode(selector.Selector);
                 fields.Add(new ResultField { Name = selector.FieldName, Value = node.InnerText.Trim() });
             }
@@ -67,7 +73,7 @@ namespace Plunder.Plugin.Analyze
                     continue;
                 newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
             }
-            return new PageResult() { Content = response.Content, Result = fields, NewRequests = newRequests };
+            return fields;
         }
     }
 }

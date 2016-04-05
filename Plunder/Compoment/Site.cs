@@ -14,6 +14,8 @@ namespace Plunder.Compoment
 
         public static Site Default => new Site();
 
+        public string Name { get; set; }
+
         public string Domain { get; set; }
 
         public string UserAgent { get; set; }

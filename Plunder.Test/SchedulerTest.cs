@@ -177,7 +177,7 @@ namespace Plunder.Test
 
             public Site Site { get; set; }
 
-            public PageResult Analyze(Response response)
+            public PageResult Analyze(Request request, Response response)
             {
                 Trace.WriteLine("分析正文:" + response.Content);
                 return new PageResult();

@@ -20,9 +20,6 @@ namespace Plunder.Compoment
 
         public bool UseProxy { get; set; }
 
-        public override string ToString()
-        {
-            return base.ToString();
-        }
+        public string Downloader { get; set; }
     }
 }
