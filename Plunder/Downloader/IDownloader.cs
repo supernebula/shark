@@ -1,10 +1,5 @@
-﻿using Plunder.Compoment;
-using Plunder.Scheduler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Plunder.Compoment;
 
 namespace Plunder.Downloader
 {
@@ -12,9 +7,11 @@ namespace Plunder.Downloader
     {
         string Topic { get; }
 
+        bool IsDefault { get; set; }
+
         bool IsAllowDownload();
 
-        int ThreadCount();
+        int TaskCount();
 
         Task<Response> DownloadAsync(Request request);
     }

@@ -8,6 +8,7 @@ using Plunder.Pipeline;
 
 namespace Plunder
 {
+
     public class Spider
     {
         #region Required Unit
@@ -17,6 +18,7 @@ namespace Plunder
         private readonly ResultPipeline _resultPipeline;
         private IEnumerable<RequestMessage> _seedRequests;
         private readonly ConcurrentDictionary<string, Type> pageAnalyzerTypes;
+        private readonly List<>
 
         #endregion
 
@@ -53,7 +55,11 @@ namespace Plunder
 
         public void RegisterPageAnalyzer<T>(string name) where T : IPageAnalyzer
         {
+            pageAnalyzerTypes.TryAdd(name, typeof(T));
+        }
 
+        public void RegisterDownloader<T>() where T : IDownloader
+        {
             pageAnalyzerTypes.TryAdd(name, typeof(T));
         }
 
@@ -70,6 +76,15 @@ namespace Plunder
 
 
         public void Start(IEnumerable<RequestMessage> seedRequests)
+        {
+            _seedRequests = seedRequests;
+            if (!CheckConfig())
+                return;
+            _scheduler.PushAsync(_seedRequests);
+        }
+
+
+        public void Start(params string[] seedRequests)
         {
             _seedRequests = seedRequests;
             if (!CheckConfig())

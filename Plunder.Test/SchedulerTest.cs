@@ -152,7 +152,7 @@ namespace Plunder.Test
                 return true;
             }
 
-            public int ThreadCount()
+            public int TaskCount()
             {
                 return 0;
             }

@@ -18,7 +18,8 @@ namespace PlunderConsole
         static Spider _spider;
         static void Main(string[] args)
         {
-            ConsoleMultiAreaTest();
+            //ConsoleMultiAreaTest();
+            RunSpider();
         }
 
 

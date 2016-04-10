@@ -49,7 +49,7 @@ namespace Plunder.Scheduler
 
         private int CurrentDownloadThreadCount()
         {
-            return _downloaders.ToList().Sum(e => e.Value.ThreadCount());
+            return _downloaders.ToList().Sum(e => e.Value.TaskCount());
         }
 
         public void StartConsume()

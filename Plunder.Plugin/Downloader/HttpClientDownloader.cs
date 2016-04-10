@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Proxy;
@@ -16,16 +12,16 @@ namespace Plunder.Plugin.Downloader
         private readonly string _topic;
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber;
-        private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
-        private HttpProxyPool _proxyPool;
+        private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1); //异步锁
 
         public string Topic => _topic;
 
-        public HttpClientDownloader(string topic, int maxTaskNumber, HttpProxyPool proxyPool)
+        public bool IsDefault { get; set; }
+
+        public HttpClientDownloader(string topic, int maxTaskNumber)
         {
             _topic = topic;
             _maxTaskNumber = maxTaskNumber;
-            _proxyPool = proxyPool;
         }
 
 
@@ -59,7 +55,7 @@ namespace Plunder.Plugin.Downloader
             return _maxTaskNumber > _currentTaskNumber;
         }
 
-        public int ThreadCount()
+        public int TaskCount()
         {
             throw new NotImplementedException();
         }
