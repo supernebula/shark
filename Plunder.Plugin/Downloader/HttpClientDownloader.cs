@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Proxy;
@@ -12,16 +14,52 @@ namespace Plunder.Plugin.Downloader
         private readonly string _topic;
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber;
-        private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1); //异步锁
+        private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
+        private HttpProxyPool _proxyPool;
 
         public string Topic => _topic;
+        private List<int> _doingTask;
 
-        public bool IsDefault { get; set; }
+        public int DownloadingTaskCount
+        {
+            get { return _doingTask.Count; }
+        }
 
-        public HttpClientDownloader(string topic, int maxTaskNumber)
+        public HttpClientDownloader(string topic, int maxTaskNumber, HttpProxyPool proxyPool)
         {
             _topic = topic;
             _maxTaskNumber = maxTaskNumber;
+            _proxyPool = proxyPool;
+            _doingTask = new List<int>();
+        }
+
+
+        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
+        {
+            foreach (Request req in requests)
+            {
+                var task = Task.Run(async () =>
+                {
+                    var client = HttpClientBuilder.GetClient(req.Site);
+                    var httpResp = await client.GetAsync(req.Uri);
+                    var resp = new Response()
+                    {
+                        Request = req,
+                        HttpStatusCode = httpResp.StatusCode,
+                        IsSuccessCode = httpResp.IsSuccessStatusCode,
+                        ReasonPhrase = httpResp.ReasonPhrase,
+                        Content = httpResp.IsSuccessStatusCode ? await httpResp.Content.ReadAsStringAsync() : null
+                    };
+                    return new Tuple<Request, Response>(req, resp);
+
+                }).ContinueWith((t) =>
+                {
+                    _doingTask.Remove(t.Id);
+                    onDownloadComplete(t.Result.Item1, t.Result.Item2);
+                });
+                _doingTask.Add(task.Id);
+
+            }
         }
 
 
@@ -53,11 +91,6 @@ namespace Plunder.Plugin.Downloader
         public bool IsAllowDownload()
         {
             return _maxTaskNumber > _currentTaskNumber;
-        }
-
-        public int TaskCount()
-        {
-            throw new NotImplementedException();
         }
     }
 }

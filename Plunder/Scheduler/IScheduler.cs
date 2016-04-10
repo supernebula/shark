@@ -10,6 +10,8 @@ namespace Plunder.Scheduler
         Task<bool> PushAsync(RequestMessage message);
         Task PushAsync(IEnumerable<RequestMessage> message);
 
+        RequestMessage WaitUntillPoll();
+
         RequestMessage Poll();
 
         List<RequestMessage> Poll(int size);

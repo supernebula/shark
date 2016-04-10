@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Plunder.Compoment
 {
     public class PageResult
     {
-        public Site Site { get; set; }
+        public Request Request { get; set; }
+
+        public Response Response { get; set; }
+
         public IEnumerable<Request> NewRequests { get; set; }
 
         public string Channel { get; set; }
 
-        public IEnumerable<ResultField> Result { get; set; }
-
-
-        public string Content { get; set; }
-
-        public HttpStatusCode HttpStatCode { get; set; }
-
-
+        public IEnumerable<ResultField> Data { get; set; }
     }
 
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
@@ -43,11 +40,6 @@ namespace Plunder.Plugin.Pipeline
             }
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Init(object context)
         {
             throw new NotImplementedException();
@@ -62,8 +54,17 @@ namespace Plunder.Plugin.Pipeline
         {
             await Task.Run(() =>
             {
-                Console.WriteLine("");
+                WriteLine(String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Uri, data.Response.HttpStatusCode, data.NewRequests.Count()));
             });
+        }
+
+        private void WriteLine(string str)
+        {
+            //Console.CursorLeft = _cursorLeft;
+            //Console.CursorTop = _cursorTop;
+            //Console.BufferHeight = _bufferHeight;
+            //Console.BufferWidth = _bufferWidth;
+            Console.WriteLine(str);
         }
     }
 }

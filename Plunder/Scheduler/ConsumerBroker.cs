@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Plunder.Analyze;
 using Plunder.Compoment;
 using Plunder.Downloader;
@@ -13,15 +12,14 @@ using Plunder.Pipeline;
 
 namespace Plunder.Scheduler
 {
-    public class ConsumerBroker
+    public class ConsumerBroker : IDisposable
     {
         private readonly IMonitorableScheduler _scheduler;
-        private readonly Dictionary<string, IDownloader> _downloaders;
+        private readonly List<IDownloader> _downloaders;
         private readonly ConcurrentDictionary<string, Type> _pageAnalyzerTypes;
         private readonly ResultPipeline _resultPipeline;
         private readonly int _maxDownloadThreadNumber;
-
-        private readonly Timer _messagePullTimer;
+        private AutoResetEvent _messagePullAutoResetEvent;
 
         private bool _pulling;
 
@@ -29,13 +27,18 @@ namespace Plunder.Scheduler
         {
             _maxDownloadThreadNumber = maxDownloadThreadNumber;
             _scheduler = scheduler;
-            _downloaders = new Dictionary<string, IDownloader>();
-            downloaders.ToList().ForEach(d => _downloaders.Add(d.Topic, d));
+            _downloaders = new List<IDownloader>();
+            _downloaders.AddRange(downloaders);
+            _downloaders.GroupBy(e => e.Topic).ToList().ForEach(g =>
+            {
+                if (g.Count() > 1)
+                    throw new ArgumentException("downloader.Topic不能重复", nameof(downloaders));
+            });
+
             _resultPipeline = resultPipeline;
             _pageAnalyzerTypes = new ConcurrentDictionary<string, Type>();
             pageAnalyzerTypes.ToList().ForEach(t => _pageAnalyzerTypes.TryAdd(t.Key, t.Value));
-            _messagePullTimer = new Timer((state) => PullMessage(), null, 0, 2000);
-           
+            _messagePullAutoResetEvent = new AutoResetEvent(false);
         }
 
         private IPageAnalyzer GeneratePageAnalyzer(Site site)
@@ -47,57 +50,64 @@ namespace Plunder.Scheduler
             return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
         }
 
-        private int CurrentDownloadThreadCount()
+        private int DownloadingTaskCount()
         {
-            return _downloaders.ToList().Sum(e => e.Value.TaskCount());
+            return _downloaders.Sum(e => e.DownloadingTaskCount);
         }
 
-        public void StartConsume()
+        public void Start()
         {
             PullMessage();
         }
 
+        private bool _stopPull;
+
         private void PullMessage()
         {
-            if (CurrentDownloadThreadCount() >= _maxDownloadThreadNumber) return;
-            if (_pulling)  return;
-            _pulling = true;
-            var message = _scheduler.Poll();
-            _pulling = false;
-
-            if(message == null) return;
-            var task1 = Task.Run(() => Consume(message, () => { }));
-        }
-
-
-        private void PullMessage(int size)
-        {
-            if (_pulling) return;
-            _pulling = true;
-            var messages = _scheduler.Poll(size);
-            _pulling = false;
-
-            var tasks = new List<Task>();
-            messages.ForEach((m) =>
+            while (true)
             {
-                tasks.Add(Task.Run(() => { Consume(m, PullMessage); }));
-            });
+                if (_stopPull)
+                    break;
+                _messagePullAutoResetEvent.WaitOne();
+                if (_pulling || DownloadingTaskCount() >= _maxDownloadThreadNumber)
+                {
+                    _messagePullAutoResetEvent.Reset();
+                    continue;
+                }
 
-            Task.WhenAll(tasks);
+                _pulling = true;
+                var message = _scheduler.Poll();
+                _pulling = false;
+
+                if (message == null)
+                    message = _scheduler.WaitUntillPoll();
+                Consume(message);
+                _messagePullAutoResetEvent.Reset();
+            }
         }
 
-
-        private async void Consume(RequestMessage message, Action callback)
+        private void Consume(params RequestMessage[] messages)
         {
-            IDownloader downloader;
-            _downloaders.TryGetValue(message.Topic, out downloader);
-            if (downloader == null)
-                return;
-            var response = await downloader.DownloadAsync(message.Request);
-            var pageAnalyzer = GeneratePageAnalyzer(message.Request.Site);
-            var pageResult = pageAnalyzer.Analyze(response);
-            _resultPipeline.Inject(pageResult);
-            callback();
+            _downloaders.ForEach(downloader =>
+            {
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request);
+                downloader.DownloadAsync(reqs, (req, resp) =>
+                {
+                    _messagePullAutoResetEvent.Set();
+                    var pageAnalyzer = GeneratePageAnalyzer(req.Site);
+                    var pageResult = pageAnalyzer.Analyze(req, resp);
+                    _resultPipeline.Inject(pageResult);
+                });
+            });
+        }
+
+        public void Dispose()
+        {
+            _messagePullAutoResetEvent.Close();
+            _messagePullAutoResetEvent.Dispose();
+            _messagePullAutoResetEvent = null;
+            _stopPull = true;
+            Thread.EndThreadAffinity();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Plunder.Analyze;
+using Plunder.Compoment;
 using Plunder.Scheduler;
 using Plunder.Downloader;
 using Plunder.Pipeline;
@@ -81,6 +82,11 @@ namespace Plunder
             if (!CheckConfig())
                 return;
             _scheduler.PushAsync(_seedRequests);
+        }
+
+        public void Start(IEnumerable<Request> seedRequests)
+        {
+            throw new NotImplementedException();
         }
 
 

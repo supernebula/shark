@@ -1,12 +1,7 @@
-﻿using Plunder.Compoment;
-using Plunder.Proxy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Plunder.Proxy;
+using Plunder.Compoment;
 
 namespace Plunder.Plugin.Downloader
 {
@@ -17,19 +12,15 @@ namespace Plunder.Plugin.Downloader
 
         }
 
-        public static HttpClient GetClient(Site site)
+        public static HttpClient GetClient(Site site, HttpProxyPool httpProxyPool = null)
         {
             var httpClientHandler = new HttpClientHandler();
-            //httpClientHandler.CookieContainer.Add(new Cookie());
-            if (site.IsUseHttpProxy)
-            {
-                httpClientHandler.UseProxy = true;
-                httpClientHandler.Proxy = HttpProxyPool.Instance.RandomProxy();
-            }
-            
+            httpClientHandler.CookieContainer = new CookieContainer() {};
+            if(site.IsUseProxy && httpProxyPool != null)
+                httpClientHandler.Proxy = httpProxyPool.RandomProxy();
+            httpClientHandler.UseProxy = true;
             httpClientHandler.UseCookies = true;
-            var httpClient = new HttpClient(httpClientHandler);
-            return httpClient;
+            return new HttpClient(httpClientHandler);
         }
     }
 }

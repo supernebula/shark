@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-namespace Plunder.Utility
+namespace Plunder.Utilities
 {
     public static class RandomUnitily
     {

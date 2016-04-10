@@ -138,6 +138,14 @@ namespace Plunder.Test
 
         public class TestDownloader : IDownloader
         {
+            public int DownloadingTaskCount
+            {
+                get
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
             public string Topic => TopicType.STATIC_HTML;
 
             public async Task<Response> DownloadAsync(Request request)
@@ -146,6 +154,12 @@ namespace Plunder.Test
                 return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Uri, HttpStatusCode = HttpStatusCode.OK, MillisecondTime = 1, ReasonPhrase = "TestReasonPhrase" });
 
             }
+
+            public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> singleContinueWith)
+            {
+                throw new NotImplementedException();
+            }
+
 
             public bool IsAllowDownload()
             {
@@ -164,7 +178,7 @@ namespace Plunder.Test
 
             public Site Site { get; set; }
 
-            public PageResult Analyze(Response response)
+            public PageResult Analyze(Request request, Response response)
             {
                 Trace.WriteLine("分析正文:" + response.Content);
                 return new PageResult();
@@ -184,7 +198,7 @@ namespace Plunder.Test
             public async Task ProcessAsync(PageResult result)
             {
                 Trace.WriteLine("处理PageResult");
-                await Task.Run(() => result.Result);
+                await Task.Run(() => result.Data);
             }
         }
 
@@ -207,7 +221,7 @@ namespace Plunder.Test
             var pageAnalyzers = new List<KeyValuePair<string, Type>>();
             pageAnalyzers.Add(new KeyValuePair<string, Type>(site.Domain, typeof(TestPageAnalyzer)));
             var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloader>() {new TestDownloader()}, new ResultPipeline(), pageAnalyzers);
-            consumerBroker.StartConsume();
+            consumerBroker.Start();
 
             var timer = new Timer((state) =>
             {

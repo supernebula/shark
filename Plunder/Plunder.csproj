@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NSoup, Version=0.8.0.0, Culture=neutral, PublicKeyToken=6d44e53f0a65e802, processorArchitecture=MSIL">
-      <HintPath>..\packages\NSoup.0.8.0\lib\net40\NSoup.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
@@ -55,8 +51,6 @@
     <Compile Include="Compoment\Proxy.cs" />
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Compoment\UserAgent.cs" />
-    <Compile Include="Downloader\~DownloaderFactory.cs" />
-    <Compile Include="Downloader\~IDownloader.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IPipelineModule.cs" />
@@ -81,13 +75,11 @@
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="Utility\RandomUnitily.cs" />
+    <Compile Include="Utilities\BloomFilter.cs" />
+    <Compile Include="Utilities\RandomUnitily.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Thread\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
