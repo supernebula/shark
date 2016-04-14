@@ -12,5 +12,11 @@ namespace Plunder.Compoment
         {
             throw new NotImplementedException();
         }
+
+        private void Load(string path)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
