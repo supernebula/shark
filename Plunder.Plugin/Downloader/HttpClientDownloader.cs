@@ -16,7 +16,7 @@ namespace Plunder.Plugin.Downloader
         private int _currentTaskNumber;
         private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
 
-        public string Topic => TopicType.STATIC_HTML;
+        public string Topic => TopicType.StaticHtml;
         private List<int> _doingTask;
 
         public int DownloadingTaskCount

@@ -8,8 +8,8 @@ namespace Plunder.Plugin.Downloader
 {
     public static class TopicType
     {
-        public const string STATIC_HTML = "staticHtml";
+        public const string  StaticHtml = "staticHtml";
 
-        public const string DYNAMIC_HTML = "dynamicHtml";
+        public const string DynamicHtml = "dynamicHtml";
     }
 }

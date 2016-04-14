@@ -24,7 +24,7 @@ namespace Plunder.Test
         {
             return new RequestMessage()
             {
-                Topic = TopicType.STATIC_HTML,
+                Topic = TopicType.StaticHtml,
                 Request = new Request()
                 {
                     SiteId = site.Id,
@@ -39,7 +39,7 @@ namespace Plunder.Test
             var list = new List<RequestMessage>();
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.STATIC_HTML,
+                Topic = TopicType.StaticHtml,
                 Request = new Request()
                 { SiteId = site.Id,  Uri = "http://www.usashopcn.com/Product/Details/126334" }
 
@@ -47,7 +47,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.STATIC_HTML,
+                Topic = TopicType.StaticHtml,
                 Request = new Request()
                 { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127698" }
 
@@ -55,7 +55,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.STATIC_HTML,
+                Topic = TopicType.StaticHtml,
                 Request = new Request()
                 { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127593" }
 
@@ -63,7 +63,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.STATIC_HTML,
+                Topic = TopicType.StaticHtml,
                 Request = new Request()
                 { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/126855" }
 
@@ -146,7 +146,7 @@ namespace Plunder.Test
                 }
             }
 
-            public string Topic => TopicType.STATIC_HTML;
+            public string Topic => TopicType.StaticHtml;
 
             public async Task<Response> DownloadAsync(Request request)
             {
