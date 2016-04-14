@@ -41,8 +41,9 @@ namespace Plunder.Scheduler
             _messagePullAutoResetEvent = new AutoResetEvent(false);
         }
 
-        private IPageAnalyzer GeneratePageAnalyzer(Site site)
+        private IPageAnalyzer GeneratePageAnalyzer(string siteId)
         {
+            var site = new Site();//todo: 根据siteId获取具体的Site
             Type analyzerType;
             _pageAnalyzerTypes.TryGetValue(site.Domain, out analyzerType);
             if (analyzerType == null || analyzerType.GetInterface(typeof (IPageAnalyzer).Name) == null)
@@ -94,7 +95,7 @@ namespace Plunder.Scheduler
                 downloader.DownloadAsync(reqs, (req, resp) =>
                 {
                     _messagePullAutoResetEvent.Set();
-                    var pageAnalyzer = GeneratePageAnalyzer(req.Site);
+                    var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
                     var pageResult = pageAnalyzer.Analyze(req, resp);
                     _resultPipeline.Inject(pageResult);
                 });

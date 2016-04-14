@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using Plunder.Analyze;
 using Plunder.Compoment;
 using Plunder.Scheduler;
@@ -15,53 +16,51 @@ namespace Plunder
         #region Required Unit
 
         private readonly IMonitorableScheduler _scheduler;
-        private readonly ConsumerBroker _consumerBroker;
         private readonly ResultPipeline _resultPipeline;
-        private IEnumerable<RequestMessage> _seedRequests;
-        private readonly ConcurrentDictionary<string, Type> pageAnalyzerTypes;
-        private readonly List<>
+        private readonly List<IDownloader> _downloaders;
+        private readonly Dictionary<string, Type> _pageAnalyzerTypes;
+        private ConsumerBroker _consumerBroker;
 
         #endregion
 
         #region Initialization
 
-        public Spider(IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders)
+        public Spider(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();
             _resultPipeline.RegisterModule(new ProducerModule(_scheduler)); //ProducerModule is required
-            _consumerBroker = new ConsumerBroker(10, _scheduler, downloaders, _resultPipeline, pageAnalyzerTypes);
-            
+            _downloaders = new List<IDownloader>();
+            _pageAnalyzerTypes = new Dictionary<string, Type>();
         }
 
         private bool CheckConfig()
         {
-            //if (DownloaderFactory.Count() > 0)
-            //    return false;
-            return true;
+            //todo:加长各项配置
+            throw new NotImplementedException();
         }
 
         #endregion
 
         #region addition
-
-        
-
         public void RegisterPipeModule(params IResultPipelineModule[] modules)
         {
             _resultPipeline.RegisterModule(modules);
         }
 
-
-
         public void RegisterPageAnalyzer<T>(string name) where T : IPageAnalyzer
         {
-            pageAnalyzerTypes.TryAdd(name, typeof(T));
+            _pageAnalyzerTypes.Add(name, typeof(T));
         }
 
-        public void RegisterDownloader<T>() where T : IDownloader
+        public void RegisterDownloader(IDownloader downloader)
         {
-            pageAnalyzerTypes.TryAdd(name, typeof(T));
+            _downloaders.Add(downloader);
+        }
+
+        public void RegisterDownloader(IEnumerable<IDownloader> downloaders)
+        {
+            _downloaders.AddRange(downloaders);
         }
 
         #endregion
@@ -78,26 +77,17 @@ namespace Plunder
 
         public void Start(IEnumerable<RequestMessage> seedRequests)
         {
-            _seedRequests = seedRequests;
+            var seedRequestMessages = new List<RequestMessage>();
+            seedRequestMessages.AddRange(seedRequests);
             if (!CheckConfig())
                 return;
-            _scheduler.PushAsync(_seedRequests);
+            Run(seedRequestMessages);
         }
 
-        public void Start(IEnumerable<Request> seedRequests)
+        private void Run(IEnumerable<RequestMessage> seedRequests)
         {
-            throw new NotImplementedException();
+            _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
+            _scheduler.PushAsync(seedRequests);
         }
-
-
-        public void Start(params string[] seedRequests)
-        {
-            _seedRequests = seedRequests;
-            if (!CheckConfig())
-                return;
-            _scheduler.PushAsync(_seedRequests);
-        }
-
-
     }
 }

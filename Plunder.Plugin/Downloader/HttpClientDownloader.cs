@@ -15,9 +15,8 @@ namespace Plunder.Plugin.Downloader
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber;
         private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
-        private HttpProxyPool _proxyPool;
 
-        public string Topic => _topic;
+        public string Topic => TopicType.STATIC_HTML;
         private List<int> _doingTask;
 
         public int DownloadingTaskCount
@@ -25,11 +24,9 @@ namespace Plunder.Plugin.Downloader
             get { return _doingTask.Count; }
         }
 
-        public HttpClientDownloader(string topic, int maxTaskNumber, HttpProxyPool proxyPool)
+        public HttpClientDownloader(int maxTaskNumber)
         {
-            _topic = topic;
             _maxTaskNumber = maxTaskNumber;
-            _proxyPool = proxyPool;
             _doingTask = new List<int>();
         }
 
@@ -40,7 +37,7 @@ namespace Plunder.Plugin.Downloader
             {
                 var task = Task.Run(async () =>
                 {
-                    var client = HttpClientBuilder.GetClient(req.Site);
+                    var client = HttpClientBuilder.GetClient(req.SiteId);
                     var httpResp = await client.GetAsync(req.Uri);
                     var resp = new Response()
                     {
@@ -69,7 +66,7 @@ namespace Plunder.Plugin.Downloader
             await _ctnLock.WaitAsync();
             try
             {
-                var client = HttpClientBuilder.GetClient(request.Site);
+                var client = HttpClientBuilder.GetClient(request.SiteId);
                 _currentTaskNumber++;
                 var resposneMessage = await client.GetAsync(request.Uri);
                 result.HttpStatusCode = resposneMessage.StatusCode;

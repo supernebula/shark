@@ -1,15 +1,11 @@
-﻿using Plunder.Compoment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Plunder.Compoment;
+
 
 namespace Plunder.Scheduler
 {
     public class RequestMessage
     {
-
         public Guid Id { get; set; }
         public string Topic { get; set; }
 
@@ -19,13 +15,6 @@ namespace Plunder.Scheduler
 
         public DateTime Timestamp { get; set; }
 
-        public string HashCode
-        {
-            get
-            {
-                return Request.Uri.GetHashCode().ToString().ToLower();
-            }
-        }
-
+        public string UniqueValue => Request.Uri.ToLower();
     }
 }

@@ -59,10 +59,11 @@ namespace PlunderConsole
             
             var downloaders = new List<IDownloader>();
             var pageAnalyzerTypes = new List<KeyValuePair<string, Type>>();
-            _spider = new Spider(new LineScheduler(), downloaders);
+            _spider = new Spider(new LineScheduler());
 
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>("usashopcn");
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
+            _spider.RegisterDownloader(downloaders);
 
             var seedRequests = new List<RequestMessage>() {new RequestMessage() {Id = Guid.NewGuid(), Topic = TopicType.STATIC_HTML, Request = new Request()} };
             _spider.Start(seedRequests);

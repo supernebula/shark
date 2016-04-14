@@ -32,14 +32,15 @@ namespace Plunder.Plugin.Analyze
 
         public PageResult Analyze(Request request, Response response)
         {
+            var site = SiteConfiguration.GetSite(request.SiteId);
             var doc = new HtmlDocument();
             doc.Load(response.Content);
 
             var resultFields = XpathSelect(doc, _fieldXPaths);
             var newRequests = FindNewRequest(doc, request, null);
             resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
-            resultFields.Add(new ResultField() { Name = "SiteName", Value = request.Site.Name });
-            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = request.Site.Domain });
+            resultFields.Add(new ResultField() { Name = "SiteName", Value = site.Name });
+            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = site.Domain });
             resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
             resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
             resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
@@ -71,7 +72,7 @@ namespace Plunder.Plugin.Analyze
                     continue;
                 if(dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
-                newRequests.Add(new Request() { Uri = href, Site = Site, Method = "GET" });
+                newRequests.Add(new Request() { Uri = href, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
             }
             return newRequests;
         }

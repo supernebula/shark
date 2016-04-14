@@ -27,7 +27,7 @@ namespace Plunder.Test
                 Topic = TopicType.STATIC_HTML,
                 Request = new Request()
                 {
-                    Site = site,
+                    SiteId = site.Id,
                     Uri = "http://www.usashopcn.com/Product/Details/126993"
                 }
 
@@ -41,7 +41,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.STATIC_HTML,
                 Request = new Request()
-                { Site = site,  Uri = "http://www.usashopcn.com/Product/Details/126334" }
+                { SiteId = site.Id,  Uri = "http://www.usashopcn.com/Product/Details/126334" }
 
             });
 
@@ -49,7 +49,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.STATIC_HTML,
                 Request = new Request()
-                { Site = site, Uri = "http://www.usashopcn.com/Product/Details/127698" }
+                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127698" }
 
             });
 
@@ -57,7 +57,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.STATIC_HTML,
                 Request = new Request()
-                { Site = site, Uri = "http://www.usashopcn.com/Product/Details/127593" }
+                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127593" }
 
             });
 
@@ -65,7 +65,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.STATIC_HTML,
                 Request = new Request()
-                { Site = site, Uri = "http://www.usashopcn.com/Product/Details/126855" }
+                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/126855" }
 
             });
 

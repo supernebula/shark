@@ -12,7 +12,11 @@ namespace Plunder.Compoment
 
         #region Property
 
+        public string Id { get; private set; }
+
         public static Site Default => new Site();
+
+        public string Name { get; set; }
 
         public string Domain { get; set; }
 
@@ -30,6 +34,8 @@ namespace Plunder.Compoment
         public int SleepMilliseconds { get; set; }
 
         public int RetryTimes { get; set; }
+
+        public int AllowedRetryCount { get; set; }
 
         public int CycleRetryTimes { get; set; }
 
