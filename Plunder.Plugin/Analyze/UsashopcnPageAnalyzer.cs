@@ -32,7 +32,7 @@ namespace Plunder.Plugin.Analyze
 
         public PageResult Analyze(Request request, Response response)
         {
-            var site = SiteConfiguration.GetSite(request.SiteId);
+            var site = SiteConfiguration.Instance.GetSite(request.SiteId);
             var doc = new HtmlDocument();
             doc.Load(response.Content);
 

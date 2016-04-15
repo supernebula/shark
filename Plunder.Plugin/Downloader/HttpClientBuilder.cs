@@ -14,7 +14,7 @@ namespace Plunder.Plugin.Downloader
 
         public static HttpClient GetClient(string siteId, HttpProxyPool httpProxyPool = null)
         {
-            var site = SiteConfiguration.GetSite(siteId);
+            var site = SiteConfiguration.Instance.GetSite(siteId);
             var httpClientHandler = new HttpClientHandler {CookieContainer = new CookieContainer() {}};
             if(site.IsUseHttpProxy && httpProxyPool != null)
                 httpClientHandler.Proxy = httpProxyPool.RandomProxy();

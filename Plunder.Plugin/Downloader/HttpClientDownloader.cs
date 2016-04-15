@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plunder.Compoment;
-using Plunder.Proxy;
 using Plunder.Downloader;
 using System.Threading;
 
@@ -11,7 +10,6 @@ namespace Plunder.Plugin.Downloader
 {
     public class HttpClientDownloader : IDownloader
     {
-        private readonly string _topic;
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber;
         private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
@@ -23,6 +21,8 @@ namespace Plunder.Plugin.Downloader
         {
             get { return _doingTask.Count; }
         }
+
+        public bool IsDefault { get; set; }
 
         public HttpClientDownloader(int maxTaskNumber)
         {
@@ -49,7 +49,7 @@ namespace Plunder.Plugin.Downloader
                     };
                     return new Tuple<Request, Response>(req, resp);
 
-                }).ContinueWith((t) =>
+                }).ContinueWith(t =>
                 {
                     _doingTask.Remove(t.Id);
                     onDownloadComplete(t.Result.Item1, t.Result.Item2);

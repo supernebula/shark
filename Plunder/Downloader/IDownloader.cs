@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Plunder.Compoment;
 
 namespace Plunder.Downloader
@@ -11,8 +13,8 @@ namespace Plunder.Downloader
 
         bool IsAllowDownload();
 
-        int ThreadCount();
+        int DownloadingTaskCount { get;}
 
-        Task<Response> DownloadAsync(Request request);
+        void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete);
     }
 }

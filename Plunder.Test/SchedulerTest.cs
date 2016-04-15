@@ -146,6 +146,8 @@ namespace Plunder.Test
                 }
             }
 
+            public bool IsDefault { get; set; }
+
             public string Topic => TopicType.StaticHtml;
 
             public async Task<Response> DownloadAsync(Request request)
