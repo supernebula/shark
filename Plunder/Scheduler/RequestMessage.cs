@@ -1,12 +1,10 @@
 ﻿using System;
 using Plunder.Compoment;
 
-
 namespace Plunder.Scheduler
 {
     public class RequestMessage
     {
-        public Guid Id { get; set; }
         public string Topic { get; set; }
 
         public Request Request { get; set; }

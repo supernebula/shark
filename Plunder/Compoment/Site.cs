@@ -20,6 +20,9 @@ namespace Plunder.Compoment
         public string Name { get; set; }
 
         [DataMember]
+        public string Url { get; set; }
+
+        [DataMember]
         public string Domain { get; set; }
 
         [DataMember]

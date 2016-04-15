@@ -30,7 +30,6 @@ namespace Plunder.Plugin.Downloader
             _doingTask = new List<int>();
         }
 
-
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
         {
             foreach (Request req in requests)
@@ -58,7 +57,6 @@ namespace Plunder.Plugin.Downloader
 
             }
         }
-
 
         public async Task<Response> DownloadAsync(Request request)
         {

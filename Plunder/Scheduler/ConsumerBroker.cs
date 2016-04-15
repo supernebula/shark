@@ -20,6 +20,7 @@ namespace Plunder.Scheduler
         private readonly ResultPipeline _resultPipeline;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
+        public int ConsumeTotal { get; private set; }
 
         private bool _pulling;
 
@@ -51,7 +52,7 @@ namespace Plunder.Scheduler
             return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
         }
 
-        private int DownloadingTaskCount()
+        public int DownloadingTaskCount()
         {
             return _downloaders.Sum(e => e.DownloadingTaskCount);
         }
@@ -94,6 +95,7 @@ namespace Plunder.Scheduler
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request);
                 downloader.DownloadAsync(reqs, (req, resp) =>
                 {
+                    ConsumeTotal++; //并发问题
                     _messagePullAutoResetEvent.Set();
                     var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
                     var pageResult = pageAnalyzer.Analyze(req, resp);

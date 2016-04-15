@@ -2,6 +2,7 @@
 using System.Net.Http;
 using Plunder.Proxy;
 using Plunder.Compoment;
+using Plunder.Plugin.Compoment;
 
 namespace Plunder.Plugin.Downloader
 {

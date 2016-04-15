@@ -7,7 +7,7 @@ namespace Plunder.Compoment
     {
         public string SiteId { get; set; }
 
-        public string Topic { get; set; }
+        public string Channel { get; set; }
 
         public string Uri { get; set; }
 

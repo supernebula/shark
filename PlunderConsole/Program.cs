@@ -9,6 +9,7 @@ using Plunder.Compoment;
 using Plunder.Scheduler;
 using Plunder.Downloader;
 using Plunder.Plugin.Analyze;
+using Plunder.Plugin.Compoment;
 using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Downloader;
 
@@ -19,10 +20,28 @@ namespace PlunderConsole
         static Spider _spider;
         static void Main(string[] args)
         {
-            //ConsoleMultiAreaTest();
             RunSpider();
         }
+        static void RunSpider()
+        {
+            _spider = new Spider(new LineScheduler());
+            _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+            _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
+            var downloaders = new List<IDownloader> {new HttpClientDownloader(4)};
+            _spider.RegisterDownloader(downloaders);
 
+            var seedRequests = new List<RequestMessage>() {new RequestMessage()
+            {
+                Topic = TopicType.StaticHtml,
+                Request = new Request() { SiteId = SiteIndex.UsashopcnId, Uri = "http://www.usashopcn.com/Product/Details/127963"}
+            } };
+            _spider.Start(seedRequests);
+
+            var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
+        }
+
+
+        #region 控制台多缓冲区测试
 
         static void ConsoleMultiAreaTest()
         {
@@ -32,7 +51,7 @@ namespace PlunderConsole
                 Console.WriteLine(i + "AAAAA AAAAA AAAAA AAAAA" + i);
             }
 
-            
+
             for (int i = 0; i < 100; i++)
             {
                 if (i > 19)
@@ -47,30 +66,13 @@ namespace PlunderConsole
                     Console.SetCursorPosition(50, 19);
                     Console.MoveBufferArea(50, 1, 25, 20, 50, 0);
                 }
-                    
+
             }
 
             Console.ReadKey();
         }
 
-
-        static void RunSpider()
-        {
-            
-            var downloaders = new List<IDownloader>();
-            _spider = new Spider(new LineScheduler());
-
-            _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>("usashopcn");
-            _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
-            _spider.RegisterDownloader(downloaders);
-
-            var seedRequests = new List<RequestMessage>() {new RequestMessage() {Id = Guid.NewGuid(), Topic = TopicType.StaticHtml, Request = new Request()} };
-            _spider.Start(seedRequests);
-
-            var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
-        }
-
-
+        #endregion
 
     }
 }   

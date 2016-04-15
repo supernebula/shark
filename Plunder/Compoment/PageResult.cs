@@ -4,6 +4,8 @@ namespace Plunder.Compoment
 {
     public class PageResult
     {
+        public string Topic { get; set; }
+
         public Request Request { get; set; }
 
         public Response Response { get; set; }

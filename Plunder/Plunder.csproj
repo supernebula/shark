@@ -44,10 +44,10 @@
   <ItemGroup>
     <Compile Include="Analyze\FieldSelector.cs" />
     <Compile Include="Analyze\IPageAnalyzer.cs" />
-    <Compile Include="Compoment\SiteConfiguration.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
+    <Compile Include="SpiderStatus.cs" />
     <Compile Include="Storage\MessageRecord.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Proxy.cs" />

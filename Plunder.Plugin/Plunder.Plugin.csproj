@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Analyze\UsashopcnPageAnalyzer.cs" />
     <Compile Include="Compoment\Channel.cs" />
+    <Compile Include="Compoment\SiteConfiguration.cs" />
+    <Compile Include="Compoment\SiteIndex.cs" />
     <Compile Include="Downloader\HttpClientBuilder.cs" />
     <Compile Include="Downloader\HttpClientDownloader.cs" />
     <Compile Include="Downloader\TopicType.cs" />

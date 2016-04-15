@@ -8,13 +8,12 @@ namespace Plunder.Pipeline
 {
     public class ProducerModule : IResultPipelineModule
     {
+        private readonly IScheduler _scheduler;
 
         public ProducerModule(IScheduler scheduler)
         {
             _scheduler = scheduler;
         }
-
-        private IScheduler _scheduler;
 
         public string ModuleName
         {
@@ -40,8 +39,7 @@ namespace Plunder.Pipeline
         {
             await _scheduler.PushAsync(result.NewRequests.Select(e => new RequestMessage()
             {
-                Id = Guid.NewGuid(),
-                Topic = e.Topic,
+                Topic = result.Topic,
                 Request = e
             }));
         }

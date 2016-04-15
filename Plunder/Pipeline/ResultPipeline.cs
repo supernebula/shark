@@ -10,6 +10,8 @@ namespace Plunder.Pipeline
     {
         private readonly ConcurrentBag<IResultPipelineModule> _modules;
 
+        public int ResultTotal { get; private set; }
+
 
         public ResultPipeline()
         {
@@ -35,6 +37,7 @@ namespace Plunder.Pipeline
 
         public void Inject(PageResult data)
         {
+            ResultTotal++; //并发问题
             foreach (IResultPipelineModule module in _modules)
             {
                 module.ProcessAsync(data);

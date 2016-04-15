@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Plunder.Compoment;
 
-namespace Plunder.Compoment
+namespace Plunder.Plugin.Compoment
 {
     public class SiteConfiguration
     {
@@ -9,10 +10,11 @@ namespace Plunder.Compoment
 
         private static SiteConfiguration _instance;
 
-        public static SiteConfiguration Instance {
+        public static SiteConfiguration Instance
+        {
             get
             {
-                if(_instance == null)
+                if (_instance == null)
                     _instance = new SiteConfiguration();
                 return _instance;
             }
@@ -31,7 +33,8 @@ namespace Plunder.Compoment
         {
             var sites = new Dictionary<string, Site>();
             var site = Site.NewDefault;
-            site.Id = Guid.NewGuid().ToString();
+            site.Id = SiteIndex.UsashopcnId;
+            site.Domain = "http://www.usashopcn.com/";
             site.Domain = "www.usashopcn.com";
             site.IsUseHttpProxy = false;
             site.Name = "美国购物网";

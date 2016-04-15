@@ -12,16 +12,16 @@ using Site = Plunder.Compoment.Site;
 
 namespace Plunder.Plugin.Analyze
 {
-    public class UsashopcnPageAnalyzer : IPageAnalyzer 
+    public class UsashopcnPageAnalyzer : IPageAnalyzer
     {
-        public Guid Id { get; private set; }
-
-        public Site Site { get; private set; }
+        public static string SiteId => SiteIndex.UsashopcnId;
+        public Site Site { get; }
 
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
 
         public UsashopcnPageAnalyzer()
         {
+            Site = SiteConfiguration.Instance.GetSite(SiteId);
             _fieldXPaths = new Dictionary<string, string> {
                 { "Title","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/h2[1]"},
                 { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},

@@ -48,9 +48,9 @@ namespace Plunder
             _resultPipeline.RegisterModule(modules);
         }
 
-        public void RegisterPageAnalyzer<T>(string name) where T : IPageAnalyzer
+        public void RegisterPageAnalyzer<T>(string siteId) where T : IPageAnalyzer, new()
         {
-            _pageAnalyzerTypes.Add(name, typeof(T));
+            _pageAnalyzerTypes.Add(siteId, typeof(T));
         }
 
         public void RegisterDownloader(IDownloader downloader)
@@ -67,9 +67,16 @@ namespace Plunder
 
         #region Running and Monitoring
 
-        public string RunStatusInfo()
+        public SpiderStatus RunStatusInfo()
         {
-            throw new NotImplementedException();
+            var status = new SpiderStatus()
+            {
+                QueueCount = _scheduler.CurrentQueueCount(),
+                TaskCount = _consumerBroker.DownloadingTaskCount(),
+                ConsumeTotal = _consumerBroker.ConsumeTotal,
+                ResultTotal = _resultPipeline.ResultTotal
+            };
+            return status;
         }
 
         #endregion
