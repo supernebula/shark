@@ -7,24 +7,26 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
+
     public static class UserAgent
     {
-        public static List<KeyValuePair<string, string>> PCUserAgents;
+        public static List<KeyValuePair<string, string>> PcUserAgents;
 
         public static List<KeyValuePair<string, string>> MobileUserAgents;
 
-        public static string RandomUserAgent()
+        public static KeyValuePair<string, string> RandomUserAgent()
         {
-            var index = RandomUnitily.RealRandom(0, PCUserAgents.Count - 1);
-            return PCUserAgents[index].Value;
+            
+            var index = RandomUnitily.RealRandom(0, PcUserAgents.Count - 1);
+            return PcUserAgents[index];
         }
 
         static UserAgent()
         {
-            PCUserAgents = new List<KeyValuePair<string, string>>();
-            PCUserAgents
+            PcUserAgents = new List<KeyValuePair<string, string>>();
+            PcUserAgents
             //PC端
-            .Add("safari 5.1 – MAC", "Mozilla / 5.0(Macintosh; U; Intel Mac OS X 10_6_8; en - us) AppleWebKit / 534.50(KHTML, like Gecko) Version / 5.1 Safari / 534.50")
+            .Add("Safari 5.1 – MAC", "Mozilla / 5.0(Macintosh; U; Intel Mac OS X 10_6_8; en - us) AppleWebKit / 534.50(KHTML, like Gecko) Version / 5.1 Safari / 534.50")
             .Add("safari 5.1 – Windows", "Mozilla / 5.0(Windows; U; Windows NT 6.1; en - us) AppleWebKit / 534.50(KHTML, like Gecko) Version / 5.1 Safari / 534.50")
             .Add("IE 9.0", "Mozilla / 5.0(compatible; MSIE 9.0; Windows NT 6.1; Trident / 5.0")
             .Add("IE 8.0", "Mozilla / 4.0(compatible; MSIE 8.0; Windows NT 6.0; Trident / 4.0)")
@@ -61,7 +63,7 @@ namespace Plunder.Compoment
             .Add("Windows Phone Mango", "Mozilla / 5.0(compatible; MSIE 9.0; Windows Phone OS 7.5; Trident / 5.0; IEMobile / 9.0; HTC; Titan)")
             .Add("UC无", "UCWEB7.0.2.37 / 28 / 999")
             .Add("UC标准", "NOKIA5700 / UCWEB7.0.2.37 / 28 / 999")
-            .Add("UCOpenwave", "Openwave / UCWEB7.0.2.37 / 28 / 999")
+            .Add("UC Openwave", "Openwave / UCWEB7.0.2.37 / 28 / 999")
             .Add("UC Opera", "Mozilla / 4.0(compatible; MSIE 6.0; ) Opera / UCWEB7.0.2.37 / 28 / 999");
 
 

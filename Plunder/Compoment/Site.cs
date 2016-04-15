@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Runtime.Serialization;
 
 
@@ -11,9 +12,9 @@ namespace Plunder.Compoment
         #region Property
 
         [DataMember]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
-        public static Site Default => new Site();
+        public static Site NewDefault => DefaultSite();
 
         [DataMember]
         public string Name { get; set; }
@@ -54,7 +55,7 @@ namespace Plunder.Compoment
         public int TimeOut { get; set; }
 
         [DataMember]
-        public List<int> AcceptHttpStatCode { get; set; }
+        public List<HttpStatusCode> AcceptHttpStatCode { get; set; }
 
         [DataMember]
         public Dictionary<string, string> Headers { get; set; }
@@ -76,8 +77,7 @@ namespace Plunder.Compoment
         {
             return new Site()
             {
-                AcceptHttpStatCode = new List<int> { 200 }
-
+                AcceptHttpStatCode = new List<HttpStatusCode> { HttpStatusCode.OK }
             };
         }
 
