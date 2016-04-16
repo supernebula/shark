@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="EFRequestMessageProvider.cs" />
     <Compile Include="Maps\ProductMap.cs" />
     <Compile Include="Migrations\201603230807413_Create-Database.cs" />
     <Compile Include="Migrations\201603230807413_Create-Database.Designer.cs">

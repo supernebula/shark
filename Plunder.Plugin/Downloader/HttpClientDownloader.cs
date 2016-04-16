@@ -37,7 +37,7 @@ namespace Plunder.Plugin.Downloader
                 var task = Task.Run(async () =>
                 {
                     var client = HttpClientBuilder.GetClient(req.SiteId);
-                    var httpResp = await client.GetAsync(req.Uri);
+                    var httpResp = await client.GetAsync(req.Url);
                     var resp = new Response()
                     {
                         Request = req,
@@ -66,7 +66,7 @@ namespace Plunder.Plugin.Downloader
             {
                 var client = HttpClientBuilder.GetClient(request.SiteId);
                 _currentTaskNumber++;
-                var resposneMessage = await client.GetAsync(request.Uri);
+                var resposneMessage = await client.GetAsync(request.Url);
                 result.HttpStatusCode = resposneMessage.StatusCode;
                 result.IsSuccessCode = resposneMessage.IsSuccessStatusCode;
                 result.ReasonPhrase = resposneMessage.ReasonPhrase;

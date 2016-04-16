@@ -13,6 +13,6 @@ namespace Plunder.Scheduler
 
         public DateTime Timestamp { get; set; }
 
-        public string UniqueValue => Request.Uri.ToLower();
+        public string UniqueValue => Request.Url.ToLower();
     }
 }

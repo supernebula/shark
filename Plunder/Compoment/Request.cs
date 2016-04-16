@@ -9,7 +9,7 @@ namespace Plunder.Compoment
 
         public string Channel { get; set; }
 
-        public string Uri { get; set; }
+        public string Url { get; set; }
 
         public HttpMethod HttpMethod { get; set; }
 

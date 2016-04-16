@@ -30,12 +30,8 @@ namespace PlunderConsole
             var downloaders = new List<IDownloader> {new HttpClientDownloader(4)};
             _spider.RegisterDownloader(downloaders);
 
-            var seedRequests = new List<RequestMessage>() {new RequestMessage()
-            {
-                Topic = TopicType.StaticHtml,
-                Request = new Request() { SiteId = SiteIndex.UsashopcnId, Uri = "http://www.usashopcn.com/Product/Details/127963"}
-            } };
-            _spider.Start(seedRequests);
+
+            _spider.Start(TopicType.StaticHtml, SiteIndex.UsashopcnId, "http://www.usashopcn.com/");
 
             var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
         }

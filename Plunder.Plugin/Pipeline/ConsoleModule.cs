@@ -54,7 +54,7 @@ namespace Plunder.Plugin.Pipeline
         {
             await Task.Run(() =>
             {
-                WriteLine(String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Uri, data.Response.HttpStatusCode, data.NewRequests.Count()));
+                WriteLine(String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Url, data.Response.HttpStatusCode, data.NewRequests.Count()));
             });
         }
 

@@ -28,7 +28,7 @@ namespace Plunder.Test
                 Request = new Request()
                 {
                     SiteId = site.Id,
-                    Uri = "http://www.usashopcn.com/Product/Details/126993"
+                    Url = "http://www.usashopcn.com/Product/Details/126993"
                 }
 
             };
@@ -41,7 +41,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.StaticHtml,
                 Request = new Request()
-                { SiteId = site.Id,  Uri = "http://www.usashopcn.com/Product/Details/126334" }
+                { SiteId = site.Id,  Url = "http://www.usashopcn.com/Product/Details/126334" }
 
             });
 
@@ -49,7 +49,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.StaticHtml,
                 Request = new Request()
-                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127698" }
+                { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127698" }
 
             });
 
@@ -57,7 +57,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.StaticHtml,
                 Request = new Request()
-                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/127593" }
+                { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127593" }
 
             });
 
@@ -65,7 +65,7 @@ namespace Plunder.Test
             {
                 Topic = TopicType.StaticHtml,
                 Request = new Request()
-                { SiteId = site.Id, Uri = "http://www.usashopcn.com/Product/Details/126855" }
+                { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/126855" }
 
             });
 
@@ -152,8 +152,8 @@ namespace Plunder.Test
 
             public async Task<Response> DownloadAsync(Request request)
             {
-                Trace.WriteLine("start download:" + request.Uri);
-                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Uri, HttpStatusCode = HttpStatusCode.OK, MillisecondTime = 1, ReasonPhrase = "TestReasonPhrase" });
+                Trace.WriteLine("start download:" + request.Url);
+                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Url, HttpStatusCode = HttpStatusCode.OK, MillisecondTime = 1, ReasonPhrase = "TestReasonPhrase" });
 
             }
 

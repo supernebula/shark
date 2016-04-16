@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public class PriorityScheduler : DuplicateRemovedScheduler
+    public interface IRequestMessageProvider
     {
+        IEnumerable<RequestMessage> List(int number);
+        IEnumerable<RequestMessage> PriorityList(int number);
     }
 }

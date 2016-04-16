@@ -20,6 +20,8 @@ namespace Plunder
         private readonly List<IDownloader> _downloaders;
         private readonly Dictionary<string, Type> _pageAnalyzerTypes;
         private ConsumerBroker _consumerBroker;
+        private List<RequestMessage> _seedRequests;
+        private IRequestMessageProvider _requestMessageProvider;
 
         #endregion
 
@@ -32,6 +34,7 @@ namespace Plunder
             _resultPipeline.RegisterModule(new ProducerModule(_scheduler)); //ProducerModule is required
             _downloaders = new List<IDownloader>();
             _pageAnalyzerTypes = new Dictionary<string, Type>();
+            _seedRequests = new List<RequestMessage>();
         }
 
         private bool CheckConfig()
@@ -63,6 +66,12 @@ namespace Plunder
             _downloaders.AddRange(downloaders);
         }
 
+        public void RegisterMessageProvider(IRequestMessageProvider requestMessageProvider)
+        {
+            _requestMessageProvider = requestMessageProvider;
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #region Running and Monitoring
@@ -81,20 +90,29 @@ namespace Plunder
 
         #endregion
 
-
         public void Start(IEnumerable<RequestMessage> seedRequests)
         {
-            var seedRequestMessages = new List<RequestMessage>();
-            seedRequestMessages.AddRange(seedRequests);
-            if (!CheckConfig())
-                return;
-            Run(seedRequestMessages);
+            _seedRequests.AddRange(seedRequests);
+            Run();
         }
 
-        private void Run(IEnumerable<RequestMessage> seedRequests)
+        public void Start(string topic, string siteId, string url)
         {
+            var seed = new RequestMessage()
+            {
+                Topic = topic,
+                Request = new Request() { SiteId = siteId, Url = url}
+            };
+            _seedRequests.Add(seed);
+            Run();
+        }
+
+        private void Run()
+        {
+            if (!CheckConfig())
+                return;
             _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
-            _scheduler.PushAsync(seedRequests);
+            _scheduler.PushAsync(_seedRequests);
         }
     }
 }

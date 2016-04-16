@@ -38,7 +38,7 @@ namespace Plunder.Plugin.Analyze
 
             var resultFields = XpathSelect(doc, _fieldXPaths);
             var newRequests = FindNewRequest(doc, request, null);
-            resultFields.Add(new ResultField() { Name = "Uri", Value = request.Uri});
+            resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url});
             resultFields.Add(new ResultField() { Name = "SiteName", Value = site.Name });
             resultFields.Add(new ResultField() { Name = "SiteDomain", Value = site.Domain });
             resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
@@ -68,11 +68,11 @@ namespace Plunder.Plugin.Analyze
                     continue;
                 if (!String.IsNullOrWhiteSpace(newUrlPattern) && !regex.IsMatch(href))
                     continue;
-                if(href.Equals(request.Uri))
+                if(href.Equals(request.Url))
                     continue;
                 if(dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
-                newRequests.Add(new Request() { Uri = href, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
+                newRequests.Add(new Request() { Url = href, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
             }
             return newRequests;
         }

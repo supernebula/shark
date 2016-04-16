@@ -47,6 +47,7 @@
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
+    <Compile Include="Scheduler\IRequestMessageProvider.cs" />
     <Compile Include="SpiderStatus.cs" />
     <Compile Include="Storage\MessageRecord.cs" />
     <Compile Include="Compoment\PageResult.cs" />

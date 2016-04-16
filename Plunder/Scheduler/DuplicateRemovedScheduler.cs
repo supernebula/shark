@@ -9,7 +9,7 @@ namespace Plunder.Scheduler
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     {
 
-        private readonly BlockingCollection<RequestMessage> _queue;
+        protected readonly BlockingCollection<RequestMessage> _queue;
 
         private readonly BloomFilter<string> _bloomFilter; 
 
@@ -36,29 +36,15 @@ namespace Plunder.Scheduler
             return message;
         }
 
-        public List<RequestMessage> Poll(int size)
-        {
-            var result = new List<RequestMessage>();
-            while (size > 0)
-            {
-                RequestMessage message;
-                if (_queue.TryTake(out message, 0))
-                {
-                    result.Add(message);
-                    AccumulatedMessageTotal++;
-                }
-                size--;
-            }
-            return result;
-        }
+        public abstract List<RequestMessage> Poll(int size);
 
         public bool Push(RequestMessage message)
         {
-            if (_bloomFilter.Contains(message.Request.Uri))
+            if (_bloomFilter.Contains(message.Request.Url))
                 return false;
             if (!_queue.TryAdd(message))
                 return false;
-            _bloomFilter.Add(message.Request.Uri);
+            _bloomFilter.Add(message.Request.Url);
             return true;
         }
 
