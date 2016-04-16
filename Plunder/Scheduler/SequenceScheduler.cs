@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Scheduler
 {
-    public class LineScheduler : DuplicateRemovedScheduler
+    public class SequenceScheduler : DuplicateRemovedScheduler
     {
         public override List<RequestMessage> Poll(int size)
         {

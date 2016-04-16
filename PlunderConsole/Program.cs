@@ -24,7 +24,7 @@ namespace PlunderConsole
         }
         static void RunSpider()
         {
-            _spider = new Spider(new LineScheduler());
+            _spider = new Spider(new SequenceScheduler());
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
             var downloaders = new List<IDownloader> {new HttpClientDownloader(4)};

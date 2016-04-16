@@ -71,7 +71,7 @@
     <Compile Include="Scheduler\IMonitorableScheduler.cs" />
     <Compile Include="Scheduler\IProducer.cs" />
     <Compile Include="Scheduler\IScheduler.cs" />
-    <Compile Include="Scheduler\LineScheduler.cs" />
+    <Compile Include="Scheduler\SequenceScheduler.cs" />
     <Compile Include="Scheduler\PriorityScheduler.cs" />
     <Compile Include="Scheduler\RequestMessage.cs" />
     <Compile Include="Selector\ISelector.cs" />
