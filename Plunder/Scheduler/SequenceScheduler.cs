@@ -6,20 +6,6 @@ namespace Plunder.Scheduler
 {
     public class SequenceScheduler : DuplicateRemovedScheduler
     {
-        public override List<RequestMessage> Poll(int size)
-        {
-            var result = new List<RequestMessage>();
-            while (size > 0)
-            {
-                RequestMessage message;
-                if (_queue.TryTake(out message, 0))
-                {
-                    result.Add(message);
-                    AccumulatedMessageTotal++;
-                }
-                size--;
-            }
-            return result;
-        }
+
     }
 }

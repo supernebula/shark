@@ -36,7 +36,21 @@ namespace Plunder.Scheduler
             return message;
         }
 
-        public abstract List<RequestMessage> Poll(int size);
+        public List<RequestMessage> Poll(int size)
+        {
+            var result = new List<RequestMessage>();
+            while (size > 0)
+            {
+                RequestMessage message;
+                if (_queue.TryTake(out message, 0))
+                {
+                    result.Add(message);
+                    AccumulatedMessageTotal++;
+                }
+                size--;
+            }
+            return result;
+        }
 
         public bool Push(RequestMessage message)
         {
