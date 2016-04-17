@@ -11,7 +11,12 @@ namespace Plunder.Plugin.Downloader
     public class HttpClientDownloader : IDownloader
     {
         private readonly int _maxTaskNumber;
-        private int _currentTaskNumber;
+
+        //任务计数器 http://www.cnblogs.com/atskyline/p/3234805.html
+        //常常需要知道还在运行的Task的数量。所以需要对计数器进行原子的加减
+        //可以在任务新建的时候使用System.Threading.Interlocked.Increment(ref tasksRunning)
+        //在任务结束后System.Threading.Interlocked.Decrement(ref tasksRunning);
+        private int _currentTaskNumber; 
         private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
 
         public string Topic => TopicType.StaticHtml;
