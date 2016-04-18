@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Plunder.Analyze;
 using Plunder.Compoment;
 using Plunder.Scheduler;
@@ -37,10 +38,29 @@ namespace Plunder
             _seedRequests = new List<RequestMessage>();
         }
 
-        private bool CheckConfig()
+        private bool CheckConfig(out string error)
         {
-            //todo:加长各项配置
-            throw new NotImplementedException();
+            var checkInfo = new StringBuilder();
+            if (_scheduler == null)
+                checkInfo.AppendLine("Error:缺少具体的Scheduler");
+            if (_resultPipeline == null)
+                checkInfo.AppendLine("Error:缺少ResultPipeline");
+            else
+            {
+                if (_resultPipeline.ModuleCount == 0)
+                    checkInfo.AppendLine("Error:ResultPipeline没有包含任何Module");
+                if (_resultPipeline.IsContainProducer())
+                    checkInfo.AppendLine("Error:ResultPipeline缺少ProducerModule");
+            }
+
+            if (_downloaders == null || !_downloaders.Any())
+                checkInfo.AppendLine("Error:缺少Downloader");
+
+            if (_pageAnalyzerTypes == null || !_pageAnalyzerTypes.Any())
+                checkInfo.AppendLine("Error:缺少PageAnalyzer");
+
+            error = checkInfo.ToString();
+            return checkInfo.Length == 0;
         }
 
         #endregion
@@ -109,7 +129,8 @@ namespace Plunder
 
         private void Run()
         {
-            if (!CheckConfig())
+            string err;
+            if (!CheckConfig(out err))
                 return;
             _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
             _scheduler.PushAsync(_seedRequests);

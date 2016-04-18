@@ -25,13 +25,13 @@ namespace PlunderConsole
         static void RunSpider()
         {
             _spider = new Spider(new SequenceScheduler());
+            var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
+            _spider.RegisterDownloader(downloaders);
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
-            var downloaders = new List<IDownloader> {new HttpClientDownloader(4)};
-            _spider.RegisterDownloader(downloaders);
 
 
-            _spider.Start(TopicType.StaticHtml, SiteIndex.UsashopcnId, "http://www.usashopcn.com/");
+            _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
 
             var statusTimer = new Timer(spider => { Console.WriteLine(((Spider) spider).RunStatusInfo()); }, _spider, 0, 2000);
         }

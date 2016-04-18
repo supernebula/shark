@@ -33,7 +33,7 @@ namespace Plunder.Plugin.Compoment
         {
             var sites = new Dictionary<string, Site>();
             var site = Site.NewDefault;
-            site.Id = SiteIndex.UsashopcnId;
+            site.Id = SiteIndex.Usashopcn;
             site.Domain = "http://www.usashopcn.com/";
             site.Domain = "www.usashopcn.com";
             site.IsUseHttpProxy = false;

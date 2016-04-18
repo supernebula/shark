@@ -1,20 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Plunder.Compoment;
+using Plunder.Plugin.Compoment;
 using Plunder.Analyze;
 using HtmlAgilityPack;
-
-using Plunder.Plugin.Compoment;
-using Site = Plunder.Compoment.Site;
 
 namespace Plunder.Plugin.Analyze
 {
     public class UsashopcnPageAnalyzer : IPageAnalyzer
     {
-        public static string SiteId => SiteIndex.UsashopcnId;
+        public static string SiteId => SiteIndex.Usashopcn;
         public Site Site { get; }
 
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
@@ -32,15 +29,14 @@ namespace Plunder.Plugin.Analyze
 
         public PageResult Analyze(Request request, Response response)
         {
-            var site = SiteConfiguration.Instance.GetSite(request.SiteId);
             var doc = new HtmlDocument();
             doc.Load(response.Content);
 
             var resultFields = XpathSelect(doc, _fieldXPaths);
             var newRequests = FindNewRequest(doc, request, null);
             resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url});
-            resultFields.Add(new ResultField() { Name = "SiteName", Value = site.Name });
-            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = site.Domain });
+            resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
+            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
             resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
             resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
             resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });

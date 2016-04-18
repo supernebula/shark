@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading;
 
 
 namespace Plunder.Pipeline
@@ -10,7 +11,10 @@ namespace Plunder.Pipeline
     {
         private readonly ConcurrentBag<IResultPipelineModule> _modules;
 
-        public int ResultTotal { get; private set; }
+        private int _resultTotal;
+        public int ResultTotal => _resultTotal;
+
+        public int ModuleCount => _modules.Count;
 
 
         public ResultPipeline()
@@ -23,6 +27,12 @@ namespace Plunder.Pipeline
             _modules = new ConcurrentBag<IResultPipelineModule>(modules);
         }
 
+        public bool IsContainProducer()
+        {
+            return _modules.OfType<ProducerModule>().Any();
+        }
+
+
         public void RegisterModule(IResultPipelineModule module)
         {
             if (_modules.Any(e => e.GetType() == module.GetType()))
@@ -32,12 +42,12 @@ namespace Plunder.Pipeline
 
         public void RegisterModule(IEnumerable<IResultPipelineModule> modules)
         {
-            modules.ToList().ForEach(e => RegisterModule(e));
+            modules.ToList().ForEach(RegisterModule);
         }
 
         public void Inject(PageResult data)
         {
-            ResultTotal++; //并发问题
+            Interlocked.Increment(ref _resultTotal);
             foreach (IResultPipelineModule module in _modules)
             {
                 module.ProcessAsync(data);

@@ -11,20 +11,14 @@ namespace Plunder.Plugin.Downloader
     public class HttpClientDownloader : IDownloader
     {
         private readonly int _maxTaskNumber;
-
-        //任务计数器 http://www.cnblogs.com/atskyline/p/3234805.html
-        //常常需要知道还在运行的Task的数量。所以需要对计数器进行原子的加减
-        //可以在任务新建的时候使用System.Threading.Interlocked.Increment(ref tasksRunning)
-        //在任务结束后System.Threading.Interlocked.Decrement(ref tasksRunning);
         private int _currentTaskNumber; 
         private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
 
         public string Topic => TopicType.StaticHtml;
-        private List<int> _doingTask;
 
         public int DownloadingTaskCount
         {
-            get { return _doingTask.Count; }
+            get { return _currentTaskNumber; }
         }
 
         public bool IsDefault { get; set; }
@@ -32,45 +26,49 @@ namespace Plunder.Plugin.Downloader
         public HttpClientDownloader(int maxTaskNumber)
         {
             _maxTaskNumber = maxTaskNumber;
-            _doingTask = new List<int>();
         }
 
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
         {
             foreach (Request req in requests)
             {
-                var task = Task.Run(async () =>
+                Interlocked.Increment(ref _currentTaskNumber);
+                Task.Run(async () =>
                 {
-                    var client = HttpClientBuilder.GetClient(req.SiteId);
-                    var httpResp = await client.GetAsync(req.Url);
-                    var resp = new Response()
+                    try
                     {
-                        Request = req,
-                        HttpStatusCode = httpResp.StatusCode,
-                        IsSuccessCode = httpResp.IsSuccessStatusCode,
-                        ReasonPhrase = httpResp.ReasonPhrase,
-                        Content = httpResp.IsSuccessStatusCode ? await httpResp.Content.ReadAsStringAsync() : null
-                    };
-                    return new Tuple<Request, Response>(req, resp);
+                        var client = HttpClientBuilder.GetClient(req.SiteId);
+                        var httpResp = await client.GetAsync(req.Url);
+                        var resp = new Response()
+                        {
+                            Request = req,
+                            HttpStatusCode = httpResp.StatusCode,
+                            IsSuccessCode = httpResp.IsSuccessStatusCode,
+                            ReasonPhrase = httpResp.ReasonPhrase,
+                            Content = httpResp.IsSuccessStatusCode ? await httpResp.Content.ReadAsStringAsync() : null
+                        };
+                        return new Tuple<Request, Response>(req, resp);
+                    }
+                    finally
+                    {
+                        Interlocked.Increment(ref _currentTaskNumber);
+                    }
 
                 }).ContinueWith(t =>
                 {
-                    _doingTask.Remove(t.Id);
                     onDownloadComplete(t.Result.Item1, t.Result.Item2);
-                });
-                _doingTask.Add(task.Id);
-
+                });  
             }
         }
 
         public async Task<Response> DownloadAsync(Request request)
         {
+            Interlocked.Increment(ref _currentTaskNumber);
             var result = new Response() {Request = request};
             await _ctnLock.WaitAsync();
             try
             {
                 var client = HttpClientBuilder.GetClient(request.SiteId);
-                _currentTaskNumber++;
                 var resposneMessage = await client.GetAsync(request.Url);
                 result.HttpStatusCode = resposneMessage.StatusCode;
                 result.IsSuccessCode = resposneMessage.IsSuccessStatusCode;
@@ -79,11 +77,11 @@ namespace Plunder.Plugin.Downloader
                 {
                     result.Content = await resposneMessage.Content.ReadAsStringAsync();
                 }
-                _currentTaskNumber--;
             }
             finally
             {
                 _ctnLock.Release();
+                Interlocked.Decrement(ref _currentTaskNumber);
             }
             return result;
         }
