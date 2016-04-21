@@ -51,7 +51,7 @@ namespace Plunder.Plugin.Downloader
                     }
                     finally
                     {
-                        Interlocked.Increment(ref _currentTaskNumber);
+                        Interlocked.Decrement(ref _currentTaskNumber);
                     }
 
                 }).ContinueWith(t =>
