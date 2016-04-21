@@ -28,7 +28,26 @@ namespace PlunderTestConsole
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
             _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
 
-            _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, "http://www.usashopcn.com/Product/Details/120039");
+            _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, GetUrls());
+
+            var statusTimer = new Timer(spider =>
+            {
+                var status = ((Spider) spider).RunStatusInfo();
+                Console.WriteLine(String.Format("QueueCount:{0}, TaskCount={1}, ConsumeTotal:{2},  ResultTotal:{3}", status.QueueCount, status.TaskCount, status.ConsumeTotal, status.ResultTotal));
+            }, _spider, 2000, 2000);
+
+        }
+
+
+        string[] GetUrls()
+        {
+            var urls = new List<string>();
+            for (int i = 0; i < 1000; i++)
+            {
+                urls.Add("http://www.usashopcn.com/Product/Details/120039?num=" + i);
+            }
+
+            return urls.ToArray();
         }
     }
 }

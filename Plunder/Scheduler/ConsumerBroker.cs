@@ -64,14 +64,23 @@ namespace Plunder.Scheduler
 
         private bool _stopPull;
 
+        private bool _first = true;
+
         private void PullMessage()
         {
             while (true)
             {
                 if (_stopPull)
                     break;
-                _messagePullAutoResetEvent.WaitOne();
-                if (_pulling || DownloadingTaskCount() >= _maxDownloadThreadNumber)
+                if(!_first)
+                {
+                    _messagePullAutoResetEvent.WaitOne();
+                    _first = false;
+                }
+
+                var downloadingNumber = DownloadingTaskCount();
+
+                if (_pulling || downloadingNumber >= _maxDownloadThreadNumber)
                 {
                     _messagePullAutoResetEvent.Reset();
                     continue;
@@ -83,8 +92,9 @@ namespace Plunder.Scheduler
 
                 if (message == null)
                     message = _scheduler.WaitUntillPoll();
-                Consume(message);
                 _messagePullAutoResetEvent.Reset();
+                Consume(message);
+                
             }
         }
 
@@ -92,11 +102,15 @@ namespace Plunder.Scheduler
         {
             _downloaders.ForEach(downloader =>
             {
-                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request);
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
                 downloader.DownloadAsync(reqs, (req, resp) =>
                 {
-                    ConsumeTotal++; //并发问题
+
+                    //ConsumeTotal++; //并发问题
                     _messagePullAutoResetEvent.Set();
+                    Console.WriteLine("_messagePullAutoResetEvent.Set()");
+                    return;
+
                     var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
                     var pageResult = pageAnalyzer.Analyze(req, resp);
                     _resultPipeline.Inject(pageResult);

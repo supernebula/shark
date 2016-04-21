@@ -40,17 +40,20 @@ namespace PlunderTestConsole
                     {
 
                         Console.WriteLine(@"开始执行Http下载，占位符." + req.Url);
-                        await Task.Delay(1000);
+                        await Task.Delay(300);
                         Console.WriteLine(@"Http下载完成，占位符" + req.Url);
+                        return new Tuple<Request, Response>(new Request(), new Response());
                     }
                     finally
                     {
-                        Interlocked.Increment(ref _currentTaskNumber);
+                        Interlocked.Decrement(ref _currentTaskNumber);
                     }
 
                 }).ContinueWith(t =>
                 {
-                    Console.WriteLine(@"执行下载完成事件onDownloadComplete，占位符");
+                    //Console.WriteLine(@"执行下载完成事件onDownloadComplete，占位符");
+                    onDownloadComplete(t.Result.Item1, t.Result.Item2);
+                    
                 });
             }
         }

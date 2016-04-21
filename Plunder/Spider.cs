@@ -40,6 +40,7 @@ namespace Plunder
 
         private bool CheckConfig(out string error)
         {
+            Console.WriteLine("检查配置");
             var checkInfo = new StringBuilder();
             if (_scheduler == null)
                 checkInfo.AppendLine("Error:缺少具体的Scheduler");
@@ -49,7 +50,7 @@ namespace Plunder
             {
                 if (_resultPipeline.ModuleCount == 0)
                     checkInfo.AppendLine("Error:ResultPipeline没有包含任何Module");
-                if (_resultPipeline.IsContainProducer())
+                if (!_resultPipeline.IsContainProducer())
                     checkInfo.AppendLine("Error:ResultPipeline缺少ProducerModule");
             }
 
@@ -116,14 +117,19 @@ namespace Plunder
             Run();
         }
 
-        public void Start(string topic, string siteId, string url)
+        public void Start(string topic, string siteId, params string[] urls)
         {
-            var seed = new RequestMessage()
+            var seeds = new List<RequestMessage>();
+            foreach (var url in urls)
             {
-                Topic = topic,
-                Request = new Request() { SiteId = siteId, Url = url}
-            };
-            _seedRequests.Add(seed);
+                var seed = new RequestMessage()
+                {
+                    Topic = topic,
+                    Request = new Request() { SiteId = siteId, Url = url }
+                };
+                seeds.Add(seed);
+            }
+            _seedRequests.AddRange(seeds);
             Run();
         }
 
@@ -131,17 +137,23 @@ namespace Plunder
         {
             string err;
             if (!CheckConfig(out err))
+            {
+                Console.WriteLine(err);
                 return;
+            }
+            
 
 #if DEBUG
 
             _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
-            _scheduler.PushAsync(_seedRequests);
+            _scheduler.Push(_seedRequests);
+            _consumerBroker.Start();
 #else
             var thread = new Thread(() =>
             {
                 _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
                 _scheduler.PushAsync(_seedRequests);
+            _consumerBroker.Start();
             });
             thread.Start();
 #endif

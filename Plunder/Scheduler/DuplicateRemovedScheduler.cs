@@ -69,10 +69,13 @@ namespace Plunder.Scheduler
 
         public void Push(IEnumerable<RequestMessage> messages)
         {
+            
             foreach (var message in messages)
             {
                 _queue.TryAdd(message);
             }
+
+            Console.WriteLine("ConcurrentQueue.Count:" + _queue.Count);
         }
 
         public async Task PushAsync(IEnumerable<RequestMessage> messages)
