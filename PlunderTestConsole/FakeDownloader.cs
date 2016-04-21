@@ -9,7 +9,7 @@ using Plunder.Downloader;
 using Plunder.Plugin.Downloader;
 
 namespace PlunderTestConsole
-{
+{ 
     public class FakeDownloader : IDownloader
     {
         private readonly int _maxTaskNumber;

@@ -11,7 +11,7 @@ using Plunder.Pipeline;
 
 
 namespace Plunder.Scheduler
-{
+{ 
     public class ConsumerBroker : IDisposable
     {
         private readonly IMonitorableScheduler _scheduler;

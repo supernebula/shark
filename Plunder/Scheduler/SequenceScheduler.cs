@@ -7,5 +7,6 @@ namespace Plunder.Scheduler
     public class SequenceScheduler : DuplicateRemovedScheduler
     {
 
+
     }
 }

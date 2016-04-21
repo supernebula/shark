@@ -7,7 +7,7 @@ using Plunder.Utilities;
 namespace Plunder.Scheduler
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
-    {
+    { 
 
         protected readonly BlockingCollection<RequestMessage> _queue;
 
