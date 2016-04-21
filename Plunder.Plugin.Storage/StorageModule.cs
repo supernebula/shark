@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
 using System.Collections.Generic;
+using System.Linq;
 using Plunder.Plugin.Storage.Models;
 using Plunder.Plugin.Storage.Repositories;
 
@@ -32,7 +33,7 @@ namespace Plunder.Plugin.Storage
         public async Task ProcessAsync(PageResult pageResult)
         {
             await Task.Run(() => {
-                if ("product".Equals(pageResult.Channel))
+                if ("product".Equals(pageResult.Channel) && pageResult.Data != null && pageResult.Data.Any())
                 {
                     var product = ModelBuilder<Product>(pageResult.Data);
                     var repository = new ProductRepository();

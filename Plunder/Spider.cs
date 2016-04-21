@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Plunder.Analyze;
 using Plunder.Compoment;
 using Plunder.Scheduler;
@@ -131,8 +132,25 @@ namespace Plunder
             string err;
             if (!CheckConfig(out err))
                 return;
+
+#if DEBUG
+
             _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
             _scheduler.PushAsync(_seedRequests);
+#else
+            var thread = new Thread(() =>
+            {
+                _consumerBroker = new ConsumerBroker(10, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
+                _scheduler.PushAsync(_seedRequests);
+            });
+            thread.Start();
+#endif
+
+
+
+
+
+
         }
     }
 }

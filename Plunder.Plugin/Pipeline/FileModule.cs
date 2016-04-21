@@ -37,8 +37,9 @@ namespace Plunder.Plugin.Pipeline
         {
             await Task.Run(() =>
             {
+                var newReqCount = data.NewRequests == null ? 0 : data.NewRequests.Count();
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-                File.AppendAllLines(baseDir + "page_result.txt", new List<string>() { String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Url, data.Response.HttpStatusCode, data.NewRequests.Count()) }, Encoding.UTF8);
+                File.AppendAllLines(baseDir + "page_result.txt", new List<string>() { String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Url, data.Response.HttpStatusCode, newReqCount) }, Encoding.UTF8);
             });
             
         }
