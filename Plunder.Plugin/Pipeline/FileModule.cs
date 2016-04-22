@@ -12,21 +12,9 @@ namespace Plunder.Plugin.Pipeline
 {
     public class FileModule : IResultPipelineModule
     {
-        public string ModuleName
-        {
-            get
-            {
-                return "文件存储模块";
-            }
-        }
+        public string ModuleName => "文件存储模块";
 
-        public string ModuleDescription
-        {
-            get
-            {
-                return "数据持久化到文件";
-            }
-        }
+        public string ModuleDescription => "数据持久化到文件";
 
         public void Init(object context)
         {

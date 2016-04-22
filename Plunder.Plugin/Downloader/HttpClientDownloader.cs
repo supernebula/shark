@@ -32,26 +32,33 @@ namespace Plunder.Plugin.Downloader
         {
             foreach (Request req in requests)
             {
-                Interlocked.Increment(ref _currentTaskNumber);
+                // _currentTaskNumber++
+                Interlocked.Increment(ref _currentTaskNumber); 
                 Task.Run(async () =>
                 {
                     try
                     {
                         var client = HttpClientBuilder.GetClient(req.SiteId);
+                        Console.WriteLine(@"开始执行Http下载，占位符." + req.Url);
                         var httpResp = await client.GetAsync(req.Url);
+                        string content = null;
+                        if (httpResp.IsSuccessStatusCode)
+                            content = await httpResp.Content.ReadAsStringAsync();
+                        Console.WriteLine(@"下载完成:" + req.Url);
                         var resp = new Response()
                         {
                             Request = req,
                             HttpStatusCode = httpResp.StatusCode,
                             IsSuccessCode = httpResp.IsSuccessStatusCode,
                             ReasonPhrase = httpResp.ReasonPhrase,
-                            Content = httpResp.IsSuccessStatusCode ? await httpResp.Content.ReadAsStringAsync() : null
+                            Content = content
                         };
                         return new Tuple<Request, Response>(req, resp);
                     }
                     finally
                     {
-                        Interlocked.Decrement(ref _currentTaskNumber);
+                        // _currentTaskNumber--
+                        Interlocked.Decrement(ref _currentTaskNumber); 
                     }
 
                 }).ContinueWith(t =>

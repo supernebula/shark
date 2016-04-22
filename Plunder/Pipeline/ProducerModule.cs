@@ -15,15 +15,9 @@ namespace Plunder.Pipeline
             _scheduler = scheduler;
         }
 
-        public string ModuleName
-        {
-            get { return "生产者模块"; }
-        }
+        public string ModuleName => "生产者模块";
 
-        public string ModuleDescription
-        {
-            get { return "从结果中发现新的url并封装为请求消息，交付给队列"; }
-        }
+        public string ModuleDescription => "从结果中发现新的url并封装为请求消息，交付给队列";
 
         public void Dispose()
         {

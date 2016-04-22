@@ -145,7 +145,7 @@ namespace Plunder
 
 #if DEBUG
 
-            _consumerBroker = new ConsumerBroker(100, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
+            _consumerBroker = new ConsumerBroker(5, _scheduler, _downloaders, _resultPipeline, _pageAnalyzerTypes);
             _scheduler.Push(_seedRequests);
             _consumerBroker.Start();
 #else

@@ -62,6 +62,12 @@ namespace Plunder.Scheduler
             PullMessage();
         }
 
+        public void Stop()
+        {
+
+            _stopPull = true;
+        }
+
         private bool _stopPull;
 
         private bool _first = true;
@@ -108,6 +114,7 @@ namespace Plunder.Scheduler
 
                     //ConsumeTotal++; //并发问题
                     _messagePullAutoResetEvent.Set();
+                    Console.WriteLine("Html:" + resp.Content);
                     Console.WriteLine("_messagePullAutoResetEvent.Set()");
                     return;
 
