@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plunder.Utilities;
+using System.Threading;
 
 namespace Plunder.Scheduler
 {
@@ -11,26 +12,31 @@ namespace Plunder.Scheduler
 
         protected readonly BlockingCollection<RequestMessage> _queue;
 
-        private readonly BloomFilter<string> _bloomFilter; 
+        private readonly BloomFilter<string> _bloomFilter;
 
-        protected int AccumulatedMessageTotal { get; set; }
+        private int _accumulatedMessageTotal;
+
+        protected int AccumulatedMessageTotal => _accumulatedMessageTotal;
 
         protected DuplicateRemovedScheduler()
         {
             _bloomFilter  = new BloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             _queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
-            AccumulatedMessageTotal = 0;
+            _accumulatedMessageTotal = 0;
         }
 
         public RequestMessage WaitUntillPoll()
         {
-            AccumulatedMessageTotal++;
+            //AccumulatedMessageTotal++;
+            Interlocked.Increment(ref _accumulatedMessageTotal);
+            
             return _queue.Take();
         }
 
         public RequestMessage Poll()
         {
-            AccumulatedMessageTotal++;
+            //AccumulatedMessageTotal++;
+            Interlocked.Increment(ref _accumulatedMessageTotal);
             RequestMessage message;
             _queue.TryTake(out message, 0);
             return message;
@@ -45,7 +51,8 @@ namespace Plunder.Scheduler
                 if (_queue.TryTake(out message, 0))
                 {
                     result.Add(message);
-                    AccumulatedMessageTotal++;
+                    //AccumulatedMessageTotal++;
+                    Interlocked.Increment(ref _accumulatedMessageTotal);
                 }
                 size--;
             }
