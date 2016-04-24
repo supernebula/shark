@@ -28,7 +28,7 @@ namespace Plunder.Plugin.Downloader
             _maxTaskNumber = maxTaskNumber;
         }
 
-        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
+        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {
             foreach (Request req in requests)
             {
@@ -64,7 +64,7 @@ namespace Plunder.Plugin.Downloader
                 }).ContinueWith(t =>
                 {
                     onDownloadComplete(t.Result.Item1, t.Result.Item2);
-                });  
+                }).ContinueWith(t => onConsumed());  
             }
         }
 
@@ -96,6 +96,11 @@ namespace Plunder.Plugin.Downloader
         public bool IsAllowDownload()
         {
             return _maxTaskNumber > _currentTaskNumber;
+        }
+
+        public Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded)
+        {
+            throw new NotImplementedException();
         }
     }
 }

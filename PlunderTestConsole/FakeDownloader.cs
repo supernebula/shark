@@ -29,7 +29,7 @@ namespace PlunderTestConsole
 
         public string Topic => TopicType.StaticHtml;
 
-        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete)
+        public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {
             foreach (Request req in requests)
             {
@@ -53,14 +53,20 @@ namespace PlunderTestConsole
                 {
                     //Console.WriteLine(@"执行下载完成事件onDownloadComplete，占位符");
                     onDownloadComplete(t.Result.Item1, t.Result.Item2);
-                    
-                });
+                }).ContinueWith(t => onConsumed);
             }
+        }
+
+        public Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsAllowDownload()
         {
             return _maxTaskNumber > _currentTaskNumber;
         }
+
+
     }
 }

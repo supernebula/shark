@@ -100,8 +100,14 @@ namespace Plunder.Scheduler
                     message = _scheduler.WaitUntillPoll();
                 _messagePullAutoResetEvent.Reset();
                 Consume(message);
-                
             }
+        }
+
+
+        private void Consumed()
+        {
+            //ConsumeTotal++;
+            _messagePullAutoResetEvent.Set();
         }
 
         private void Consume(params RequestMessage[] messages)
@@ -112,15 +118,32 @@ namespace Plunder.Scheduler
                 downloader.DownloadAsync(reqs, (req, resp) =>
                 {
 
-                    //ConsumeTotal++; //并发问题
-                    _messagePullAutoResetEvent.Set();
+                    
                     Console.WriteLine("Html:" + resp.Content);
                     Console.WriteLine("_messagePullAutoResetEvent.Set()");
-                    return;
+                    //return;
 
-                    var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
-                    var pageResult = pageAnalyzer.Analyze(req, resp);
-                    _resultPipeline.Inject(pageResult);
+                    //var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
+                    //var pageResult = pageAnalyzer.Analyze(req, resp);
+                    //_resultPipeline.Inject(pageResult);
+                }, Consumed);
+            });
+        }
+
+        private void Consume2(params RequestMessage[] messages)
+        {
+            _downloaders.ForEach(downloader =>
+            {
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
+                reqs.ForEach(request => {
+                    downloader.DownloadAsync(request, (req, resp) =>
+                    {
+                        Console.WriteLine("Html:" + resp.Content);
+                        Console.WriteLine("_messagePullAutoResetEvent.Set()");
+                        var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
+                        var pageResult = pageAnalyzer.Analyze(req, resp);
+                        _resultPipeline.Inject(pageResult);
+                    }).ContinueWith(t => Consumed());
                 });
             });
         }

@@ -157,7 +157,13 @@ namespace Plunder.Test
 
             }
 
-            public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> singleContinueWith)
+            public Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded)
+            {
+                throw new NotImplementedException();
+            }
+
+
+            public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloaded, Action onConsumed)
             {
                 throw new NotImplementedException();
             }
