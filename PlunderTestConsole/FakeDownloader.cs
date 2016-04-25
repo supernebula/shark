@@ -67,6 +67,9 @@ namespace PlunderTestConsole
             return _maxTaskNumber > _currentTaskNumber;
         }
 
-
+        public Task<Tuple<Request, Response>> DownloadAsync(Request request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

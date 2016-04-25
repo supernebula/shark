@@ -17,6 +17,8 @@ namespace Plunder.Downloader
 
         void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloaded, Action onConsumed);
 
-        Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded);
+        //Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded);
+
+        Task<Tuple<Request, Response>> DownloadAsync(Request request);
     }
 }

@@ -178,6 +178,11 @@ namespace Plunder.Test
             {
                 return 0;
             }
+
+            Task<Tuple<Request, Response>> IDownloader.DownloadAsync(Request request)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class TestPageAnalyzer : IPageAnalyzer

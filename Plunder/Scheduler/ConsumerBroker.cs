@@ -110,6 +110,12 @@ namespace Plunder.Scheduler
             _messagePullAutoResetEvent.Set();
         }
 
+        private void Downloaded()
+        {
+            //ConsumeTotal++;
+            _messagePullAutoResetEvent.Set();
+        }
+
         private void Consume(params RequestMessage[] messages)
         {
             _downloaders.ForEach(downloader =>
@@ -135,15 +141,18 @@ namespace Plunder.Scheduler
             _downloaders.ForEach(downloader =>
             {
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
-                reqs.ForEach(request => {
-                    downloader.DownloadAsync(request, (req, resp) =>
-                    {
-                        Console.WriteLine("Html:" + resp.Content);
-                        Console.WriteLine("_messagePullAutoResetEvent.Set()");
-                        var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
-                        var pageResult = pageAnalyzer.Analyze(req, resp);
-                        _resultPipeline.Inject(pageResult);
-                    }).ContinueWith(t => Consumed());
+                reqs.ForEach(request =>
+                {
+                    downloader.DownloadAsync(request)
+                        .ContinueWith(t =>
+                        {
+                            Downloaded();
+                            Console.WriteLine("Html:" + t.Result.Item2.Content);
+                            Console.WriteLine("_messagePullAutoResetEvent.Set()");
+                            var pageAnalyzer = GeneratePageAnalyzer(t.Result.Item1.SiteId);
+                            var pageResult = pageAnalyzer.Analyze(t.Result.Item1, t.Result.Item2);
+                            _resultPipeline.Inject(pageResult);
+                        });
                 });
             });
         }

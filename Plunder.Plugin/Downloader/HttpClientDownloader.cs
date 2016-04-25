@@ -12,7 +12,7 @@ namespace Plunder.Plugin.Downloader
     {
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber; 
-        private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
+        //private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
 
         public string Topic => TopicType.StaticHtml;
 
@@ -68,29 +68,36 @@ namespace Plunder.Plugin.Downloader
             }
         }
 
-        public async Task<Response> DownloadAsync(Request request)
+        public async Task<Tuple<Request, Response>> DownloadAsync(Request request)
         {
-            Interlocked.Increment(ref _currentTaskNumber);
-            var result = new Response() {Request = request};
-            await _ctnLock.WaitAsync();
             try
             {
+                Interlocked.Increment(ref _currentTaskNumber);
                 var client = HttpClientBuilder.GetClient(request.SiteId);
-                var resposneMessage = await client.GetAsync(request.Url);
-                result.HttpStatusCode = resposneMessage.StatusCode;
-                result.IsSuccessCode = resposneMessage.IsSuccessStatusCode;
-                result.ReasonPhrase = resposneMessage.ReasonPhrase;
-                if (resposneMessage.IsSuccessStatusCode)
+                var httpResp = await client.GetAsync(request.Url);
+                string content = null;
+                if (httpResp.IsSuccessStatusCode)
                 {
-                    result.Content = await resposneMessage.Content.ReadAsStringAsync();
+                    content = await httpResp.Content.ReadAsStringAsync();
                 }
+
+                var resp = new Response()
+                {
+                    HttpStatusCode = httpResp.StatusCode,
+                    IsSuccessCode = httpResp.IsSuccessStatusCode,
+                    ReasonPhrase = httpResp.ReasonPhrase,
+                    Content = content
+                };
+                return new Tuple<Request, Response>(request, resp);
+            }
+            catch (Exception)
+            {
+                throw;
             }
             finally
             {
-                _ctnLock.Release();
                 Interlocked.Decrement(ref _currentTaskNumber);
             }
-            return result;
         }
 
         public bool IsAllowDownload()
