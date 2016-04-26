@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.RegularExpressions;
 using Plunder.Compoment;
 using Plunder.Plugin.Compoment;
@@ -24,13 +27,18 @@ namespace Plunder.Plugin.Analyze
                 { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},
                 { "Description","/html[1]/body[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]"},
                 { "PicUri","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]/@src[1]"},
-            }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value });
+            }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value }).ToList();
         }
 
         public PageResult Analyze(Request request, Response response)
         {
             var doc = new HtmlDocument();
-            doc.Load(response.Content);
+            //var stream = new MemoryStream();
+            //var bytes = Encoding.UTF8.GetBytes(response.Content);
+            //stream.Write(bytes, 0, bytes.Length);
+            //byte[] b = stream.ToArray();
+            //string s = Encoding.UTF8.GetString(b, 0, b.Length);
+            doc.LoadHtml(response.Content);
 
             var resultFields = XpathSelect(doc, _fieldXPaths);
             var newRequests = FindNewRequest(doc, request, null);
@@ -82,7 +90,7 @@ namespace Plunder.Plugin.Analyze
                 if(String.IsNullOrWhiteSpace(selector.Selector))
                     continue;
                 var node = doc.DocumentNode.SelectSingleNode(selector.Selector);
-                fields.Add(new ResultField { Name = selector.FieldName, Value = node.InnerText.Trim() });
+                fields.Add(new ResultField { Name = selector.FieldName, Value = node == null ? null : node.InnerText.Trim() });
             }
             return fields;
         }

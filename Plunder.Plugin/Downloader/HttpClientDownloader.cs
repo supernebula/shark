@@ -1,10 +1,13 @@
 ﻿
 using System;
+using System.Threading;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Downloader;
-using System.Threading;
+
 
 namespace Plunder.Plugin.Downloader
 {
@@ -28,6 +31,7 @@ namespace Plunder.Plugin.Downloader
             _maxTaskNumber = maxTaskNumber;
         }
 
+        [Obsolete]
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {
             foreach (Request req in requests)
@@ -74,19 +78,23 @@ namespace Plunder.Plugin.Downloader
             {
                 Interlocked.Increment(ref _currentTaskNumber);
                 var client = HttpClientBuilder.GetClient(request.SiteId);
-                var httpResp = await client.GetAsync(request.Url);
+                var httpRespMessage = await client.GetAsync(request.Url);
                 string content = null;
-                if (httpResp.IsSuccessStatusCode)
+                Stream stream = null;
+                if (httpRespMessage.IsSuccessStatusCode)
                 {
-                    content = await httpResp.Content.ReadAsStringAsync();
+                    var contentType = httpRespMessage.Content.Headers.ContentType;
+                    content = await httpRespMessage.Content.ReadAsStringAsync();
+                    stream = await httpRespMessage.Content.ReadAsStreamAsync();
                 }
 
                 var resp = new Response()
                 {
-                    HttpStatusCode = httpResp.StatusCode,
-                    IsSuccessCode = httpResp.IsSuccessStatusCode,
-                    ReasonPhrase = httpResp.ReasonPhrase,
-                    Content = content
+                    HttpStatusCode = httpRespMessage.StatusCode,
+                    IsSuccessCode = httpRespMessage.IsSuccessStatusCode,
+                    ReasonPhrase = httpRespMessage.ReasonPhrase,
+                    Content = content,
+                    StreamContent = stream
                 };
                 return new Tuple<Request, Response>(request, resp);
             }

@@ -43,10 +43,10 @@ namespace PlunderTestConsole
         string[] GetUrls()
         {
             var urls = new List<string>();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1; i++)
             {
-                //urls.Add("http://www.usashopcn.com/Product/Details/120039?num=" + i);
-                urls.Add("https://detail.tmall.com/item.htm?spm=a223v.7914393.2320796782.3.Eih3aS&id=529389366427&abbucket=_AB-M972_B17&acm=03683.1003.1.670563&aldid=vlaSgHMR&abtest=_AB-LR972-PR972&scm=1003.1.03683.ITEM_529389366427_670563&pos=3&nummmmmm=" + i);
+                urls.Add("http://www.usashopcn.com/Product/Details/120039?num=" + i);
+                //urls.Add("https://detail.tmall.com/item.htm?spm=a223v.7914393.2320796782.3.Eih3aS&id=529389366427&abbucket=_AB-M972_B17&acm=03683.1003.1.670563&aldid=vlaSgHMR&abtest=_AB-LR972-PR972&scm=1003.1.03683.ITEM_529389366427_670563&pos=3&nummmmmm=" + i);
             
             }
 

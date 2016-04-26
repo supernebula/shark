@@ -44,9 +44,8 @@ namespace Plunder.Scheduler
 
         private IPageAnalyzer GeneratePageAnalyzer(string siteId)
         {
-            var site = new Site();//todo: 根据siteId获取具体的Site
             Type analyzerType;
-            _pageAnalyzerTypes.TryGetValue(site.Domain, out analyzerType);
+            _pageAnalyzerTypes.TryGetValue(siteId, out analyzerType);
             if (analyzerType == null || analyzerType.GetInterface(typeof (IPageAnalyzer).Name) == null)
                 return null;
             return (IPageAnalyzer)TypeDescriptor.CreateInstance(null, analyzerType, null, null);
@@ -116,27 +115,28 @@ namespace Plunder.Scheduler
             _messagePullAutoResetEvent.Set();
         }
 
-        private void Consume(params RequestMessage[] messages)
+        [Obsolete]
+        private void Consume_1(params RequestMessage[] messages)
         {
             _downloaders.ForEach(downloader =>
             {
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
-                downloader.DownloadAsync(reqs, (req, resp) =>
-                {
+                //downloader.DownloadAsync(reqs, (req, resp) =>
+                //{
 
                     
-                    Console.WriteLine("Html:" + resp.Content);
-                    Console.WriteLine("_messagePullAutoResetEvent.Set()");
-                    //return;
+                //    Console.WriteLine("Html:" + resp.Content);
+                //    Console.WriteLine("_messagePullAutoResetEvent.Set()");
+                //    //return;
 
-                    //var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
-                    //var pageResult = pageAnalyzer.Analyze(req, resp);
-                    //_resultPipeline.Inject(pageResult);
-                }, Consumed);
+                //    //var pageAnalyzer = GeneratePageAnalyzer(req.SiteId);
+                //    //var pageResult = pageAnalyzer.Analyze(req, resp);
+                //    //_resultPipeline.Inject(pageResult);
+                //}, Consumed);
             });
         }
 
-        private void Consume2(params RequestMessage[] messages)
+        private void Consume(params RequestMessage[] messages)
         {
             _downloaders.ForEach(downloader =>
             {
@@ -151,6 +151,7 @@ namespace Plunder.Scheduler
                             Console.WriteLine("_messagePullAutoResetEvent.Set()");
                             var pageAnalyzer = GeneratePageAnalyzer(t.Result.Item1.SiteId);
                             var pageResult = pageAnalyzer.Analyze(t.Result.Item1, t.Result.Item2);
+                            return;
                             _resultPipeline.Inject(pageResult);
                         });
                 });
