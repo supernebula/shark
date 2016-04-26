@@ -11,6 +11,8 @@ namespace Plunder.Compoment
 
         public string Url { get; set; }
 
+        public UrlType UrlType { get; set; }
+
         public HttpMethod HttpMethod { get; set; }
 
         public int RemainRetryCount { get; set; }

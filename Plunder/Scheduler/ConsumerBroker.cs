@@ -151,7 +151,6 @@ namespace Plunder.Scheduler
                             Console.WriteLine("_messagePullAutoResetEvent.Set()");
                             var pageAnalyzer = GeneratePageAnalyzer(t.Result.Item1.SiteId);
                             var pageResult = pageAnalyzer.Analyze(t.Result.Item1, t.Result.Item2);
-                            return;
                             _resultPipeline.Inject(pageResult);
                         });
                 });

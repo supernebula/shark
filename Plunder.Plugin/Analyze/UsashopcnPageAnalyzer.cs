@@ -33,21 +33,20 @@ namespace Plunder.Plugin.Analyze
         public PageResult Analyze(Request request, Response response)
         {
             var doc = new HtmlDocument();
-            //var stream = new MemoryStream();
-            //var bytes = Encoding.UTF8.GetBytes(response.Content);
-            //stream.Write(bytes, 0, bytes.Length);
-            //byte[] b = stream.ToArray();
-            //string s = Encoding.UTF8.GetString(b, 0, b.Length);
             doc.LoadHtml(response.Content);
+            var newRequests = FindNewRequest(doc, request, null);//todo: regexPattern
+            List<ResultField> resultFields = null;
+            if (request.UrlType == UrlType.Extracting)
+            {
+                resultFields = XpathSelect(doc, _fieldXPaths);
+                resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url });
+                resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
+                resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
+                resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
+                resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
+                resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
+            }
 
-            var resultFields = XpathSelect(doc, _fieldXPaths);
-            var newRequests = FindNewRequest(doc, request, null);
-            resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url});
-            resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
-            resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
-            resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
-            resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
-            resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
             var pageResult = new PageResult
             {
                 Request = request,
@@ -59,24 +58,30 @@ namespace Plunder.Plugin.Analyze
             return pageResult;
         }
 
-        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, Request request, string newUrlPattern)
+        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, Request request, string newUrlPattern, string extractUrlPattern)
         {
-            var regex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
+            if(String.IsNullOrWhiteSpace(extractUrlPattern))
+                throw new ArgumentNullException(nameof(extractUrlPattern));
+            var newRegex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
+            var extractRegex = new Regex(extractUrlPattern, RegexOptions.IgnoreCase);
             var newRequests = new List<Request>();
             var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase); 
 
             foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
             {
                 var href = link.GetAttributeValue("href", String.Empty);
+                if (request.Url.Equals(href.Trim(), StringComparison.CurrentCultureIgnoreCase))
+                    continue;
                 if (String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
                     continue;
-                if (!String.IsNullOrWhiteSpace(newUrlPattern) && !regex.IsMatch(href))
+                if (!String.IsNullOrWhiteSpace(newUrlPattern) && !newRegex.IsMatch(href))
                     continue;
                 if(href.Equals(request.Url))
                     continue;
                 if(dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
-                newRequests.Add(new Request() { Url = href, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
+                var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
+                newRequests.Add(new Request() { Url = href, UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
             }
             return newRequests;
         }

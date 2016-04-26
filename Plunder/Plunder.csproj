@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Analyze\FieldSelector.cs" />
     <Compile Include="Analyze\IPageAnalyzer.cs" />
+    <Compile Include="Compoment\UrlType.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
