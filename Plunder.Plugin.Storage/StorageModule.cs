@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Plunder.Plugin.Storage.Models;
 using Plunder.Plugin.Storage.Repositories;
@@ -32,19 +33,62 @@ namespace Plunder.Plugin.Storage
 
         public async Task ProcessAsync(PageResult pageResult)
         {
+            var model = ModelBuilder<Product>(pageResult.Data.ToList());
+            if (model == null)
+                return;
             await Task.Run(() => {
                 if ("product".Equals(pageResult.Channel) && pageResult.Data != null && pageResult.Data.Any())
                 {
-                    var product = ModelBuilder<Product>(pageResult.Data);
+                    var product = model;
                     var repository = new ProductRepository();
                     repository.Insert(product);
                 }
+
+                var urls = ConvertToUrl(pageResult.NewRequests);
+                var urlRepository = new UrlRepository();
+                urlRepository.InsertRange(urls);
             });
         }
 
-        private T ModelBuilder<T>(IEnumerable<ResultField> resultField)
+        private List<Url> ConvertToUrl(IEnumerable<Request> requests)
         {
-            throw new NotImplementedException();
+            var list = requests.Select(req => new Url()
+                {
+                    SiteId = req.SiteId,
+                    Channel = req.Channel,
+                    Hash = req.Hash,
+                    Value = req.Url,
+                    HttpMethod = req.HttpMethod.Method,
+                    UrlType = req.UrlType,
+                    Status = UrlStatusType.New,
+                    AlreadyRetryCount = 0
+                }).ToList();
+            return list;
+        }
+
+        private static T ModelBuilder<T>(IReadOnlyCollection<ResultField> resultFields) where T : class
+        {
+            if (resultFields == null || !resultFields.Any())
+                return null;
+            var obj = (T)Activator.CreateInstance(typeof(T));
+            var properties = TypeDescriptor.GetProperties(typeof (T));
+            foreach (PropertyDescriptor prop in properties)
+            {
+                var type = prop.GetType();
+                var propName = prop.Name;
+                if(!type.IsPublic)
+                    continue;
+                if (!type.IsEnum && !type.IsPrimitive)
+                    continue;
+                var tConverter = prop.Converter;
+                if (tConverter == null || !tConverter.CanConvertFrom(typeof (string)))
+                    continue;
+                var field = resultFields.FirstOrDefault(e => e.Name.Equals(propName, StringComparison.CurrentCultureIgnoreCase));
+                if (field == null)
+                    continue;
+                prop.SetValue(obj, tConverter.ConvertFrom(field.Value));
+            }
+            return obj;
         }
     }
 }

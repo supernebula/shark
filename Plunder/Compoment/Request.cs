@@ -16,6 +16,8 @@ namespace Plunder.Compoment
 
         public string Url { get; set; }
 
+        public string Hash => this.Url.GetHashCode().ToString();
+
         public UrlType UrlType { get; set; }
 
         public HttpMethod HttpMethod { get; set; }

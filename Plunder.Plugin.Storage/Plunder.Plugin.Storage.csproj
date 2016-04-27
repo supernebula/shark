@@ -81,6 +81,7 @@
     <Compile Include="Repositories\Interface\IProductRepository.cs" />
     <Compile Include="Repositories\PlunderDbContext.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\UrlRepository.cs" />
     <Compile Include="StorageModule.cs" />
   </ItemGroup>
   <ItemGroup>
