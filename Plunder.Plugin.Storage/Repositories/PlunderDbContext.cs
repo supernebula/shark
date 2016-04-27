@@ -27,6 +27,7 @@ namespace Plunder.Plugin.Storage.Repositories
         {
 
             modelBuilder.Configurations.Add(new ProductMap());
+            modelBuilder.Configurations.Add(new UrlMap());
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

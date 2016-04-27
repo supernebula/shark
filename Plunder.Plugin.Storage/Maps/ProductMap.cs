@@ -14,11 +14,11 @@ namespace Plunder.Plugin.Storage.Maps
         {
             this.ToTable("Product");
             this.HasKey(e => e.Id);
-            this.Property(e => e.Title).IsRequired().HasMaxLength(100).HasColumnName("Name");
+            this.Property(e => e.Title).IsRequired().HasMaxLength(100).HasColumnName("Title");
             this.Property(e => e.Description).IsOptional().HasMaxLength(8000);
             this.Property(e => e.Price).IsRequired().HasColumnAnnotation("商品价格", "value");
-            this.Property(e => e.PicUri).IsOptional().HasMaxLength(200);
-            this.Property(e => e.Uri).IsRequired().HasMaxLength(200);
+            this.Property(e => e.PicUri).IsOptional().HasMaxLength(300);
+            this.Property(e => e.Uri).IsRequired().HasMaxLength(300);
             this.Property(e => e.CommentCount).IsRequired();
             this.Property(e => e.SiteName).IsRequired().HasMaxLength(100);
             this.Property(e => e.SiteDomain).IsRequired().HasMaxLength(100);

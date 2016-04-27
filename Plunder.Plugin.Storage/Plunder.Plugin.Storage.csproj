@@ -52,6 +52,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="EFRequestMessageProvider.cs" />
     <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Maps\UrlMap.cs" />
     <Compile Include="Migrations\201603230807413_Create-Database.cs" />
     <Compile Include="Migrations\201603230807413_Create-Database.Designer.cs">
       <DependentUpon>201603230807413_Create-Database.cs</DependentUpon>
@@ -60,10 +61,20 @@
     <Compile Include="Migrations\201603230824141_Update-Table-Product.Designer.cs">
       <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604270637455_Add-Table-Url.cs" />
+    <Compile Include="Migrations\201604270637455_Add-Table-Url.Designer.cs">
+      <DependentUpon>201604270637455_Add-Table-Url.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604270640272_Add-Table-Url2.cs" />
+    <Compile Include="Migrations\201604270640272_Add-Table-Url2.Designer.cs">
+      <DependentUpon>201604270640272_Add-Table-Url2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BasicEntity.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Url.cs" />
+    <Compile Include="Models\UrlStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BasicEntityFrameworkRepository.cs" />
     <Compile Include="Repositories\IBasicRepository.cs" />
@@ -88,6 +99,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603230824141_Update-Table-Product.resx">
       <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604270637455_Add-Table-Url.resx">
+      <DependentUpon>201604270637455_Add-Table-Url.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604270640272_Add-Table-Url2.resx">
+      <DependentUpon>201604270640272_Add-Table-Url2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
