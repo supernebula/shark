@@ -35,7 +35,7 @@ namespace Plunder.Pipeline
             {
                 Topic = result.Topic,
                 Request = e
-            }));
+            })).ContinueWith(t => Console.WriteLine("ProducerPushAsync:" + result.Request.Url));
         }
     }
 }

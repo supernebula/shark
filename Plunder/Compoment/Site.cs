@@ -16,11 +16,13 @@ namespace Plunder.Compoment
 
         public static Site NewDefault => DefaultSite();
 
+        public string Topic { get; set; }
+
         [DataMember]
         public string Name { get; set; }
 
         [DataMember]
-        public string Url { get; set; }
+        public string IndexUrl { get; set; }
 
         [DataMember]
         public string Domain { get; set; }

@@ -147,8 +147,10 @@ namespace Plunder.Scheduler
                         .ContinueWith(t =>
                         {
                             Downloaded();
-                            Console.WriteLine("Html:" + t.Result.Item2.Content);
-                            Console.WriteLine("_messagePullAutoResetEvent.Set()");
+                            //Console.WriteLine("Downloaded Html:" + t.Result.Item2.Content);
+#if DEBUG
+                            Console.WriteLine("Downloaded:" + t.Result.Item1.Url);
+#endif
                             var pageAnalyzer = GeneratePageAnalyzer(t.Result.Item1.SiteId);
                             var pageResult = pageAnalyzer.Analyze(t.Result.Item1, t.Result.Item2);
                             _resultPipeline.Inject(pageResult);

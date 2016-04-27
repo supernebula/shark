@@ -5,6 +5,11 @@ namespace Plunder.Compoment
 {
     public class Request
     {
+        public Request()
+        {
+            HttpMethod = HttpMethod.Get;
+        }
+
         public string SiteId { get; set; }
 
         public string Channel { get; set; }

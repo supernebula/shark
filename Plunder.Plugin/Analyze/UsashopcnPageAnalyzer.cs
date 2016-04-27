@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web;
 using Plunder.Compoment;
 using Plunder.Plugin.Compoment;
 using Plunder.Analyze;
 using HtmlAgilityPack;
+using Site = Plunder.Compoment.Site;
 
 namespace Plunder.Plugin.Analyze
 {
@@ -34,7 +37,7 @@ namespace Plunder.Plugin.Analyze
         {
             var doc = new HtmlDocument();
             doc.LoadHtml(response.Content);
-            var newRequests = FindNewRequest(doc, request, null);//todo: regexPattern
+            var newRequests = FindNewRequest(doc, request, @"[\s\S]*", "/Product/Details/");//todo: regexPattern
             List<ResultField> resultFields = null;
             if (request.UrlType == UrlType.Extracting)
             {
@@ -53,23 +56,25 @@ namespace Plunder.Plugin.Analyze
                 Response = response,
                 NewRequests = newRequests,
                 Channel = Channel.Product,
-                Data = resultFields
+                Data = resultFields,
+                Topic = Site.Topic
             };
             return pageResult;
         }
 
         private IEnumerable<Request> FindNewRequest(HtmlDocument doc, Request request, string newUrlPattern, string extractUrlPattern)
         {
-            if(String.IsNullOrWhiteSpace(extractUrlPattern))
-                throw new ArgumentNullException(nameof(extractUrlPattern));
+            if (String.IsNullOrWhiteSpace(extractUrlPattern))
+                return null;
             var newRegex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
-            var extractRegex = new Regex(extractUrlPattern, RegexOptions.IgnoreCase);
+            //var extractRegex = new Regex(extractUrlPattern, RegexOptions.IgnoreCase);
             var newRequests = new List<Request>();
             var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase); 
 
             foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
             {
-                var href = link.GetAttributeValue("href", String.Empty);
+                var href = link.GetAttributeValue("href", String.Empty).Trim();
+                href = AbsoluteUrl(href);
                 if (request.Url.Equals(href.Trim(), StringComparison.CurrentCultureIgnoreCase))
                     continue;
                 if (String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
@@ -78,12 +83,20 @@ namespace Plunder.Plugin.Analyze
                     continue;
                 if(href.Equals(request.Url))
                     continue;
-                if(dominRegex.Match(href).Value.Contains(Site.Domain))
+                if(!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
-                var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
+                //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
+                var urlTye = href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) >= 0 ? UrlType.Extracting : UrlType.Navigation;
                 newRequests.Add(new Request() { Url = href, UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
             }
             return newRequests;
+        }
+
+        private string AbsoluteUrl(string url)
+        {
+            if (url.StartsWith("http", StringComparison.CurrentCultureIgnoreCase))
+                return url;
+            return (new Uri(new Uri(String.Format("http://{0}/", Site.Domain)), url)).AbsoluteUri;
         }
 
 
