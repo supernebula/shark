@@ -46,6 +46,7 @@
     <Compile Include="Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\UrlType.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
+    <Compile Include="Filter\IBloomFilter.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IRequestMessageProvider.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="Utilities\BloomFilter.cs" />
+    <Compile Include="Utilities\MemoryBloomFilter.cs" />
     <Compile Include="Utilities\RandomUnitily.cs" />
   </ItemGroup>
   <ItemGroup>

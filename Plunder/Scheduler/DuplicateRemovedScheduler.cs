@@ -12,7 +12,7 @@ namespace Plunder.Scheduler
 
         protected readonly BlockingCollection<RequestMessage> _queue;
 
-        private readonly BloomFilter<string> _bloomFilter;
+        private readonly MemoryBloomFilter<string> _bloomFilter;
 
         private int _accumulatedMessageTotal;
 
@@ -20,7 +20,7 @@ namespace Plunder.Scheduler
 
         protected DuplicateRemovedScheduler()
         {
-            _bloomFilter  = new BloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            _bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             _queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
         }

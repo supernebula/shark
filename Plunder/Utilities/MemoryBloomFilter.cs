@@ -9,7 +9,7 @@ namespace Plunder.Utilities
     /// 布隆过滤器
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BloomFilter<T>
+    public class MemoryBloomFilter<T>
     {
         #region Fields
 
@@ -59,7 +59,7 @@ namespace Plunder.Utilities
         /// <param name="dataSize">数据量</param>
         /// <param name="falsePositiveRate">假阳性概率</param>
         [Obsolete("未实现...")]
-        public BloomFilter(int dataSize, float falsePositiveRate)
+        public MemoryBloomFilter(int dataSize, float falsePositiveRate)
         {
             _dataSize = dataSize;
             FalsePositiveRate = falsePositiveRate;
@@ -71,7 +71,7 @@ namespace Plunder.Utilities
         /// </summary>
         /// <param name="dateSize">数据量</param>
         /// <param name="spaceSize">空间量</param>
-        public BloomFilter(int dateSize, int spaceSize)
+        public MemoryBloomFilter(int dateSize, int spaceSize)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
@@ -87,7 +87,7 @@ namespace Plunder.Utilities
         /// <param name="dateSize">数据量</param>
         /// <param name="spaceSize">空间量</param>
         /// <param name="numberOfHashes">Hash函数最佳个数</param>
-        public BloomFilter(int dateSize, int spaceSize, int numberOfHashes)
+        public MemoryBloomFilter(int dateSize, int spaceSize, int numberOfHashes)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
