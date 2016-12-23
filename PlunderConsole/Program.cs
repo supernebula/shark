@@ -26,7 +26,7 @@ namespace PlunderConsole
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _spider.RegisterDownloader(downloaders);
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _spider.RegisterPipeModule(new ConsoleModule(0, 20, 400, 500, true, true));
+            _spider.RegisterResultPipeModule(new ConsoleModule(0, 20, 400, 500, true, true));
 
             _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
 
