@@ -57,6 +57,8 @@
     <Compile Include="Downloader\HttpClientBuilder.cs" />
     <Compile Include="Downloader\HttpClientDownloader.cs" />
     <Compile Include="Downloader\TopicType.cs" />
+    <Compile Include="Filter\MemoryBloomFilter.cs" />
+    <Compile Include="Filter\RedisBloomFilter.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,7 +6,7 @@ namespace Plunder.Filter
     /// 布隆过滤器
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IBloomFilter<T>
+    public interface IBloomFilter<in T>
     {
         /// <summary>
         /// 添加项目

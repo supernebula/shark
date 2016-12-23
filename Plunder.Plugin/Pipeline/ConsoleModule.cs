@@ -22,7 +22,12 @@ namespace Plunder.Plugin.Pipeline
             _bufferWidth = bufferWidth;
             _isNewBuffer = isNewBuffer;
             _isBufferFixedHeight = isBufferFixedHeight;
-    }
+            Console.CursorLeft = _cursorLeft;
+            Console.CursorTop = _cursorTop;
+            //Console.BufferHeight = _bufferHeight;
+            //Console.BufferWidth = _bufferWidth;
+            Console.SetBufferSize(_bufferWidth, _bufferWidth);
+        }
 
         public string ModuleName
         {
@@ -54,17 +59,13 @@ namespace Plunder.Plugin.Pipeline
         {
             await Task.Run(() =>
             {
-                var newReqCount = data.NewRequests == null ? 0 : data.NewRequests.Count();
-                WriteLine(String.Format("Url:{0}, StatusCode:{1}, New Request Count:{2}", data.Request.Url, data.Response.HttpStatusCode, newReqCount));
+                var newReqCount = data.NewRequests?.Count() ?? 0;
+                WriteLine($"Url:{data.Request.Url}, StatusCode:{data.Response.HttpStatusCode}, New Request Count:{newReqCount}");
             });
         }
 
         private void WriteLine(string str)
         {
-            //Console.CursorLeft = _cursorLeft;
-            //Console.CursorTop = _cursorTop;
-            //Console.BufferHeight = _bufferHeight;
-            //Console.BufferWidth = _bufferWidth;
             Console.WriteLine(str);
         }
     }

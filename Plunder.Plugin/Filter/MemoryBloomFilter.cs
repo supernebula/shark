@@ -2,14 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Plunder.Filter;
 
-namespace Plunder.Utilities
+namespace Plunder.Plugin.Filter
 {
     /// <summary>
     /// 布隆过滤器
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class MemoryBloomFilter<T>
+    public class MemoryBloomFilter<T> : IBloomFilter<T>
     {
         #region Fields
 
@@ -49,7 +50,6 @@ namespace Plunder.Utilities
         public int NumberOfHashes => _numberOfHashes;
 
         #endregion
-
 
         #region Constructors
 
@@ -98,9 +98,6 @@ namespace Plunder.Utilities
 
         #endregion
 
-
-
-
         #region Method
 
         public void Add(T item)
@@ -138,7 +135,7 @@ namespace Plunder.Utilities
         /// 假阳性概率
         /// </summary>
         /// <returns></returns>
-        private double FalsePositiveProbability()
+        public double FalsePositiveProbability()
         {
             return Math.Pow((1 - Math.Exp(-_numberOfHashes * _dataSize / (double)_spaceSize)), _numberOfHashes);
         }
@@ -148,13 +145,12 @@ namespace Plunder.Utilities
             return item.GetHashCode();
         }
 
-        private int OptimalNumberOfHashes()
+        public int OptimalNumberOfHashes()
         {
             return (int)Math.Ceiling((_spaceSize * 1.00 / _dataSize) * Math.Log(2.0));
         }
 
         #endregion
-
 
     }
 }

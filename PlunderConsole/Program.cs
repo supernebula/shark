@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Plunder;
-using Plunder.Compoment;
 using Plunder.Scheduler;
 using Plunder.Downloader;
 using Plunder.Plugin.Analyze;
 using Plunder.Plugin.Compoment;
 using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Downloader;
+using Plunder.Plugin.Filter;
 
 namespace PlunderConsole
 {
@@ -24,12 +21,12 @@ namespace PlunderConsole
         }
         static void RunSpider()
         {
-            _spider = new Spider(new SequenceScheduler());
+            var bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            _spider = new Spider(new SequenceScheduler(bloomFilter));
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _spider.RegisterDownloader(downloaders);
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _spider.RegisterPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
-
+            _spider.RegisterPipeModule(new ConsoleModule(0, 20, 400, 500, true, true));
 
             _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
 
