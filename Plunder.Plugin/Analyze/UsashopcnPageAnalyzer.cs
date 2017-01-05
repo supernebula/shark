@@ -36,6 +36,8 @@ namespace Plunder.Plugin.Analyze
         public PageResult Analyze(Request request, Response response)
         {
             var doc = new HtmlDocument();
+            if (string.IsNullOrWhiteSpace(response.Content))
+                return PageResult.EmptyResponse(Site.Topic, request, response, Channel.Product);
             doc.LoadHtml(response.Content);
             var newRequests = FindNewRequest(doc, request, @"[\s\S]*", "/Product/Details/");//todo: regexPattern
             List<ResultField> resultFields = null;

@@ -2,26 +2,28 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plunder.Utilities;
 using System.Threading;
+using Plunder.Filter;
+using Plunder.Util;
 
 namespace Plunder.Scheduler
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     { 
 
-        protected readonly BlockingCollection<RequestMessage> _queue;
+        protected readonly BlockingCollection<RequestMessage> Queue;
 
-        private readonly MemoryBloomFilter<string> _bloomFilter;
+        private readonly IBloomFilter<string> _bloomFilter;
 
         private int _accumulatedMessageTotal;
 
         protected int AccumulatedMessageTotal => _accumulatedMessageTotal;
 
-        protected DuplicateRemovedScheduler()
+        protected DuplicateRemovedScheduler(IBloomFilter<string> bloomFilter)
         {
-            _bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
-            _queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
+            //_bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            _bloomFilter = bloomFilter;
+            Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
         }
 
@@ -30,7 +32,7 @@ namespace Plunder.Scheduler
             //AccumulatedMessageTotal++;
             Interlocked.Increment(ref _accumulatedMessageTotal);
             
-            return _queue.Take();
+            return Queue.Take();
         }
 
         public RequestMessage Poll()
@@ -38,7 +40,7 @@ namespace Plunder.Scheduler
             //AccumulatedMessageTotal++;
             Interlocked.Increment(ref _accumulatedMessageTotal);
             RequestMessage message;
-            _queue.TryTake(out message, 0);
+            Queue.TryTake(out message, 0);
             return message;
         }
 
@@ -48,7 +50,7 @@ namespace Plunder.Scheduler
             while (size > 0)
             {
                 RequestMessage message;
-                if (_queue.TryTake(out message, 0))
+                if (Queue.TryTake(out message, 0))
                 {
                     result.Add(message);
                     //AccumulatedMessageTotal++;
@@ -63,7 +65,7 @@ namespace Plunder.Scheduler
         {
             if (_bloomFilter.Contains(message.Request.Url))
                 return false;
-            if (!_queue.TryAdd(message))
+            if (!Queue.TryAdd(message))
                 return false;
             _bloomFilter.Add(message.Request.Url);
             return true;
@@ -71,7 +73,7 @@ namespace Plunder.Scheduler
 
         public async Task<bool> PushAsync(RequestMessage message)
         {
-            return await Task.Run(() => _queue.TryAdd(message));
+            return await Task.Run(() => Queue.TryAdd(message));
         }
 
         public void Push(IEnumerable<RequestMessage> messages)
@@ -79,10 +81,10 @@ namespace Plunder.Scheduler
             
             foreach (var message in messages)
             {
-                _queue.TryAdd(message);
+                Queue.TryAdd(message);
             }
 
-            Console.WriteLine("ConcurrentQueue.Count:" + _queue.Count);
+            Console.WriteLine("ConcurrentQueue.Count:" + Queue.Count);
         }
 
         public async Task PushAsync(IEnumerable<RequestMessage> messages)
@@ -91,7 +93,7 @@ namespace Plunder.Scheduler
             {
                 foreach (var message in messages)
                 {
-                    _queue.TryAdd(message);
+                    Queue.TryAdd(message);
                 }
             });
         }
@@ -101,7 +103,7 @@ namespace Plunder.Scheduler
 
         public int CurrentQueueCount()
         {
-            return _queue.Count;
+            return Queue.Count;
         }
 
         public int AccumulatedTotal()
@@ -115,7 +117,7 @@ namespace Plunder.Scheduler
 
         public void Dispose()
         {
-            _queue.Dispose();
+            Queue.Dispose();
         }
     }
 }

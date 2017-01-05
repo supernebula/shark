@@ -10,6 +10,7 @@ using Plunder.Compoment;
 using Plunder.Downloader;
 using Plunder.Pipeline;
 using Plunder.Plugin.Downloader;
+using Plunder.Plugin.Filter;
 using Plunder.Scheduler;
 using Plunder.Test.Pipeline;
 
@@ -82,7 +83,8 @@ namespace Plunder.Test
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
             var requestMessage = NewTestRequestMessage(site);
-            var lineScheduler = new SequenceScheduler();
+            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var lineScheduler = new SequenceScheduler(bloomFilter);
             lineScheduler.Push(requestMessage);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
             Assert.IsTrue(lineScheduler.CurrentQueueCount() == 1, "添加消息失败");
@@ -95,7 +97,8 @@ namespace Plunder.Test
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
             var requestMessage = NewTestRequestMessage(site);
-            var lineScheduler = new SequenceScheduler();
+            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var lineScheduler = new SequenceScheduler(bloomFilter);
             lineScheduler.PushAsync(requestMessage);
             Thread.Sleep(500);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
@@ -109,7 +112,8 @@ namespace Plunder.Test
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
             var requestMessages = NewTestRequestMessages(site);
-            var lineScheduler = new SequenceScheduler();
+            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var lineScheduler = new SequenceScheduler(bloomFilter);
             lineScheduler.Push(requestMessages);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
             Assert.IsTrue(lineScheduler.CurrentQueueCount() == requestMessages.Count, "添加消息失败");
@@ -122,7 +126,8 @@ namespace Plunder.Test
         {
             var site = new Site() { Domain = "www.usashopcn.com" };
             var requestMessages = NewTestRequestMessages(site);
-            var lineScheduler = new SequenceScheduler();
+            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var lineScheduler = new SequenceScheduler(bloomFilter);
             lineScheduler.PushAsync(requestMessages);
             Thread.Sleep(500);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
@@ -225,7 +230,8 @@ namespace Plunder.Test
             var site = new Site() {Domain = "www.usashopcn.com"};
 
             var requestMessages = NewTestRequestMessages(site);
-            var lineScheduler = new SequenceScheduler();
+            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var lineScheduler = new SequenceScheduler(bloomFilter);
             lineScheduler.Push(requestMessages);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
 

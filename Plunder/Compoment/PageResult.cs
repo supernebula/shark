@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Plunder.Compoment
 {
@@ -15,6 +16,18 @@ namespace Plunder.Compoment
         public string Channel { get; set; }
 
         public IEnumerable<ResultField> Data { get; set; }
+
+        public static PageResult EmptyResponse(string topic, Request request, Response response, string channel)
+        {
+            return new PageResult
+            {
+                Topic = topic,
+                Request = request,
+                Response = response,
+                Channel = channel
+            };
+
+        }
     }
 
 
