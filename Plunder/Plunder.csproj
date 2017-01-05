@@ -78,8 +78,8 @@
     <Compile Include="Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
     <Compile Include="Spider.cs" />
-    <Compile Include="Utilities\MemoryBloomFilter.cs" />
-    <Compile Include="Utilities\RandomUnitily.cs" />
+    <Compile Include="Filter\MemoryBloomFilter.cs" />
+    <Compile Include="Util\RandomUnitily.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Thread\" />
