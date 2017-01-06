@@ -9,6 +9,7 @@ using Plunder.Downloader;
 using Plunder.Plugin.Analyze;
 using Plunder.Plugin.Compoment;
 using Plunder.Plugin.Downloader;
+using Plunder.Filter;
 using Plunder.Plugin.Filter;
 using Plunder.Plugin.Pipeline;
 using Plunder.Scheduler;
@@ -23,8 +24,10 @@ namespace PlunderTestConsole
         private Spider _spider;
         public void RunSpider()
         {
-            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
-            _spider = new Spider(new SequenceScheduler(bloomFilter));
+            //var memoryBloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            //_spider = new Spider(new SequenceScheduler(memoryBloomFilter));
+            var redisBloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "localhost", 6379);
+            _spider = new Spider(new SequenceScheduler(redisBloomFilter));
             //var downloaders = new List<IDownloader> { new FakeDownloader(4) };
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _spider.RegisterDownloader(downloaders);

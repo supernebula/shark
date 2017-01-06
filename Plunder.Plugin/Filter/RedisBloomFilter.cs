@@ -8,18 +8,33 @@ namespace Plunder.Plugin.Filter
 {
     public class RedisBloomFilter<T> : IBloomFilter<T>
     {
+        #region Fields
+
+        private IDatabase _database;
         private IDatabase Database
         {
             get
             {
-                return RedisClient.Current.Database;
+                if(_database == null)
+                    _database = RedisClient.Current.GetDatabase(_redisHost, _redisPort);
+                return _database;
             }
         }
 
         /// <summary>
+        /// redis 地址
+        /// </summary>
+        private readonly string _redisHost;
+
+        /// <summary>
+        /// redis端口
+        /// </summary>
+        private readonly int _redisPort ;
+
+        /// <summary>
         /// 位数组
         /// </summary>
-        private readonly string _bitSetKey;
+        private readonly string _bitSetKey = "plunderBloom";
 
         /// <summary>
         /// 数据量
@@ -34,6 +49,8 @@ namespace Plunder.Plugin.Filter
         /// Hash函数最佳个数
         /// </summary>
         private readonly int _numberOfHashes;
+
+#endregion
 
         #region Properties
 
@@ -54,29 +71,20 @@ namespace Plunder.Plugin.Filter
         #region Constructors
 
         /// <summary>
-        /// 构造方法， 自动计算最佳空间和Hash函数最佳个数
-        /// </summary>
-        /// <param name="dataSize">数据量</param>
-        /// <param name="falsePositiveRate">假阳性概率</param>
-        [Obsolete("未实现...")]
-        public RedisBloomFilter(int dataSize, float falsePositiveRate)
-        {
-            _dataSize = dataSize;
-            FalsePositiveRate = falsePositiveRate;
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// 构造方法， 自动计算Hash函数最佳个数
         /// </summary>
         /// <param name="dateSize">数据量</param>
         /// <param name="spaceSize">空间量</param>
-        public RedisBloomFilter(int dateSize, int spaceSize)
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        public RedisBloomFilter(int dateSize, int spaceSize, string host, int port)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
             _numberOfHashes = OptimalNumberOfHashes();
             FalsePositiveRate = FalsePositiveProbability();
+            _redisHost = host;
+            _redisPort = port;
         }
 
         /// <summary>
@@ -85,12 +93,33 @@ namespace Plunder.Plugin.Filter
         /// <param name="dateSize">数据量</param>
         /// <param name="spaceSize">空间量</param>
         /// <param name="numberOfHashes">Hash函数最佳个数</param>
-        public RedisBloomFilter(int dateSize, int spaceSize, int numberOfHashes)
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        public RedisBloomFilter(int dateSize, int spaceSize, int numberOfHashes, string host, int port)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
             _numberOfHashes = numberOfHashes;
             FalsePositiveRate = FalsePositiveProbability();
+            _redisHost = host;
+            _redisPort = port;
+        }
+
+        /// <summary>
+        /// 构造方法， 自动计算最佳空间和Hash函数最佳个数
+        /// </summary>
+        /// <param name="dataSize">数据量</param>
+        /// <param name="falsePositiveRate">假阳性概率</param>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        [Obsolete("未实现...")]
+        public RedisBloomFilter(int dataSize, float falsePositiveRate, string host, int port)
+        {
+            _dataSize = dataSize;
+            FalsePositiveRate = falsePositiveRate;
+            _redisHost = host;
+            _redisPort = port;
+            throw new NotImplementedException();
         }
 
         #endregion
