@@ -85,6 +85,7 @@ namespace Plunder.Plugin.Filter
             FalsePositiveRate = FalsePositiveProbability();
             _redisHost = host;
             _redisPort = port;
+            //Database.KeyDelete(_bitSetKey);
         }
 
         /// <summary>
@@ -103,6 +104,7 @@ namespace Plunder.Plugin.Filter
             FalsePositiveRate = FalsePositiveProbability();
             _redisHost = host;
             _redisPort = port;
+            //Database.KeyDelete(_bitSetKey);
         }
 
         /// <summary>
@@ -119,6 +121,7 @@ namespace Plunder.Plugin.Filter
             FalsePositiveRate = falsePositiveRate;
             _redisHost = host;
             _redisPort = port;
+            //Database.KeyDelete(_bitSetKey);
             throw new NotImplementedException();
         }
 

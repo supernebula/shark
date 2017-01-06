@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Plunder.Filter;
 using Plunder.Util;
+using System.Linq;
 
 namespace Plunder.Scheduler
 {
@@ -62,12 +63,26 @@ namespace Plunder.Scheduler
 
         public bool Push(RequestMessage message)
         {
-            if (_bloomFilter.Contains(message.Request.Url))
+            if (IsDuplicate(message))
                 return false;
             if (!Queue.TryAdd(message))
                 return false;
-            _bloomFilter.Add(message.Request.Url);
             return true;
+        }
+
+        public bool IsDuplicate(RequestMessage message)
+        {
+            if (_bloomFilter.Contains(message.Request.Url))
+            {
+                var originalColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"重复:{message.Request.Url}");
+                Console.ForegroundColor = originalColor;
+                return true;
+            }
+                
+            _bloomFilter.Add(message.Request.Url);
+            return false;
         }
 
         public async Task<bool> PushAsync(RequestMessage message)
@@ -77,12 +92,7 @@ namespace Plunder.Scheduler
 
         public void Push(IEnumerable<RequestMessage> messages)
         {
-            
-            foreach (var message in messages)
-            {
-                Queue.TryAdd(message);
-            }
-
+            messages.ToList().ForEach(e => Push(e));
             Console.WriteLine("ConcurrentQueue.Count:" + Queue.Count);
         }
 
