@@ -9,6 +9,7 @@ using Plunder.Plugin.Compoment;
 using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Downloader;
 using Plunder.Plugin.Filter;
+using Plunder.Filter;
 
 namespace PlunderConsole
 {
