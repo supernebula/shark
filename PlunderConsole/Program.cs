@@ -8,7 +8,7 @@ using Plunder.Plugin.Analyze;
 using Plunder.Plugin.Compoment;
 using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Downloader;
-using Plunder.Filter;
+using Plunder.Plugin.Filter;
 
 namespace PlunderConsole
 {
@@ -21,7 +21,8 @@ namespace PlunderConsole
         }
         static void RunSpider()
         {
-            var bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            //var bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379);
             _spider = new Spider(new SequenceScheduler(bloomFilter));
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _spider.RegisterDownloader(downloaders);

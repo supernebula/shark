@@ -21,7 +21,6 @@ namespace Plunder.Scheduler
 
         protected DuplicateRemovedScheduler(IBloomFilter<string> bloomFilter)
         {
-            //_bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             _bloomFilter = bloomFilter;
             Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
