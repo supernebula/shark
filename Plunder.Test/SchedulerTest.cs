@@ -10,7 +10,7 @@ using Plunder.Compoment;
 using Plunder.Downloader;
 using Plunder.Pipeline;
 using Plunder.Plugin.Downloader;
-using Plunder.Plugin.Filter;
+using Plunder.Filter;
 using Plunder.Scheduler;
 using Plunder.Test.Pipeline;
 

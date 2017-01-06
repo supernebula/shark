@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using StackExchange.Redis;
 
 namespace Plunder.Plugin.Filter
@@ -6,6 +7,9 @@ namespace Plunder.Plugin.Filter
     public class RedisClient : IDisposable
     {
         private static RedisClient _instanse;
+
+        private readonly ConcurrentDictionary<string, ConnectionMultiplexer> _redisConnectionCollection = new ConcurrentDictionary<string, ConnectionMultiplexer>();
+
         public static RedisClient Current
         {
             get
@@ -16,24 +20,38 @@ namespace Plunder.Plugin.Filter
             }
         }
 
-        private ConnectionMultiplexer _redisConnection;
-        public IDatabase Database
+        public IDatabase GetDatabase(string host, int port)
         {
-            get
+            var configuration = $"{host}:{port}";
+            ConnectionMultiplexer connection;
+            if (!_redisConnectionCollection.ContainsKey(configuration))
             {
-                if (_redisConnection == null)
-                    throw new NullReferenceException(nameof(_redisConnection));
-                if (!_redisConnection.IsConnected)
-                    throw new Exception("RedisConnectionException:连接已断开或未连接");
-                var db = _redisConnection.GetDatabase();
-                return db;
+                connection = ConnectionMultiplexer.Connect(configuration);
+                if (!_redisConnectionCollection.TryAdd(configuration, connection))
+                {
+                    connection.Close();
+                    throw new InvalidOperationException("连接添加到redis连接池失败");
+                }
+
+                return connection.GetDatabase();
             }
+           
+
+            if(_redisConnectionCollection.TryGetValue(configuration, out connection))
+                throw new InvalidOperationException($"从连接池{nameof(_redisConnectionCollection)}获取连接失败");
+            if(connection == null)
+                throw new NullReferenceException($"返回的连接为空{(ConnectionMultiplexer) null}");
+            return connection.GetDatabase();
         }
+
 
         public void Dispose()
         {
-            _redisConnection.Close();
-            _redisConnection.Dispose();
+            foreach (var connect in _redisConnectionCollection.Values)
+            {
+                connect.Close();
+                connect.Dispose();
+            }
         }
     }
 }
