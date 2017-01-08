@@ -74,10 +74,10 @@ namespace Plunder.Scheduler
         {
             if (_bloomFilter.Contains(message.Request.Url))
             {
-                var originalColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"重复:{message.Request.Url}");
-                Console.ForegroundColor = originalColor;
+                //var originalColor = Console.ForegroundColor;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
+                //Console.WriteLine($"------------------------------------------------重复:{message.Request.Url}");
+                //Console.ForegroundColor = originalColor;
                 return true;
             }
                 
@@ -87,7 +87,12 @@ namespace Plunder.Scheduler
 
         public async Task<bool> PushAsync(RequestMessage message)
         {
-            return await Task.Run(() => Queue.TryAdd(message));
+            return await Task.Run(() =>
+            {
+                if (IsDuplicate(message))
+                    return false;
+                return Queue.TryAdd(message);
+            });
         }
 
         public void Push(IEnumerable<RequestMessage> messages)
@@ -102,7 +107,8 @@ namespace Plunder.Scheduler
             {
                 foreach (var message in messages)
                 {
-                    Queue.TryAdd(message);
+                    if(!IsDuplicate(message))
+                        Queue.TryAdd(message);
                 }
             });
         }

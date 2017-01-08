@@ -77,7 +77,8 @@ namespace Plunder.Plugin.Filter
         /// <param name="spaceSize">空间量</param>
         /// <param name="host"></param>
         /// <param name="port"></param>
-        public RedisBloomFilter(int dateSize, int spaceSize, string host, int port)
+        /// <param name="c;ear">是否清空历史记录</param>
+        public RedisBloomFilter(int dateSize, int spaceSize, string host, int port, bool clear = false)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
@@ -85,7 +86,8 @@ namespace Plunder.Plugin.Filter
             FalsePositiveRate = FalsePositiveProbability();
             _redisHost = host;
             _redisPort = port;
-            //Database.KeyDelete(_bitSetKey);
+            if (clear)
+                Clear();
         }
 
         /// <summary>
@@ -96,7 +98,8 @@ namespace Plunder.Plugin.Filter
         /// <param name="numberOfHashes">Hash函数最佳个数</param>
         /// <param name="host"></param>
         /// <param name="port"></param>
-        public RedisBloomFilter(int dateSize, int spaceSize, int numberOfHashes, string host, int port)
+        /// /// <param name="c;ear">是否清空历史记录</param>
+        public RedisBloomFilter(int dateSize, int spaceSize, int numberOfHashes, string host, int port, bool clear = false)
         {
             _dataSize = dateSize;
             _spaceSize = spaceSize;
@@ -104,25 +107,39 @@ namespace Plunder.Plugin.Filter
             FalsePositiveRate = FalsePositiveProbability();
             _redisHost = host;
             _redisPort = port;
-            //Database.KeyDelete(_bitSetKey);
+            if (clear)
+                Clear();
         }
 
-        /// <summary>
-        /// 构造方法， 自动计算最佳空间和Hash函数最佳个数
-        /// </summary>
-        /// <param name="dataSize">数据量</param>
-        /// <param name="falsePositiveRate">假阳性概率</param>
-        /// <param name="host"></param>
-        /// <param name="port"></param>
-        [Obsolete("未实现...")]
-        public RedisBloomFilter(int dataSize, float falsePositiveRate, string host, int port)
+        ///// <summary>
+        ///// 构造方法， 自动计算最佳空间和Hash函数最佳个数
+        ///// </summary>
+        ///// <param name="dataSize">数据量</param>
+        ///// <param name="falsePositiveRate">假阳性概率</param>
+        ///// <param name="host"></param>
+        ///// <param name="port"></param>
+        ///// /// <param name="c;ear">是否清空历史记录</param>
+        //[Obsolete("未实现...")]
+        //public RedisBloomFilter(int dataSize, float falsePositiveRate, string host, int port, bool clear = false)
+        //{
+        //    _dataSize = dataSize;
+        //    FalsePositiveRate = falsePositiveRate;
+        //    _redisHost = host;
+        //    _redisPort = port;
+        //    if (clear)
+        //        Clear();
+        //    throw new NotImplementedException();
+        //}
+
+        public void Clear()
         {
-            _dataSize = dataSize;
-            FalsePositiveRate = falsePositiveRate;
-            _redisHost = host;
-            _redisPort = port;
-            //Database.KeyDelete(_bitSetKey);
-            throw new NotImplementedException();
+            var beforeCount = Database.StringBitCount("_bitSetKey");
+            Database.KeyDelete(_bitSetKey);
+            var afterCount = Database.StringBitCount("_bitSetKey");
+            var originalColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"RedisBloomFilter, 清理前{beforeCount}, 清理后{afterCount}");
+            Console.ForegroundColor = originalColor;
         }
 
         #endregion
@@ -143,10 +160,10 @@ namespace Plunder.Plugin.Filter
             for (int i = 0; i < _numberOfHashes; i++)
             {
                 var offset = random.Next(_spaceSize);
-                if (!Database.StringGetBit(_bitSetKey, offset))
-                    return false;
+                if (Database.StringGetBit(_bitSetKey, offset))
+                    return true;
             }
-            return true;
+            return false;
         }
 
         public bool ContainsAll(IEnumerable<T> items)
