@@ -47,6 +47,7 @@
     <Compile Include="Compoment\UrlType.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Filter\IBloomFilter.cs" />
+    <Compile Include="Models\Page.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IRequestMessageProvider.cs" />

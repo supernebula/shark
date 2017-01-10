@@ -23,7 +23,7 @@ namespace Plunder.Storage
                 return history.ContainsKey(key);
             }
         }
-
+            
         public static int Count()
         {
             return history.Count;
