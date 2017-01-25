@@ -203,7 +203,7 @@ namespace Plunder.Test
             }
         }
 
-        public class TestPipelineMoudle : IResultPipelineModule
+        public class TestPipelineMoudle : Plunder.Pipeline.IPipelineModule
         {
             public string ModuleDescription => "";
 

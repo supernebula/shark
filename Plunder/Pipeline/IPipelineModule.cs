@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Pipeline
 {
-    public interface IResultPipelineModule
+    public interface IPipelineModule
     {
         string ModuleName { get; }
 

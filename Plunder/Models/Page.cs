@@ -2,12 +2,16 @@
 
 namespace Plunder.Models
 {
+    /// <summary>
+    /// Save to MongoDb
+    /// </summary>
     public class Page
     {
         public string Topic { get; set; }
-        public string Uri { get; set; }
 
         public string Domain { get; set; }
+
+        public string Uri { get; set; }
 
         public string UriSign { get; set; }
 

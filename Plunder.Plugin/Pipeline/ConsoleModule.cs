@@ -6,7 +6,7 @@ using Plunder.Pipeline;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class ConsoleModule : IResultPipelineModule
+    public class ConsoleModule : IPipelineModule
     {
         private int _cursorLeft;
         private int _cursorTop;

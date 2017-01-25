@@ -32,7 +32,7 @@ namespace Plunder
         {
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();
-            _resultPipeline.RegisterModule(new ProducerModule(_scheduler)); //ProducerModule is required
+            _resultPipeline.RegisterModule(new DefaultMomeryProducerModule(_scheduler)); //ProducerModule is required
             _downloaders = new List<IDownloader>();
             _pageAnalyzerTypes = new Dictionary<string, Type>();
             _seedRequests = new List<RequestMessage>();
@@ -67,7 +67,7 @@ namespace Plunder
         #endregion
 
         #region addition
-        public void RegisterResultPipeModule(params IResultPipelineModule[] modules)
+        public void RegisterResultPipeModule(params IPipelineModule[] modules)
         {
             _resultPipeline.RegisterModule(modules);
         }

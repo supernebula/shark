@@ -48,6 +48,7 @@
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Filter\IBloomFilter.cs" />
     <Compile Include="Models\Page.cs" />
+    <Compile Include="Pipeline\IProducerModule.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
     <Compile Include="Scheduler\IConsumer.cs" />
     <Compile Include="Scheduler\IRequestMessageProvider.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IPipelineModule.cs" />
-    <Compile Include="Pipeline\ProducerModule.cs" />
+    <Compile Include="Pipeline\DefaultMomeryProducerModule.cs" />
     <Compile Include="Pipeline\ResultPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proxy\HttpProxy.cs" />

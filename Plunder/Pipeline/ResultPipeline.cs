@@ -9,7 +9,7 @@ namespace Plunder.Pipeline
 {
     public class ResultPipeline
     {
-        private readonly ConcurrentBag<IResultPipelineModule> _modules;
+        private readonly ConcurrentBag<IPipelineModule> _modules;
 
         private int _resultTotal;
         public int ResultTotal => _resultTotal;
@@ -19,28 +19,28 @@ namespace Plunder.Pipeline
 
         public ResultPipeline()
         {
-            _modules = new ConcurrentBag<IResultPipelineModule>();
+            _modules = new ConcurrentBag<IPipelineModule>();
         }
 
-        public ResultPipeline(IEnumerable<IResultPipelineModule> modules)
+        public ResultPipeline(IEnumerable<IPipelineModule> modules)
         {
-            _modules = new ConcurrentBag<IResultPipelineModule>(modules);
+            _modules = new ConcurrentBag<IPipelineModule>(modules);
         }
 
         public bool IsContainProducer()
         {
-            return _modules.OfType<ProducerModule>().Any();
+            return _modules.OfType<DefaultMomeryProducerModule>().Any();
         }
 
 
-        public void RegisterModule(IResultPipelineModule module)
+        public void RegisterModule(IPipelineModule module)
         {
             if (_modules.Any(e => e.GetType() == module.GetType()))
                 return;
             _modules.Add(module);
         }
 
-        public void RegisterModule(IEnumerable<IResultPipelineModule> modules)
+        public void RegisterModule(IEnumerable<IPipelineModule> modules)
         {
             modules.ToList().ForEach(RegisterModule);
         }
@@ -48,7 +48,7 @@ namespace Plunder.Pipeline
         public void Inject(PageResult data)
         {
             Interlocked.Increment(ref _resultTotal);
-            foreach (IResultPipelineModule module in _modules)
+            foreach (IPipelineModule module in _modules)
             {
                 module.ProcessAsync(data);
             }
