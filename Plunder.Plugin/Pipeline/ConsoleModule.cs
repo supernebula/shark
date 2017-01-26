@@ -29,7 +29,7 @@ namespace Plunder.Plugin.Pipeline
             Console.SetBufferSize(_bufferWidth, _bufferWidth);
         }
 
-        public string ModuleName
+        public string Name
         {
             get
             {
@@ -37,7 +37,7 @@ namespace Plunder.Plugin.Pipeline
             }
         }
 
-        public string ModuleDescription
+        public string Description
         {
             get
             {

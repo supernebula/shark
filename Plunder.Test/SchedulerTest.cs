@@ -205,9 +205,9 @@ namespace Plunder.Test
 
         public class TestPipelineMoudle : Plunder.Pipeline.IPipelineModule
         {
-            public string ModuleDescription => "";
+            public string Description => "";
 
-            public string ModuleName => "";
+            public string Name => "";
 
             public void Init(object context)
             {

@@ -5,9 +5,9 @@ namespace Plunder.Pipeline
 {
     public interface IPipelineModule
     {
-        string ModuleName { get; }
+        string Name { get; }
 
-        string ModuleDescription { get; }
+        string Description { get; }
 
         void Init(object context);
 

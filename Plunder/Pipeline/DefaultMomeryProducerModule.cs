@@ -15,9 +15,9 @@ namespace Plunder.Pipeline
             Scheduler = scheduler;
         }
 
-        public string ModuleName => "默认内存生产者模块";
+        public string Name => "默认内存生产者模块";
 
-        public string ModuleDescription => "从结果中发现新的url并封装为请求消息，交付给队列";
+        public string Description => "从结果中发现新的url并封装为请求消息，交付给队列";
 
         public void Dispose()
         {

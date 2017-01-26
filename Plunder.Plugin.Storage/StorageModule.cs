@@ -12,9 +12,9 @@ namespace Plunder.Plugin.Storage
 {
     public class StorageModule : IPipelineModule
     {
-        public string ModuleName => "仓储模块";
+        public string Name => "仓储模块";
 
-        public string ModuleDescription => "数据持久化到数据库，如：SqlServer、MySql、NoSql....";
+        public string Description => "数据持久化到数据库，如：SqlServer、MySql、NoSql....";
 
         public StorageModule()
         {
