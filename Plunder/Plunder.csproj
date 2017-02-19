@@ -47,6 +47,8 @@
     <Compile Include="Compoment\UrlType.cs" />
     <Compile Include="Downloader\IDownloader.cs" />
     <Compile Include="Filter\IBloomFilter.cs" />
+    <Compile Include="Filter\IDuplicateFilter.cs" />
+    <Compile Include="Models\AccessLog.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Pipeline\IProducerModule.cs" />
     <Compile Include="Scheduler\ConsumerBroker.cs" />
@@ -88,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PlunderClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Dotnet\MeerkatProduct\Evol.Common\Evol.Common.csproj">
+      <Project>{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}</Project>
+      <Name>Evol.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

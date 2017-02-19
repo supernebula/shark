@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Evol.Common;
+using System;
 
 namespace Plunder.Models
 {
     /// <summary>
     /// Save to MongoDb
     /// </summary>
-    public class Page
+    public class Page : IEntity<string>
     {
+        public string Id { get; set; }
+
         public string Topic { get; set; }
 
         public string Domain { get; set; }
@@ -15,7 +18,7 @@ namespace Plunder.Models
 
         public string UriSign { get; set; }
 
-        public string Text { get; set; }
+        public string Content { get; set; }
 
         public bool IsFetched { get; set; }
 
@@ -25,5 +28,7 @@ namespace Plunder.Models
         public int Elapsed { get; set; }
 
         public DateTime CreateTime { get; set; }
+
+        
     }
 }

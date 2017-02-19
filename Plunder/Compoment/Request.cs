@@ -14,6 +14,8 @@ namespace Plunder.Compoment
 
         public string Channel { get; set; }
 
+        public string Domain { get; set; }
+
         public string Url { get; set; }
 
         public string Hash => this.Url.GetHashCode().ToString();

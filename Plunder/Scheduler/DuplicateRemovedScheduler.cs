@@ -14,15 +14,15 @@ namespace Plunder.Scheduler
 
         protected readonly BlockingCollection<RequestMessage> Queue;
 
-        private readonly IBloomFilter<string> _bloomFilter;
+        private readonly IDuplicateFilter<string> _duplicateFilter;
 
         private int _accumulatedMessageTotal;
 
         protected int AccumulatedMessageTotal => _accumulatedMessageTotal;
 
-        protected DuplicateRemovedScheduler(IBloomFilter<string> bloomFilter)
+        protected DuplicateRemovedScheduler(IDuplicateFilter<string> duplicateFilter)
         {
-            _bloomFilter = bloomFilter;
+            _duplicateFilter = duplicateFilter;
             Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
         }
@@ -72,7 +72,7 @@ namespace Plunder.Scheduler
 
         public bool IsDuplicate(RequestMessage message)
         {
-            if (_bloomFilter.Contains(message.Request.Url))
+            if (_duplicateFilter.Contains(message.Request.Url))
             {
                 //var originalColor = Console.ForegroundColor;
                 //Console.ForegroundColor = ConsoleColor.Yellow;
@@ -81,7 +81,7 @@ namespace Plunder.Scheduler
                 return true;
             }
                 
-            _bloomFilter.Add(message.Request.Url);
+            _duplicateFilter.Add(message.Request.Url);
             return false;
         }
 
