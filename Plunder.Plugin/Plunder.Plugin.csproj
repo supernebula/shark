@@ -65,6 +65,11 @@
     <Compile Include="Filter\MongodbDuplicateFilter.cs" />
     <Compile Include="Filter\RedisBloomFilter.cs" />
     <Compile Include="Filter\RedisClient.cs" />
+    <Compile Include="Memory\Storage\MemoryData.cs" />
+    <Compile Include="Memory\Storage\QueryEntries\AccessLogQueryEntry.cs" />
+    <Compile Include="Memory\Storage\QueryEntries\PageQueryEntry.cs" />
+    <Compile Include="Memory\Storage\Repositories\AccessLogRepository.cs" />
+    <Compile Include="Memory\Storage\Repositories\PageRepository.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
     <Compile Include="Pipeline\AccessRepositoryModule.cs" />
