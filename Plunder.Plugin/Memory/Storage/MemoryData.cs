@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Plunder.Plugin.Memory.Storage
 {
-    public class MemoryData<T, TKey> where T : IEntity<TKey> where TKey : struct 
+    public class MemoryData<T, TKey> where T : IEntity<TKey>
     {
 
 
@@ -24,7 +24,7 @@ namespace Plunder.Plugin.Memory.Storage
 
         private ConcurrentBag<T> _collecton = new ConcurrentBag<T>();
 
-        public IReadOnlyCollection<T> Collecton()
+        public IEnumerable<T> Collecton()
         {
             return _collecton;
         }
@@ -71,11 +71,9 @@ namespace Plunder.Plugin.Memory.Storage
         }
 
         [Obsolete]
-        public T Find(TKey id)
+        public T FindOne(Func<T, bool> predicate)
         {
-            return default(T);
-
-            //return _collecton.SingleOrDefault(e => e.Id == id);
+            return _collecton.SingleOrDefault(predicate);
         }
 
         public IEnumerable<T> Select(Func<T, bool> predicate)
@@ -88,8 +86,9 @@ namespace Plunder.Plugin.Memory.Storage
             IEnumerable<T> query = _collecton;
             if (predicate != null)
                 query = _collecton.Where(predicate);
-            var total = query.Count();
-            var list = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var enumerable = query as T[] ?? query.ToArray();
+            var total = enumerable.Count();
+            var list = enumerable.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             var result = new Paged<T>() {
                 PageTotal = total % pageSize == 0 ? total / pageSize : total / pageSize + 1,
                 RecordTotal = total,

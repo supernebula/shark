@@ -11,18 +11,23 @@ namespace Plunder.Plugin.Memory.Storage.Repositories
 {
     public class AccessLogRepository : IAccessLogRepository
     {
+        private MemoryData<AccessLog, string> _collection => MemoryData<AccessLog, string>.Instance;
+
         public Task AddAsync(AccessLog item)
         {
-            throw new NotImplementedException();
+            _collection.Add(item);
+            return Task.FromResult(1);
         }
 
         public Task AddBatchAsync(IEnumerable<AccessLog> items)
         {
-            throw new NotImplementedException();
+            _collection.AddBatch(items);
+            return Task.FromResult(1);
         }
 
         public Task<bool> DeleteAsync(string id)
         {
+            _collection.DeleteBy(e => e.Id == id);
             throw new NotImplementedException();
         }
 
