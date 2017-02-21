@@ -8,7 +8,7 @@ namespace Plunder.Plugin.Memory.Storage
 {
     public class MemoryData<T, TKey> where T : IEntity<TKey> where TKey : struct 
     {
-         
+
 
         private static MemoryData<T, TKey> _instance;
         public static MemoryData<T, TKey> Instance
@@ -73,8 +73,9 @@ namespace Plunder.Plugin.Memory.Storage
         [Obsolete]
         public T Find(TKey id)
         {
-            if(id is string)
-                return _collecton.SingleOrDefault(e => e.Id == id as string);
+            return default(T);
+
+            //return _collecton.SingleOrDefault(e => e.Id == id);
         }
 
         public IEnumerable<T> Select(Func<T, bool> predicate)
@@ -100,5 +101,8 @@ namespace Plunder.Plugin.Memory.Storage
         }
 
 
+
+
     }
+
 }
