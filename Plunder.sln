@@ -21,13 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage", "Plunder.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F9C3819E-D428-49D0-8498-58CB3592A70B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evol.Common", "..\Dotnet\MeerkatProduct\Evol.Common\Evol.Common.csproj", "{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evol.Utilities", "..\Dotnet\MeerkatProduct\Evol.Utilities\Evol.Utilities.csproj", "{8431D32B-C3BA-4EFB-B85D-7BC70798F571}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{094DA403-34E3-478B-9423-8A20E81D2F30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evol.MongoDB", "..\Dotnet\MeerkatProduct\Evol.MongoDB\Evol.MongoDB.csproj", "{44CA5261-4125-4CB0-8D79-C1B1D905A188}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{407C0637-F164-4F5B-8FC8-A7F224E440A3}"
+	ProjectSection(SolutionItems) = preProject
+		Library\Evol.Common.dll = Library\Evol.Common.dll
+		Library\Evol.MongoDB.dll = Library\Evol.MongoDB.dll
+		Library\Evol.Utilities.dll = Library\Evol.Utilities.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,18 +68,6 @@ Global
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8431D32B-C3BA-4EFB-B85D-7BC70798F571}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8431D32B-C3BA-4EFB-B85D-7BC70798F571}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8431D32B-C3BA-4EFB-B85D-7BC70798F571}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8431D32B-C3BA-4EFB-B85D-7BC70798F571}.Release|Any CPU.Build.0 = Release|Any CPU
-		{44CA5261-4125-4CB0-8D79-C1B1D905A188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44CA5261-4125-4CB0-8D79-C1B1D905A188}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44CA5261-4125-4CB0-8D79-C1B1D905A188}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44CA5261-4125-4CB0-8D79-C1B1D905A188}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,8 +75,5 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{862A23F1-6822-461C-A60B-2F3B8DCBE253} = {094DA403-34E3-478B-9423-8A20E81D2F30}
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5} = {094DA403-34E3-478B-9423-8A20E81D2F30}
-		{FFD8CED2-AAD0-443D-9C53-943C7A2327EE} = {F9C3819E-D428-49D0-8498-58CB3592A70B}
-		{8431D32B-C3BA-4EFB-B85D-7BC70798F571} = {F9C3819E-D428-49D0-8498-58CB3592A70B}
-		{44CA5261-4125-4CB0-8D79-C1B1D905A188} = {F9C3819E-D428-49D0-8498-58CB3592A70B}
 	EndGlobalSection
 EndGlobal

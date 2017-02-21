@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Plunder.Plugin.Memory.Storage
 {
-    public class MemoryData<T, TKey> where T : IEntity<TKey>
+    public class MemoryData<T, TKey> where T : IEntity<TKey> where TKey : struct 
     {
          
 
@@ -73,8 +73,8 @@ namespace Plunder.Plugin.Memory.Storage
         [Obsolete]
         public T Find(TKey id)
         {
-            throw new NotImplementedException();
-            //return _collecton.SingleOrDefault(e => e.Id == id);
+            if(id is string)
+                return _collecton.SingleOrDefault(e => e.Id == id as string);
         }
 
         public IEnumerable<T> Select(Func<T, bool> predicate)

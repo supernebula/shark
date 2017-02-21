@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Evol.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Evol.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
@@ -90,12 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PlunderClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Dotnet\MeerkatProduct\Evol.Common\Evol.Common.csproj">
-      <Project>{FFD8CED2-AAD0-443D-9C53-943C7A2327EE}</Project>
-      <Name>Evol.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
