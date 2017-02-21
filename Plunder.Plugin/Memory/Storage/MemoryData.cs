@@ -22,70 +22,84 @@ namespace Plunder.Plugin.Memory.Storage
 
         }
 
-        private ConcurrentBag<T> _collecton = new ConcurrentBag<T>();
+        private ConcurrentDictionary<TKey, T> _dic = new ConcurrentDictionary<TKey, T>();
 
-        public IEnumerable<T> Collecton()
-        {
-            return _collecton;
-        }
 
-        public void Add(T item)
+        public bool Add(T item)
         {
-            _collecton.Add(item);
+            return _dic.TryAdd(item.Id, item);
         }
 
         public void AddBatch(IEnumerable<T> items)
         {
             foreach (var item in items)
             {
-                _collecton.Add(item);
+                _dic.TryAdd(item.Id, item);
             }
-            
         }
 
         public bool Update(T item)
         {
+            T value;
+            return _dic.TryGetValue(item.Id, out value) && _dic.TryUpdate(item.Id, item, value);
+        }
+
+        public bool Delete(TKey id)
+        {
             T delete;
-            if (!_collecton.TryTake(out delete))
-                return false;
-            _collecton.Add(item);
-            return true;
+            return _dic.TryRemove(id, out delete);
         }
 
         public bool Delete(T item)
         {
             T delete;
-            return _collecton.TryTake(out delete);
+            return _dic.TryRemove(item.Id, out delete);
         }
 
         public void DeleteBatch(IEnumerable<TKey> ids)
         {
-            var items = _collecton.Where(e => ids.Contains(e.Id)).ToList();
-            items.ForEach(e => Delete(e));
+            foreach (var id in ids)
+            {
+                T delete;
+                _dic.TryRemove(id, out delete);
+            }
         }
 
         public void DeleteBy(Func<T, bool> predicate)
         {
-            var items = _collecton.Where(predicate).ToList();
-            items.ForEach(e => Delete(e));
+            var ids = _dic.Where(kv => predicate.Invoke(kv.Value)).Select(kv => kv.Key).ToList();
+            foreach (var id in ids)
+            {
+                T delete;
+                _dic.TryRemove(id, out delete);
+            }
         }
 
-        [Obsolete]
+        public T Find(TKey id)
+        {
+            T value;
+            _dic.TryGetValue(id, out value);
+            return value;
+        }
+
         public T FindOne(Func<T, bool> predicate)
         {
-            return _collecton.SingleOrDefault(predicate);
+            var id = _dic.Where(kv => predicate.Invoke(kv.Value)).Select(kv => kv.Key).FirstOrDefault();
+            T value;
+            _dic.TryGetValue(id, out value);
+            return value;
         }
 
         public IEnumerable<T> Select(Func<T, bool> predicate)
         {
-            return _collecton.Where(predicate).ToList();
+            return _dic.Where(kv => predicate.Invoke(kv.Value)).Select(kv => kv.Value).ToList();
         }
 
         public IPaged<T> Paged(Func<T, bool> predicate, int pageIndex, int pageSize)
-        { 
-            IEnumerable<T> query = _collecton;
+        {
+            var query = _dic.Where(kv => predicate.Invoke(kv.Value)).Select(kv => kv.Value);
             if (predicate != null)
-                query = _collecton.Where(predicate);
+                query = query.Where(predicate);
             var enumerable = query as T[] ?? query.ToArray();
             var total = enumerable.Count();
             var list = enumerable.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();

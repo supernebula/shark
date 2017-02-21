@@ -77,6 +77,7 @@
     <Compile Include="Memory\Storage\QueryEntries\AccessLogQueryEntry.cs" />
     <Compile Include="Memory\Storage\QueryEntries\PageQueryEntry.cs" />
     <Compile Include="Memory\Storage\Repositories\AccessLogRepository.cs" />
+    <Compile Include="Memory\Storage\Repositories\BaseMemoryDbRepository.cs" />
     <Compile Include="Memory\Storage\Repositories\PageRepository.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
