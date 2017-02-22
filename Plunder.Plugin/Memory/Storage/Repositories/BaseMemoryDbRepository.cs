@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Plunder.Plugin.Memory.Storage.Repositories
 {
-    public abstract class BaseMemoryDbRepository<T> where T : IEntity<string>
+    public class BaseMemoryDbRepository<T> where T : IEntity<string>
     {
         private MemoryData<T, string> _collection => MemoryData<T, string>.Instance;
 
@@ -30,20 +29,20 @@ namespace Plunder.Plugin.Memory.Storage.Repositories
             return Task.FromResult(flag);
         }
 
-        public Task DeleteBatchAsync(IEnumerable<string> ids)
+        public Task<bool> DeleteBatchAsync(IEnumerable<string> ids)
         {
             foreach (var id in ids)
             {
                 _collection.Delete(id);
             }
-            return Task.FromResult(1);
+            return Task.FromResult(true);
         }
 
-        public Task DeleteByAsync(Expression<Func<T, bool>> predicate)
+        public Task<bool> DeleteByAsync(Expression<Func<T, bool>> predicate)
         {
             var func = predicate.Compile();
             _collection.DeleteBy(func);
-            return Task.FromResult(1);
+            return Task.FromResult(true);
         }
 
         public Task<T> FindAsync(string id)
@@ -59,10 +58,22 @@ namespace Plunder.Plugin.Memory.Storage.Repositories
             return Task.FromResult(value);
         }
 
-        public Task UpdateAsync(T item)
+        public Task<bool> UpdateAsync(T item)
         {
             _collection.Update(item);
-            return Task.FromResult(1);
+            return Task.FromResult(true);
+        }
+
+        public Task<IPaged<T>> PagedSelectAsync(Expression<Func<T, bool>> predicate, int pageIndex, int pageSize)
+        {
+            var  result =_collection.Paged(predicate.Compile(), pageIndex, pageSize);
+            return Task.FromResult(result);
+        }
+
+        public Task<List<T>> SelectAsync<TKey>(Expression<Func<T, bool>> predicate, Expression<Func<T, TKey>> orderByKeySelector, bool isDescending = true)
+        {
+            var list = _collection.Select(predicate.Compile()).OrderBy(orderByKeySelector.Compile()).ToList();
+            return Task.FromResult(list);
         }
     }
 }
