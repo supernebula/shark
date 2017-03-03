@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("Evol.MongoDB")]
+[assembly: AssemblyTitle("Plunder.MemoryStorage")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Evol.MongoDB")]
+[assembly: AssemblyProduct("Plunder.MemoryStorage")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("75bf084c-99f0-4f1c-911e-b20980a703b2")]
+[assembly: Guid("5398a6be-89a0-480f-b576-54a27077dde7")]
 
 // 程序集的版本信息由下列四个值组成: 
 //

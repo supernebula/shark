@@ -2,7 +2,7 @@
 
 namespace Plunder.Plugin.QueryEntries
 {
-    public interface IAccessLogQueryEntry : IQueryEntry<AccessLog>
+    public interface IAccessLogQueryEntry : IQueryEntry<AccessLog, string>
     {
     }
 }

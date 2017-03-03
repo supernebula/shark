@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Plunder.Plugin.Memory.Storage.Repositories
+namespace Plunder.MemoryStorage.Repositories
 {
     public class BaseMemoryDbRepository<T> where T : IEntity<string>
     {

@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{407C
 		Library\Evol.Utilities.dll = Library\Evol.Utilities.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.MemoryStorage", "Plunder.MemoryStorage\Plunder.MemoryStorage.csproj", "{5398A6BE-89A0-480F-B576-54A27077DDE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5398A6BE-89A0-480F-B576-54A27077DDE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5398A6BE-89A0-480F-B576-54A27077DDE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5398A6BE-89A0-480F-B576-54A27077DDE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5398A6BE-89A0-480F-B576-54A27077DDE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
