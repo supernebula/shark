@@ -2,7 +2,7 @@
 
 namespace Plunder.Plugin.QueryEntries
 {
-    public interface IPageQueryEntry : IQueryEntry<Page>
+    public interface IPageQueryEntry : IQueryEntry<Page, string>
     {
     }
 }

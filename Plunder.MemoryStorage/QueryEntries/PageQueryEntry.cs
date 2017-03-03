@@ -6,5 +6,6 @@ namespace Plunder.MemoryStorage.QueryEntries
 {
     public class PageQueryEntry : BaseQueryEntry<Page, string>, IPageQueryEntry
     {
+
     }
 }

@@ -5,5 +5,6 @@ namespace Plunder.MemoryStorage.Repositories
 {
     public class AccessLogRepository : BaseMemoryDbRepository<AccessLog>, IAccessLogRepository
     {
+
     }
 }
