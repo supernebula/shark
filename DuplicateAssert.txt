@@ -1,0 +1,33 @@
+core object:
+master:  queue、downloader、processer
+worker:  queue(master) => worker
+
+重复判断时机：
+下载前(!downloading && !downloaded)、加载到queue前(!downloading && !downloaded)
+
+url状态：
+found、downloading、downloaded
+
+fllow:
+
+
+
+                              queue
+							         -
+									      -
+										       -
+											        -
+													     -
+		                                                     -+ \
+															   downloader
+          Database                                             -
+														    -
+													    -
+												    -
+												-
+											-
+										/+-
+							 processer
+
+
+
