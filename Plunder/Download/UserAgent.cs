@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Plunder.Util;
 
-namespace Plunder.Compoment
+namespace Plunder.Download
 {
 
     public static class UserAgent

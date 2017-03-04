@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Plunder.Compoment;
+using Plunder.Download;
 using Plunder.Plugin.Download;
 
 namespace Plunder.Plugin.Compoment

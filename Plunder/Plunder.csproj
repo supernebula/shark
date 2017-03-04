@@ -59,10 +59,12 @@
     <Compile Include="Engine\IConsumer.cs" />
     <Compile Include="Schedule\IRequestMessageProvider.cs" />
     <Compile Include="SpiderStatus.cs" />
-    <Compile Include="Storage\MessageRecord.cs" />
+    <Compile Include="Storage\MemoryDuplicateFilter.cs" />
+    <Compile Include="Storage\MemoryStorage.cs" />
+    <Compile Include="Storage\~MessageRecord.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Response.cs" />
-    <Compile Include="Compoment\UserAgent.cs" />
+    <Compile Include="Download\UserAgent.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IPipelineModule.cs" />
