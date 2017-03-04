@@ -1,9 +1,10 @@
-﻿using Plunder.Filter;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plunder.Schedule.Filter;
 
 namespace Plunder.Plugin.Filter
 {

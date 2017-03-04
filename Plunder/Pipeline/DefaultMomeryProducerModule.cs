@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Plunder.Compoment;
-using Plunder.Scheduler;
+using Plunder.Schedule;
 
 namespace Plunder.Pipeline
 {

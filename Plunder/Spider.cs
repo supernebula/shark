@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Plunder.Analyze;
+using Plunder.Process.Analyze;
 using Plunder.Compoment;
-using Plunder.Scheduler;
-using Plunder.Downloader;
+using Plunder.Schedule;
+using Plunder.Download;
 using Plunder.Pipeline;
 
 namespace Plunder
 {
 
-    public class Spider
+    public class SpiderEngine
     {
         #region Required Unit
 
@@ -28,7 +28,7 @@ namespace Plunder
 
         #region Initialization
 
-        public Spider(IMonitorableScheduler scheduler)
+        public SpiderEngine(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();

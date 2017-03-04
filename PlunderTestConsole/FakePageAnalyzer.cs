@@ -5,10 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Plunder.Analyze;
+using Plunder.Process.Analyze;
 using Plunder.Compoment;
 using Plunder.Plugin.Compoment;
-using Plunder.Plugin.Downloader;
+using Plunder.Plugin.Download;
 
 namespace PlunderTestConsole
 {
@@ -49,7 +49,7 @@ namespace PlunderTestConsole
 
             return new PageResult()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = request,
                 Response = response
             };

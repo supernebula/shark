@@ -12,22 +12,22 @@ fllow:
 
 
 
-                              queue
-							         -
-									      -
+                              Scheduler(queue)
+							    /\    -
+								|	      -
 										       -
-											        -
+								|			        -
 													     -
-		                                                     -+ \
+		                        |                            -+ \
 															   downloader
-          Database                                             -
+          £¨Database£©Pipe      |                               -
 														    -
-													    -
+								|					    -
 												    -
-												-
+								|				-
 											-
-										/+-
-							 processer
+								|		/+-
+							 processer(spider)
 
 
 

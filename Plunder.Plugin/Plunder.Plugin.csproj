@@ -67,9 +67,9 @@
     <Compile Include="Compoment\Channel.cs" />
     <Compile Include="Compoment\SiteConfiguration.cs" />
     <Compile Include="Compoment\SiteIndex.cs" />
-    <Compile Include="Downloader\HttpClientBuilder.cs" />
-    <Compile Include="Downloader\HttpClientDownloader.cs" />
-    <Compile Include="Downloader\TopicType.cs" />
+    <Compile Include="Download\HttpClientBuilder.cs" />
+    <Compile Include="Download\HttpClientDownloader.cs" />
+    <Compile Include="Download\WebPageType.cs" />
     <Compile Include="Filter\MongodbDuplicateFilter.cs" />
     <Compile Include="Filter\RedisBloomFilter.cs" />
     <Compile Include="Filter\RedisClient.cs" />

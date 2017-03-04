@@ -5,13 +5,13 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Plunder.Analyze;
+using Plunder.Process.Analyze;
 using Plunder.Compoment;
-using Plunder.Downloader;
+using Plunder.Download;
 using Plunder.Pipeline;
-using Plunder.Plugin.Downloader;
-using Plunder.Filter;
-using Plunder.Scheduler;
+using Plunder.Plugin.Download;
+using Plunder.Schedule;
+using Plunder.Schedule.Filter;
 using Plunder.Test.Pipeline;
 
 namespace Plunder.Test
@@ -25,7 +25,7 @@ namespace Plunder.Test
         {
             return new RequestMessage()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = new Request()
                 {
                     SiteId = site.Id,
@@ -40,7 +40,7 @@ namespace Plunder.Test
             var list = new List<RequestMessage>();
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id,  Url = "http://www.usashopcn.com/Product/Details/126334" }
 
@@ -48,7 +48,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127698" }
 
@@ -56,7 +56,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127593" }
 
@@ -64,7 +64,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = TopicType.StaticHtml,
+                Topic = WebPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/126855" }
 
@@ -153,7 +153,7 @@ namespace Plunder.Test
 
             public bool IsDefault { get; set; }
 
-            public string Topic => TopicType.StaticHtml;
+            public string Topic => WebPageType.Static;
 
             public async Task<Response> DownloadAsync(Request request)
             {

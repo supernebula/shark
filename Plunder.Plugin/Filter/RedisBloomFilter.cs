@@ -1,7 +1,7 @@
-﻿using Plunder.Filter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Plunder.Schedule.Filter;
 using StackExchange.Redis;
 
 namespace Plunder.Plugin.Filter

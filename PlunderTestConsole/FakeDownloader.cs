@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Plunder.Compoment;
-using Plunder.Downloader;
-using Plunder.Plugin.Downloader;
+using Plunder.Download;
+using Plunder.Plugin.Download;
 
 namespace PlunderTestConsole
 { 
@@ -27,7 +27,7 @@ namespace PlunderTestConsole
 
         public bool IsDefault { get; set; }
 
-        public string Topic => TopicType.StaticHtml;
+        public string Topic => WebPageType.Static;
 
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {

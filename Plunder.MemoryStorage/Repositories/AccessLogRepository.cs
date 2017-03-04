@@ -1,5 +1,5 @@
 ﻿using Plunder.Plugin.Repositories;
-using Plunder.Models;
+using Plunder.Compoment.Models;
 
 namespace Plunder.MemoryStorage.Repositories
 {

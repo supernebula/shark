@@ -1,4 +1,4 @@
-﻿using Plunder.Models;
+﻿using Plunder.Compoment.Models;
 
 namespace Plunder.Plugin.QueryEntries
 {

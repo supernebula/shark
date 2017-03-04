@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Plunder.Compoment;
-using Plunder.Plugin.Downloader;
+using Plunder.Plugin.Download;
 
 namespace Plunder.Plugin.Compoment
 {
@@ -35,7 +35,7 @@ namespace Plunder.Plugin.Compoment
             var sites = new Dictionary<string, Site>();
             var site = Site.NewDefault;
             site.Id = SiteIndex.Usashopcn;
-            site.Topic = TopicType.StaticHtml;
+            site.Topic = WebPageType.Static;
             site.IndexUrl = "http://www.usashopcn.com/";
             site.Domain = "www.usashopcn.com";
             site.IsUseHttpProxy = false;

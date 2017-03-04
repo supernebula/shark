@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Plunder.Compoment;
 using Plunder.Plugin.Compoment;
-using Plunder.Analyze;
+using Plunder.Process.Analyze;
 using HtmlAgilityPack;
 using Site = Plunder.Compoment.Site;
 

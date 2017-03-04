@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Plunder;
-using Plunder.Downloader;
+using Plunder.Download;
+using Plunder.Process.Analyze;
 using Plunder.Plugin.Analyze;
 using Plunder.Plugin.Compoment;
-using Plunder.Plugin.Downloader;
-using Plunder.Filter;
+using Plunder.Plugin.Download;
 using Plunder.Plugin.Filter;
 using Plunder.Plugin.Pipeline;
-using Plunder.Scheduler;
+using Plunder.Schedule;
 
 namespace PlunderTestConsole
 {
@@ -21,24 +21,24 @@ namespace PlunderTestConsole
         private static SchedulerTest _instance;
         public static SchedulerTest Instance => _instance ?? (_instance = new SchedulerTest());
 
-        private Spider _spider;
+        private SpiderEngine _spider;
         public void RunSpider()
         {
             //var memoryBloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             //_spider = new Spider(new SequenceScheduler(memoryBloomFilter));
             var redisBloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "localhost", 6379);
-            _spider = new Spider(new SequenceScheduler(redisBloomFilter));
+            _spider = new SpiderEngine(new SequenceScheduler(redisBloomFilter));
             //var downloaders = new List<IDownloader> { new FakeDownloader(4) };
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _spider.RegisterDownloader(downloaders);
             _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
             _spider.RegisterResultPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
 
-            _spider.Start(TopicType.StaticHtml, SiteIndex.Usashopcn, GetUrls());
+            _spider.Start(WebPageType.Static, SiteIndex.Usashopcn, GetUrls());
 
             var statusTimer = new Timer(spider =>
             {
-                var status = ((Spider) spider).RunStatusInfo();
+                var status = ((SpiderEngine) spider).RunStatusInfo();
                 Console.WriteLine(String.Format("QueueCount:{0}, TaskCount={1}, ConsumeTotal:{2},  ResultTotal:{3}", status.QueueCount, status.TaskCount, status.ConsumeTotal, status.ResultTotal));
             }, _spider, 2000, 2000);
 

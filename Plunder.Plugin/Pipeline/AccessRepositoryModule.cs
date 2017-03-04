@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Plugin.Repositories;
-using Plunder.Models;
+using Plunder.Compoment.Models;
 using Evol.Utilities;
 using Evol.Utilities.Hash;
 

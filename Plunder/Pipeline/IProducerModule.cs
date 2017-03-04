@@ -1,4 +1,4 @@
-﻿using Plunder.Scheduler;
+﻿using Plunder.Schedule;
 using System.Threading.Tasks;
 
 namespace Plunder.Pipeline
