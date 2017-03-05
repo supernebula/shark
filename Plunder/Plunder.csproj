@@ -58,7 +58,7 @@
     <Compile Include="Schedule\ConsumerBroker.cs" />
     <Compile Include="Engine\IConsumer.cs" />
     <Compile Include="Schedule\IRequestMessageProvider.cs" />
-    <Compile Include="SpiderStatus.cs" />
+    <Compile Include="CrawlerStatus.cs" />
     <Compile Include="Storage\MemoryDuplicateFilter.cs" />
     <Compile Include="Storage\MemoryStorage.cs" />
     <Compile Include="Storage\~MessageRecord.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Process\Selector\ISelector.cs" />
     <Compile Include="Process\Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
-    <Compile Include="Spider.cs" />
+    <Compile Include="Crawler.cs" />
     <Compile Include="Schedule\Filter\MemoryBloomFilter.cs" />
     <Compile Include="Util\RandomUnitily.cs" />
   </ItemGroup>
@@ -94,7 +94,7 @@
     <Folder Include="Thread\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="PlunderClassDiagram1.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

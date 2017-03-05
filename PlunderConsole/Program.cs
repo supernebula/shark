@@ -14,24 +14,24 @@ namespace PlunderConsole
 {
     public class Program
     {
-        static SpiderEngine _spider;
+        static Crawler _crawler;
         static void Main(string[] args)
         {
-            RunSpider();
+            RunCrawler();
         }
-        static void RunSpider()
+        static void RunCrawler()
         {
             //var bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379, true);
-            _spider = new SpiderEngine(new SequenceScheduler(bloomFilter));
+            _crawler = new Crawler(new SequenceScheduler(bloomFilter));
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
-            _spider.RegisterDownloader(downloaders);
-            _spider.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _spider.RegisterResultPipeModule(new ConsoleModule(0, 20, 400, 500, true, true));
+            _crawler.RegisterDownloader(downloaders);
+            _crawler.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+            _crawler.RegisterResultPipeModule(new ConsoleModule(0, 20, 400, 500, true, true));
 
-            _spider.Start(WebPageType.Static, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
+            _crawler.Start(WebPageType.Static, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
 
-            var statusTimer = new Timer(spider => { Console.WriteLine(((SpiderEngine) spider).RunStatusInfo()); }, _spider, 0, 2000);
+            var statusTimer = new Timer(crawler => { Console.WriteLine(((Crawler) crawler).RunStatusInfo()); }, _crawler, 0, 2000);
         }
 
 

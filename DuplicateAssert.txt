@@ -27,7 +27,7 @@ fllow:
 								|				-
 											-
 								|		/+-
-							 processer(spider)
+							 processer()
 
 
 

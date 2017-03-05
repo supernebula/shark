@@ -12,7 +12,7 @@ using Plunder.Pipeline;
 namespace Plunder
 {
 
-    public class SpiderEngine
+    public class Crawler
     {
         #region Required Unit
 
@@ -28,7 +28,7 @@ namespace Plunder
 
         #region Initialization
 
-        public SpiderEngine(IMonitorableScheduler scheduler)
+        public Crawler(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;
             _resultPipeline = new ResultPipeline();
@@ -97,9 +97,9 @@ namespace Plunder
 
         #region Running and Monitoring
 
-        public SpiderStatus RunStatusInfo()
+        public CrawlerStatus RunStatusInfo()
         {
-            var status = new SpiderStatus()
+            var status = new CrawlerStatus()
             {
                 QueueCount = _scheduler.CurrentQueueCount(),
                 TaskCount = _consumerBroker.DownloadingTaskCount(),

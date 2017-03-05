@@ -7,7 +7,7 @@ namespace Plunder.Schedule
 {
     public class SequenceScheduler : DuplicateRemovedScheduler
     {
-        public SequenceScheduler(IBloomFilter<string> bloomFilter) : base(bloomFilter)
+        public SequenceScheduler(IDuplicateFilter<string> duplicateFilter) : base(duplicateFilter)
         {
         }
     }

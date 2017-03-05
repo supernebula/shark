@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Plunder
 {
-    public class SpiderStatus
+    public class CrawlerStatus
     {
         public int QueueCount { get; set; }
 
