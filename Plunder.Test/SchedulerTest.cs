@@ -158,7 +158,7 @@ namespace Plunder.Test
             public async Task<Response> DownloadAsync(Request request)
             {
                 Trace.WriteLine("start download:" + request.Url);
-                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Url, HttpStatusCode = HttpStatusCode.OK, MillisecondTime = 1, ReasonPhrase = "TestReasonPhrase" });
+                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Url, HttpStatusCode = HttpStatusCode.OK, ElapsedTime = 1, ReasonPhrase = "TestReasonPhrase" });
 
             }
 
@@ -203,7 +203,7 @@ namespace Plunder.Test
             }
         }
 
-        public class TestPipelineMoudle : Plunder.Pipeline.IPipelineModule
+        public class TestPipelineMoudle : Plunder.Pipeline.IResultPipelineModule
         {
             public string Description => "";
 

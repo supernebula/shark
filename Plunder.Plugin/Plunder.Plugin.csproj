@@ -81,6 +81,7 @@
     <Compile Include="Memory\Storage\Repositories\~BaseMemoryDbRepository.cs" />
     <Compile Include="Memory\Storage\Repositories\~PageRepository.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
+    <Compile Include="Pipeline\MultiAreaConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
     <Compile Include="Pipeline\AccessRepositoryModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

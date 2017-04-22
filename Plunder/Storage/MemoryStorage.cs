@@ -6,7 +6,12 @@ using Evol.Common;
 
 namespace Plunder.Storage
 {
-    public class MemoryStorage<T, TKey> where T : IEntity<TKey>
+    /// <summary>
+    /// 内存仓储
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public class MemoryStorage<T, TKey> where T : IPrimaryKey<TKey>
     {
 
 
@@ -73,6 +78,11 @@ namespace Plunder.Storage
                 T delete;
                 _dic.TryRemove(id, out delete);
             }
+        }
+
+        public bool Contains(TKey id)
+        {
+            return _dic.ContainsKey(id);
         }
 
         public T Find(TKey id)

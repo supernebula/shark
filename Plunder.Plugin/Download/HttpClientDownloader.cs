@@ -7,7 +7,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Download;
-
+using System.Diagnostics;
 
 namespace Plunder.Plugin.Download
 {
@@ -76,9 +76,15 @@ namespace Plunder.Plugin.Download
         {
             try
             {
+                //当前任务数加1，原子执行
                 Interlocked.Increment(ref _currentTaskNumber);
                 var client = HttpClientBuilder.GetClient(request.SiteId);
+                var sw = new Stopwatch();
+                sw.Start();
                 var httpRespMessage = await client.GetAsync(request.Url);
+                sw.Stop();
+                var elapsed = sw.ElapsedMilliseconds;
+                sw = null;
                 string content = null;
                 Stream stream = null;
                 if (httpRespMessage.IsSuccessStatusCode)
@@ -90,20 +96,23 @@ namespace Plunder.Plugin.Download
 
                 var resp = new Response()
                 {
+                    Request = request,
                     HttpStatusCode = httpRespMessage.StatusCode,
                     IsSuccessCode = httpRespMessage.IsSuccessStatusCode,
                     ReasonPhrase = httpRespMessage.ReasonPhrase,
                     Content = content,
-                    StreamContent = stream
+                    StreamContent = stream,
+                    ElapsedTime = elapsed
                 };
                 return new Tuple<Request, Response>(request, resp);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
+                //当前任务减1，原子执行
                 Interlocked.Decrement(ref _currentTaskNumber);
             }
         }
@@ -111,11 +120,6 @@ namespace Plunder.Plugin.Download
         public bool IsAllowDownload()
         {
             return _maxTaskNumber > _currentTaskNumber;
-        }
-
-        public Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded)
-        {
-            throw new NotImplementedException();
         }
     }
 }

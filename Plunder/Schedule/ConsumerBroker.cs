@@ -144,9 +144,13 @@ namespace Plunder.Schedule
                 reqs.ForEach(request =>
                 {
                     downloader.DownloadAsync(request)
-                        .ContinueWith(t =>
-                        {
-                            Downloaded();
+                    .ContinueWith(t => {
+                        Downloaded();
+                        return t.Result;
+                    })
+                    .ContinueWith(t =>
+                     {
+                            
                             //Console.WriteLine("Downloaded Html:" + t.Result.Item2.Content);
 #if DEBUG
                             Console.WriteLine("Downloaded:" + t.Result.Item1.Url);

@@ -43,7 +43,7 @@ namespace PlunderTestConsole
                 ReasonPhrase = "OK",
                 IsSuccessCode = true,
                 Content = "测试文本",
-                MillisecondTime = 1000,
+                ElapsedTime = 1000,
                 Downloader = "FakeDownloader"
             };
 

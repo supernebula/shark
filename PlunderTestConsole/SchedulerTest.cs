@@ -32,7 +32,7 @@ namespace PlunderTestConsole
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             _crawler.RegisterDownloader(downloaders);
             _crawler.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _crawler.RegisterResultPipeModule(new ConsoleModule(500, 0, 400, 500, true, true));
+            _crawler.RegisterResultPipeModule(new MultiAreaConsoleModule(500, 0, 400, 500, true, true));
 
             _crawler.Start(WebPageType.Static, SiteIndex.Usashopcn, GetUrls());
 

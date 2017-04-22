@@ -10,7 +10,7 @@ using log4net;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class FileModule : IPipelineModule
+    public class FileModule : IResultPipelineModule
     {
         public string Name => "文件存储模块";
 

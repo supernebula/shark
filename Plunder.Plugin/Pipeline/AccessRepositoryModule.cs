@@ -12,19 +12,19 @@ using Evol.Utilities.Hash;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class AccessRepositoryModule : IPipelineModule
+    public class AccessRepositoryModule : IResultPipelineModule
     {
         public IAccessLogRepository AccessLogRepository { get; set; }
-        string IPipelineModule.Description => "存储访问日志记录";
+        string IResultPipelineModule.Description => "存储访问日志记录";
 
-        string IPipelineModule.Name => "访问日志存储";
+        string IResultPipelineModule.Name => "访问日志存储";
 
-        void IPipelineModule.Init(object context)
+        void IResultPipelineModule.Init(object context)
         {
             
         }
 
-        async Task IPipelineModule.ProcessAsync(PageResult result)
+        async Task IResultPipelineModule.ProcessAsync(PageResult result)
         {
             var accessLog = new AccessLog() {
                 Id = Guid.NewGuid().ToString(),
@@ -32,7 +32,7 @@ namespace Plunder.Plugin.Pipeline
                 Uri = result.Request.Url,
                 StatusCode = result.Response.HttpStatusCode,
                 IsSuccessCode = result.Response.IsSuccessCode,
-                ElapsedTime = result.Response.MillisecondTime,
+                ElapsedTime = result.Response.ElapsedTime,
                 CreateTime = DateTime.Now
             };
             await AccessLogRepository.AddAsync(accessLog);
@@ -44,7 +44,7 @@ namespace Plunder.Plugin.Pipeline
                 Uri = result.Request.Url,
                 UriSign = HashUtility.Md5(result.Request.Url),
                 IsFetched = result.Response.IsSuccessCode,
-                Elapsed = result.Response.MillisecondTime,
+                Elapsed = result.Response.ElapsedTime,
                 CreateTime = DateTime.Now
             };
 

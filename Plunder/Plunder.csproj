@@ -34,10 +34,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Evol.Common.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.0.0-beta06\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConfig.cs" />
     <Compile Include="Process\Analyze\FieldSelector.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\UrlType.cs" />
@@ -67,7 +76,7 @@
     <Compile Include="Download\UserAgent.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
-    <Compile Include="Pipeline\IPipelineModule.cs" />
+    <Compile Include="Pipeline\IResultPipelineModule.cs" />
     <Compile Include="Pipeline\DefaultMomeryProducerModule.cs" />
     <Compile Include="Pipeline\ResultPipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

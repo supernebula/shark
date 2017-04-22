@@ -67,7 +67,7 @@ namespace Plunder
         #endregion
 
         #region addition
-        public void RegisterResultPipeModule(params IPipelineModule[] modules)
+        public void RegisterResultPipeModule(params IResultPipelineModule[] modules)
         {
             _resultPipeline.RegisterModule(modules);
         }

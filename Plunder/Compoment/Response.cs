@@ -14,13 +14,17 @@ namespace Plunder.Compoment
         public bool IsSuccessCode { get; set; }
 
         public string CharSet { get; set; }
+
         public Encoding Encoding { get; set; }
 
         public string Content { get; set; }
 
         public Stream StreamContent { get; set; }
 
-        public int MillisecondTime { get; set; }
+        /// <summary>
+        /// 耗时，毫秒
+        /// </summary>
+        public long ElapsedTime { get; set; }
 
         public string Downloader { get; set; }
     }

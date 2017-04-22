@@ -6,7 +6,7 @@ using Plunder.Schedule;
 
 namespace Plunder.Pipeline
 {
-    public class DefaultMomeryProducerModule : IProducerModule, IPipelineModule
+    public class DefaultMomeryProducerModule : IProducerModule, IResultPipelineModule
     {
         public IScheduler Scheduler { get; private set; }
 

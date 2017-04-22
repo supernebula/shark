@@ -47,7 +47,7 @@ namespace Plunder.Plugin.Analyze
                 resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url });
                 resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
                 resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
-                resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.MillisecondTime.ToString() });
+                resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.ElapsedTime.ToString() });
                 resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
                 resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
             }
@@ -88,7 +88,9 @@ namespace Plunder.Plugin.Analyze
                 if(!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                var urlTye = href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) >= 0 ? UrlType.Extracting : UrlType.Navigation;
+                var urlTye = UrlType.Navigation;
+                if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
+                    urlTye = UrlType.Extracting;
                 newRequests.Add(new Request() { Url = href, UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
             }
             return newRequests;

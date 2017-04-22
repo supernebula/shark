@@ -10,7 +10,7 @@ using Plunder.Plugin.Storage.Repositories;
 
 namespace Plunder.Plugin.Storage
 {
-    public class StorageModule : IPipelineModule
+    public class StorageModule : IResultPipelineModule
     {
         public string Name => "仓储模块";
 
