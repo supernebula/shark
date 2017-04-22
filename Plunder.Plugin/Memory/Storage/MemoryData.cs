@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Plunder.MemoryStorage
+namespace Plunder.Plugin.Memory.Storage
 {
     public class MemoryData<T, TKey> where T : IEntity<TKey>
     {

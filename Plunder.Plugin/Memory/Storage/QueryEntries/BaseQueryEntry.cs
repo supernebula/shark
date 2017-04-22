@@ -1,11 +1,11 @@
 ﻿using Evol.Common;
+using Plunder.Plugin.Memory.Storage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Plunder.MemoryStorage.Repositories;
 
-namespace Plunder.MemoryStorage.QueryEntries
+namespace Plunder.Plugin.Memory.Storage.QueryEntries
 {
     public  class BaseQueryEntry<T, TKey> where T : IEntity<string>
     {

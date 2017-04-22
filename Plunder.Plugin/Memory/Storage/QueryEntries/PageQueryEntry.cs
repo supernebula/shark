@@ -2,7 +2,7 @@
 using Plunder.Compoment.Models;
 
 
-namespace Plunder.MemoryStorage.QueryEntries
+namespace Plunder.Plugin.Memory.Storage.QueryEntries
 {
     public class PageQueryEntry : BaseQueryEntry<Page, string>, IPageQueryEntry
     {

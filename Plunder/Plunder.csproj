@@ -99,9 +99,7 @@
     <Compile Include="Schedule\Filter\MemoryBloomFilter.cs" />
     <Compile Include="Util\RandomUnitily.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Thread\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <Content Include="NLog.config">
