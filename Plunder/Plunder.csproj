@@ -70,7 +70,6 @@
     <Compile Include="CrawlerStatus.cs" />
     <Compile Include="Storage\MemoryDuplicateFilter.cs" />
     <Compile Include="Storage\MemoryStorage.cs" />
-    <Compile Include="Storage\~MessageRecord.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Download\UserAgent.cs" />
