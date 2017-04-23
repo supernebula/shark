@@ -25,7 +25,7 @@ namespace Plunder.Compoment.Models
         /// <summary>
         /// millisecond
         /// </summary>
-        public int Elapsed { get; set; }
+        public long Elapsed { get; set; }
 
         public DateTime CreateTime { get; set; }
 
