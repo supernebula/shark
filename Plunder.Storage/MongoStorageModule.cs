@@ -21,10 +21,10 @@ namespace Plunder.Storage
 
         public Task ProcessAsync(PageResult result)
         {
-            using (var contenxt = new PlunderMongoDBContext())
-            {
+            //using (var contenxt = new PlunderMongoDBContext())
+            //{
                 
-            }
+            //}
             throw new NotImplementedException();
         }
     }

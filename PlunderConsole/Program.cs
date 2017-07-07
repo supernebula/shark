@@ -10,6 +10,7 @@ using Plunder.Plugin.Pipeline;
 using Plunder.Plugin.Download;
 using Plunder.Plugin.Filter;
 using Plunder.Schedule.Filter;
+using Autofac;
 
 namespace PlunderConsole
 {
@@ -35,6 +36,13 @@ namespace PlunderConsole
             var statusTimer = new Timer(crawler => { Console.WriteLine(((Crawler) crawler).RunStatusInfo()); }, _crawler, 0, 2000);
         }
 
+
+        static void AutofacTest()
+        {
+            IContainer container = null;
+            var scope = container.BeginLifetimeScope();
+            scope.Resolve<SequenceScheduler>(new TypedParameter(typeof(IDuplicateFilter<string>), null));
+    }
 
         //#region 控制台多缓冲区测试
 
