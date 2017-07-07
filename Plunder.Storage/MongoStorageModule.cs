@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
+using Plunder.Storage.Repositories;
+using Plunder.Compoment.Models;
 
 namespace Plunder.Storage
 {
@@ -19,8 +21,30 @@ namespace Plunder.Storage
             throw new NotImplementedException();
         }
 
-        public Task ProcessAsync(PageResult result)
+        public async Task ProcessAsync(PageResult result)
         {
+            var accesslogRepos = new AccessLogRepository();
+            await accesslogRepos.AddAsync(new AccessLog() {
+                Id = Guid.NewGuid().ToString().ToLower(),
+                Domian = result.Request.Domain,
+                Uri = result.Request.Url,
+                StatusCode = result.Response.HttpStatusCode,
+                IsSuccessCode = result.Response.IsSuccessCode,
+                ElapsedTime = result.Response.ElapsedTime,
+                CreateTime = DateTime.Now
+            });
+
+            var pageRepos = new PageRepository();
+            await pageRepos.AddAsync(new Page() {
+                Id = Guid.NewGuid().ToString().ToLower(),
+                Domain = result.Request.Domain,
+                Uri = result.Request.Url,
+                UriSign = result.Request.Hash,
+                IsFetched = result.Response.IsSuccessCode,
+                Elapsed = result.Response.ElapsedTime,
+                Content = result.Response.Content,
+                CreateTime = DateTime.Now
+            });
             //using (var contenxt = new PlunderMongoDBContext())
             //{
                 
