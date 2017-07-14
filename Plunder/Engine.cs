@@ -28,6 +28,11 @@ namespace Plunder
 
         #region Initialization
 
+        public Engine(EngineOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
         public Engine(IMonitorableScheduler scheduler)
         {
             _scheduler = scheduler;

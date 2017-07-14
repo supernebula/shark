@@ -7,6 +7,8 @@ namespace Plunder.Download
 {
     public interface IDownloader
     {
+        void ReInit();
+
         string Topic { get; }
 
         bool IsDefault { get; set; }

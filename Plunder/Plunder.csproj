@@ -55,8 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="DownloaderFactory.cs" />
+    <Compile Include="EngineOptions.cs" />
     <Compile Include="Ioc\IIocManager.cs" />
     <Compile Include="Ioc\IIocServiceGetter.cs" />
+    <Compile Include="PageAnalyzerFactory.cs" />
     <Compile Include="Process\Analyze\FieldSelector.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\UrlType.cs" />
