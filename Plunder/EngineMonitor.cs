@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Plunder
 {
-    public class CrawlerStatus
+    public class EngineMonitor
     {
         public int QueueCount { get; set; }
 

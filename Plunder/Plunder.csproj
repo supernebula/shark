@@ -67,9 +67,9 @@
     <Compile Include="Compoment\Models\Page.cs" />
     <Compile Include="Pipeline\IProducerModule.cs" />
     <Compile Include="Schedule\ConsumerBroker.cs" />
-    <Compile Include="Engine\IConsumer.cs" />
+    <Compile Include="Core\IConsumer.cs" />
     <Compile Include="Schedule\IRequestMessageProvider.cs" />
-    <Compile Include="CrawlerStatus.cs" />
+    <Compile Include="EngineMonitor.cs" />
     <Compile Include="Storage\MemoryDuplicateFilter.cs" />
     <Compile Include="Storage\MemoryStorage.cs" />
     <Compile Include="Compoment\PageResult.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="Schedule\IMessage.cs" />
     <Compile Include="Schedule\IMonitorableBroker.cs" />
     <Compile Include="Schedule\IMonitorableScheduler.cs" />
-    <Compile Include="Engine\IProducer.cs" />
+    <Compile Include="Core\IProducer.cs" />
     <Compile Include="Schedule\IScheduler.cs" />
     <Compile Include="Schedule\SequenceScheduler.cs" />
     <Compile Include="Schedule\PriorityScheduler.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Process\Selector\ISelector.cs" />
     <Compile Include="Process\Selector\XPathSelector.cs" />
     <Compile Include="Compoment\Site.cs" />
-    <Compile Include="Crawler.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Schedule\Filter\MemoryBloomFilter.cs" />
     <Compile Include="Util\RandomUnitily.cs" />
   </ItemGroup>

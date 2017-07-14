@@ -7,7 +7,7 @@ namespace PlunderTestConsole
         public static void Main(string[] args)
         {
             Console.WriteLine(@"开始");
-            SchedulerTest.Instance.RunCrawler();
+            SchedulerTest.Instance.LaunchEngine();
 
              
 

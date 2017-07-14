@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plunder.Engine
+namespace Plunder.Core
 {
     public interface IConsumer
     {

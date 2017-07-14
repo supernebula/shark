@@ -16,24 +16,24 @@ namespace PlunderConsole
 {
     public class Program
     {
-        static Crawler _crawler;
+        static Engine _engine;
         static void Main(string[] args)
         {
-            RunCrawler();
+            LaunchEngine();
         }
-        static void RunCrawler()
+        static void LaunchEngine()
         {
             var bloomFilter  = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             //var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379, true);
-            _crawler = new Crawler(new SequenceScheduler(bloomFilter));
+            _engine = new Engine(new SequenceScheduler(bloomFilter));
             var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
-            _crawler.RegisterDownloader(downloaders);
-            _crawler.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _crawler.RegisterResultPipeModule(new ConsoleModule());
+            _engine.RegisterDownloader(downloaders);
+            _engine.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+            _engine.RegisterResultPipeModule(new ConsoleModule());
 
-            _crawler.Start(WebPageType.Static, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
+            _engine.Start(WebPageType.Static, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
 
-            var statusTimer = new Timer(crawler => { Console.WriteLine(((Crawler) crawler).RunStatusInfo()); }, _crawler, 0, 2000);
+            var statusTimer = new Timer(engine => { Console.WriteLine(((Engine) engine).RunStatusInfo()); }, _engine, 0, 2000);
         }
 
 

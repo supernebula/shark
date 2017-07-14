@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Schedule;
 
-namespace Plunder.Engine
+namespace Plunder.Core
 {
     public interface IProducer
     {
