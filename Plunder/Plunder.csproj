@@ -55,7 +55,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="Core\IDownloaderFactory.cs" />
+    <Compile Include="Core\IPageAnalyzerFactory.cs" />
+    <Compile Include="Core\IResultItemPipeline.cs" />
     <Compile Include="DownloaderFactory.cs" />
+    <Compile Include="EngineContext.cs" />
     <Compile Include="EngineOptions.cs" />
     <Compile Include="Ioc\IIocManager.cs" />
     <Compile Include="Ioc\IIocServiceGetter.cs" />
@@ -73,6 +77,8 @@
     <Compile Include="Core\IConsumer.cs" />
     <Compile Include="Schedule\IRequestMessageProvider.cs" />
     <Compile Include="EngineMonitor.cs" />
+    <Compile Include="Schedule\SchedulerContext.cs" />
+    <Compile Include="Schedule\Trigger.cs" />
     <Compile Include="Storage\MemoryDuplicateFilter.cs" />
     <Compile Include="Storage\MemoryStorage.cs" />
     <Compile Include="Compoment\PageResult.cs" />

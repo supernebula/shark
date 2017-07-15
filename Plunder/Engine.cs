@@ -59,7 +59,7 @@ namespace Plunder
         {
 #if DEBUG
 
-            //_consumerBroker = new ConsumerBroker(5, Scheduler, _downloaders, ResultPipeline, _pageAnalyzerTypes);
+            _consumerBroker = new ConsumerBroker(5, Scheduler, _downloaders, ResultPipeline, _pageAnalyzerTypes);
             Scheduler.Push(SeekRequests);
             _consumerBroker.Start();
 #else

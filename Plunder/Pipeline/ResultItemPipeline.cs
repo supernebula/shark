@@ -1,13 +1,13 @@
-﻿using Plunder.Compoment;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
-
+using Plunder.Core;
+using Plunder.Compoment;
 
 namespace Plunder.Pipeline
 {
-    public class ResultItemPipeline
+    public class ResultItemPipeline : IResultItemPipeline
     {
         private readonly ConcurrentBag<IResultPipelineModule> _modules;
 

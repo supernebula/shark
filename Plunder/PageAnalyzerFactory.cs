@@ -1,12 +1,11 @@
-﻿using Plunder.Process.Analyze;
+﻿using Plunder.Core;
+using Plunder.Process.Analyze;
 using System;
 using System.Collections.Concurrent;
 
 namespace Plunder
 {
-
-
-    public class PageAnalyzerFactory
+    public class PageAnalyzerFactory : IPageAnalyzerFactory
     {
         private readonly ConcurrentDictionary<string, Func<IPageAnalyzer>> _analyzerThunkDic;
 
@@ -15,14 +14,14 @@ namespace Plunder
             _analyzerThunkDic = new ConcurrentDictionary<string, Func<IPageAnalyzer>>();
         }
 
-        private string GenerateKey(string siteId, string pageTag)
+        private string GenerateKey(string siteId, string topic)
         {
-            return $"{siteId}.{pageTag}";
+            return $"{siteId}.{topic}";
         }
 
-        public void Register(string siteId, string pageTag, Func<IPageAnalyzer> analyzerThunk)
+        public void Register(string siteId, string topic, Func<IPageAnalyzer> analyzerThunk)
         {
-            var key = GenerateKey(siteId, pageTag);
+            var key = GenerateKey(siteId, topic);
             Func<IPageAnalyzer> delete;
             if (_analyzerThunkDic.ContainsKey(key) && _analyzerThunkDic.TryRemove(key, out delete))
                 _analyzerThunkDic.TryAdd(key, analyzerThunk);
@@ -30,8 +29,14 @@ namespace Plunder
                 _analyzerThunkDic.TryAdd(key, analyzerThunk);
         }
 
-        public IPageAnalyzer Create(string key)
+        public IPageAnalyzer Create(string siteId, string topic)
         {
+            if (!string.IsNullOrWhiteSpace(siteId))
+                throw new ArgumentNullException(nameof(siteId));
+
+            if (!string.IsNullOrWhiteSpace(topic))
+                throw new ArgumentNullException(nameof(topic));
+            var key = GenerateKey(siteId, topic);
             Func<IPageAnalyzer> thunk;
             if (!_analyzerThunkDic.TryGetValue(key, out thunk))
                 throw new ArgumentException($"不包含参数{nameof(key)}对应的键,{nameof(key)}={key}");

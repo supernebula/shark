@@ -1,14 +1,13 @@
-﻿using Plunder.Download;
+﻿using Plunder.Core;
+using Plunder.Download;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plunder
 {
-    public class DownloaderFactory
+    public class DownloaderFactory : IDownloaderFactory
     {
         private Dictionary<string, Func<IDownloader>> _downloaderThunk = new Dictionary<string, Func<IDownloader>>();
         private ConcurrentDictionary<string, IDownloader> _topicDownloaderDic;

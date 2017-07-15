@@ -1,4 +1,5 @@
-﻿using Plunder.Pipeline;
+﻿using Plunder.Core;
+using Plunder.Pipeline;
 using Plunder.Schedule;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,11 @@ namespace Plunder
     {
         public IMonitorableScheduler Scheduler { get; set; }
 
-        public DownloaderFactory DownloaderFactory { get;set;}
+        public IDownloaderFactory DownloaderFactory { get;set;}
 
-        public PageAnalyzerFactory PageAnalyzerFactory { get; set; }
+        public IPageAnalyzerFactory PageAnalyzerFactory { get; set; }
 
-        public ResultItemPipeline ResultPipeline { get; set; }
+        public IResultItemPipeline ResultPipeline { get; set; }
 
         ////以下确定
 
