@@ -10,22 +10,36 @@ namespace Plunder
 {
     public class DownloaderFactory
     {
-        public DownloaderFactory(Dictionary<string, IDownloader> pageTagDownloaders)
+
+        private ConcurrentDictionary<string, Type> _downloaderCollection;
+        public DownloaderFactory()
         {
-            if (pageTagDownloaders == null)
-                throw new ArgumentNullException(nameof(pageTagDownloaders));
-            if (!pageTagDownloaders.Any())
-                throw new ArgumentOutOfRangeException($"{nameof(pageTagDownloaders)}不包含任何元素");
-            _downloaderCollection = new ConcurrentDictionary<string, IDownloader>(pageTagDownloaders.ToList());
+            _downloaderCollection = new ConcurrentDictionary<string, Type>();
         }
 
-        private ConcurrentDictionary<string, IDownloader> _downloaderCollection;
-
-        public IDownloader CreateDownloader(string pageTag)
+        public void Register<TDownloader>(string topic) where TDownloader : IDownloader
         {
-            IDownloader item = null;
-            _downloaderCollection.TryGetValue(pageTag, out item);
-            return item;
+            Register(topic, typeof(TDownloader));
+        }
+
+        public void Register(string topic, Type downloaderType)
+        {
+            if (!string.IsNullOrWhiteSpace(topic))
+                throw new ArgumentNullException(nameof(topic));
+            if (!downloaderType.IsAssignableFrom(typeof(IDownloader)))
+                throw new ArgumentException($"{nameof(downloaderType)}不是类型：{typeof(IDownloader).FullName}");
+
+            _downloaderCollection.TryAdd(topic, downloaderType);
+        }
+
+        
+
+        public IDownloader CreateDownloader(string topic)
+        {
+            Type type;
+            _downloaderCollection.TryGetValue(topic, out type);
+
+            throw new NotImplementedException();
         }
     }
 }

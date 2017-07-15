@@ -121,5 +121,10 @@ namespace Plunder.Plugin.Download
         {
             return _maxTaskNumber > _currentTaskNumber;
         }
+
+        public void ReInit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
