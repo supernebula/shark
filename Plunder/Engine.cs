@@ -14,6 +14,8 @@ namespace Plunder
 
     public class Engine
     {
+        public readonly EngineOptions _options;
+
         #region Required Unit
 
         private readonly IMonitorableScheduler _scheduler;
@@ -30,7 +32,7 @@ namespace Plunder
 
         public Engine(EngineOptions options)
         {
-            throw new NotImplementedException();
+            _options = options;
         }
 
         public Engine(IMonitorableScheduler scheduler)
