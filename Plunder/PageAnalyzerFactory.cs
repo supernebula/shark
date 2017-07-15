@@ -1,10 +1,6 @@
 ﻿using Plunder.Process.Analyze;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Plunder
 {
@@ -12,14 +8,10 @@ namespace Plunder
 
     public class PageAnalyzerFactory
     {
-        private ConcurrentDictionary<string, Func<IPageAnalyzer>> _analyzerThunkDic;
+        private readonly ConcurrentDictionary<string, Func<IPageAnalyzer>> _analyzerThunkDic;
 
         public PageAnalyzerFactory()
         {
-            //if (pageAnalyzers == null)
-            //    throw new ArgumentNullException(nameof(pageAnalyzers));
-            //if (!pageAnalyzers.Any())
-            //    throw new ArgumentOutOfRangeException($"{nameof(pageAnalyzers)}不包含任何元素");
             _analyzerThunkDic = new ConcurrentDictionary<string, Func<IPageAnalyzer>>();
         }
 
@@ -38,12 +30,24 @@ namespace Plunder
                 _analyzerThunkDic.TryAdd(key, analyzerThunk);
         }
 
-
-
-
-        public Type CreatePageAnalyzer(string key)
+        public IPageAnalyzer Create(string key)
         {
-            throw new NotImplementedException();
+            Func<IPageAnalyzer> thunk;
+            if (!_analyzerThunkDic.TryGetValue(key, out thunk))
+                throw new ArgumentException($"不包含参数{nameof(key)}对应的键,{nameof(key)}={key}");
+            if(thunk == null)
+                throw new NullReferenceException($"与参数{nameof(key)}对应的值为null,{nameof(key)}={key}");
+            var item = thunk.Invoke();
+            if (item == null)
+                throw new NullReferenceException($"与参数{nameof(key)}对应的thunk委托返回null的{typeof(IPageAnalyzer).FullName}");
+            return item;
+        }
+
+        public int Count => _analyzerThunkDic.Values.Count;
+
+        public bool Any()
+        {
+            return Count > 0;
         }
     }
 }

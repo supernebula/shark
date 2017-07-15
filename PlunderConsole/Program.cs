@@ -47,7 +47,6 @@ namespace PlunderConsole
                 DownloaderFactory = InitDownloaderFactory(),
                 PageAnalyzerFactory = InitPageAnalyzerFactory(),
                 ResultPipeline = InitResultItemPipeline()
-
             };
 
             return options;

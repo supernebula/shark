@@ -32,6 +32,13 @@ namespace Plunder
             _topicDownloaderDic.TryAdd(topic, thunk.Invoke());
         }
 
+        public int Count => _downloaderThunk.Values.Count;
+
+        public bool Any()
+        {
+            return Count > 0;
+        }
+
         //public void Register(string topic, Type downloaderType)
         //{
         //    if (!string.IsNullOrWhiteSpace(topic))
