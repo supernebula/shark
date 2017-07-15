@@ -17,14 +17,14 @@ namespace Plunder.Schedule
         private readonly IMonitorableScheduler _scheduler;
         private readonly List<IDownloader> _downloaders;
         private readonly ConcurrentDictionary<string, Type> _pageAnalyzerTypes;
-        private readonly ResultPipeline _resultPipeline;
+        private readonly ResultItemPipeline _resultPipeline;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
         public int ConsumeTotal { get; private set; }
 
         private bool _pulling;
 
-        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultPipeline resultPipeline, IEnumerable<KeyValuePair<string, Type>> pageAnalyzerTypes)
+        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultItemPipeline resultPipeline, IEnumerable<KeyValuePair<string, Type>> pageAnalyzerTypes)
         {
             _maxDownloadThreadNumber = maxDownloadThreadNumber;
             _scheduler = scheduler;

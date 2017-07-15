@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Plunder.Pipeline
 {
-    public class ResultPipeline
+    public class ResultItemPipeline
     {
         private readonly ConcurrentBag<IResultPipelineModule> _modules;
 
@@ -17,12 +17,12 @@ namespace Plunder.Pipeline
         public int ModuleCount => _modules.Count;
 
 
-        public ResultPipeline()
+        public ResultItemPipeline()
         {
             _modules = new ConcurrentBag<IResultPipelineModule>();
         }
 
-        public ResultPipeline(IEnumerable<IResultPipelineModule> modules)
+        public ResultItemPipeline(IEnumerable<IResultPipelineModule> modules)
         {
             _modules = new ConcurrentBag<IResultPipelineModule>(modules);
         }

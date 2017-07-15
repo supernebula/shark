@@ -17,8 +17,14 @@ namespace Plunder.Plugin.Analyze
 {
     public class UsashopcnPageAnalyzer : IPageAnalyzer
     {
-        public static string SiteId => SiteIndex.Usashopcn;
+        public const string SiteIdValue = SiteIndex.Usashopcn;
+
+        public const string PageTagValue = "product.detail" ;
         public Site Site { get; }
+
+        public string SiteId => SiteIdValue;
+
+        public string PageTag => PageTagValue;
 
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
 

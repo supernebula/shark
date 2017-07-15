@@ -16,12 +16,12 @@ namespace Plunder
 
         public PageAnalyzerFactory PageAnalyzerFactory { get; set; }
 
-        public ResultPipeline ResultPipeline { get; set; }
+        public ResultItemPipeline ResultPipeline { get; set; }
 
-        //以下确定
+        ////以下确定
 
-        private ConsumerBroker _consumerBroker;
-        private List<RequestMessage> _seedRequests;
-        private IRequestMessageProvider _requestMessageProvider;
+        //private ConsumerBroker _consumerBroker;
+        //private List<RequestMessage> _seedRequests;
+        //private IRequestMessageProvider _requestMessageProvider;
     }
 }

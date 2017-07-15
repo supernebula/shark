@@ -8,7 +8,7 @@ using Plunder.Compoment;
 
 namespace Plunder.Plugin.Pipeline
 {
-    public class ConsoleModule : IResultPipelineModule
+    public class ConsoleResultModule : IResultPipelineModule
     {
         public string Description => "简单控制台结果中间件";
 

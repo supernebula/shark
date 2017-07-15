@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="DefaultIoCManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

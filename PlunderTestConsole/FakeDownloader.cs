@@ -71,5 +71,10 @@ namespace PlunderTestConsole
         {
             throw new NotImplementedException();
         }
+
+        public void ReInit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

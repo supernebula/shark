@@ -179,6 +179,11 @@ namespace Plunder.Test
                 return true;
             }
 
+            public void ReInit()
+            {
+                throw new NotImplementedException();
+            }
+
             public int TaskCount()
             {
                 return 0;
@@ -195,6 +200,10 @@ namespace Plunder.Test
             public Guid Id { get; set; }
 
             public Site Site { get; set; }
+
+            public string SiteId => throw new NotImplementedException();
+
+            public string PageTag => throw new NotImplementedException();
 
             public PageResult Analyze(Request request, Response response)
             {
@@ -235,11 +244,11 @@ namespace Plunder.Test
             lineScheduler.Push(requestMessages);
             Trace.WriteLine("CurrentQueueCount:" + lineScheduler.CurrentQueueCount());
 
-            var resultPipeline = new ResultPipeline();
+            var resultPipeline = new ResultItemPipeline();
             resultPipeline.RegisterModule(new TestPipelineMoudle());
             var pageAnalyzers = new List<KeyValuePair<string, Type>>();
             pageAnalyzers.Add(new KeyValuePair<string, Type>(site.Domain, typeof(TestPageAnalyzer)));
-            var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloader>() {new TestDownloader()}, new ResultPipeline(), pageAnalyzers);
+            var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloader>() {new TestDownloader()}, new ResultItemPipeline(), pageAnalyzers);
             consumerBroker.Start();
 
             var timer = new Timer((state) =>

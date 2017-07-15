@@ -24,23 +24,23 @@ namespace PlunderTestConsole
         private Engine _engine;
         public void LaunchEngine()
         {
-            //var memoryBloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
-            //_engine = new Engine(new SequenceScheduler(memoryBloomFilter));
-            var redisBloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "localhost", 6379);
-            _engine = new Engine(new SequenceScheduler(redisBloomFilter));
-            //var downloaders = new List<IDownloader> { new FakeDownloader(4) };
-            var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
-            _engine.RegisterDownloader(downloaders);
-            _engine.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
-            _engine.RegisterResultPipeModule(new MultiAreaConsoleModule(500, 0, 400, 500, true, true));
+            ////var memoryBloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            ////_engine = new Engine(new SequenceScheduler(memoryBloomFilter));
+            //var redisBloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "localhost", 6379);
+            //_engine = new Engine(new SequenceScheduler(redisBloomFilter));
+            //////var downloaders = new List<IDownloader> { new FakeDownloader(4) };
+            //var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
+            //_engine.RegisterDownloader(downloaders);
+            //_engine.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+            //_engine.RegisterResultPipeModule(new MultiAreaConsoleModule(500, 0, 400, 500, true, true));
 
-            _engine.Start(WebPageType.Static, SiteIndex.Usashopcn, GetUrls());
+            //_engine.Start(WebPageType.Static, SiteIndex.Usashopcn, GetUrls());
 
-            var statusTimer = new Timer(engine =>
-            {
-                var status = ((Engine) engine).RunStatusInfo();
-                Console.WriteLine(String.Format("QueueCount:{0}, TaskCount={1}, ConsumeTotal:{2},  ResultTotal:{3}", status.QueueCount, status.TaskCount, status.ConsumeTotal, status.ResultTotal));
-            }, _engine, 2000, 2000);
+            //var statusTimer = new Timer(engine =>
+            //{
+            //    var status = ((Engine) engine).RunStatusInfo();
+            //    Console.WriteLine(String.Format("QueueCount:{0}, TaskCount={1}, ConsumeTotal:{2},  ResultTotal:{3}", status.QueueCount, status.TaskCount, status.ConsumeTotal, status.ResultTotal));
+            //}, _engine, 2000, 2000);
 
         }
 

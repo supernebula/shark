@@ -14,8 +14,15 @@ namespace PlunderTestConsole
 {
     public class FakePageAnalyzer : IPageAnalyzer
     {
-        public static string SiteId => SiteIndex.Usashopcn;
+        public string SiteId => SiteIdValue;
+
+        public string PageTag => PageTagValue;
         public Site Site { get; }
+
+        public const string SiteIdValue = SiteIndex.Usashopcn;
+
+        public string PageTagValue = "product.detail";
+
 
         public FakePageAnalyzer()
         {
