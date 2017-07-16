@@ -30,7 +30,7 @@ namespace Plunder.Schedule
             _scheduler = scheduler;
             _downloaders = new List<IDownloader>();
             _downloaders.AddRange(downloaders);
-            _downloaders.GroupBy(e => e.Topic).ToList().ForEach(g =>
+            _downloaders.GroupBy(e => e.ContentType).ToList().ForEach(g =>
             {
                 if (g.Count() > 1)
                     throw new ArgumentException("downloader.Topic不能重复", nameof(downloaders));
@@ -120,7 +120,7 @@ namespace Plunder.Schedule
         {
             _downloaders.ForEach(downloader =>
             {
-                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.ContentType)).Select(m => m.Request).ToList();
                 //downloader.DownloadAsync(reqs, (req, resp) =>
                 //{
 
@@ -140,7 +140,7 @@ namespace Plunder.Schedule
         {
             _downloaders.ForEach(downloader =>
             {
-                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.ContentType)).Select(m => m.Request).ToList();
                 reqs.ForEach(request =>
                 {
                     downloader.DownloadAsync(request)

@@ -17,7 +17,7 @@ namespace Plunder.Plugin.Download
         private int _currentTaskNumber; 
         //private readonly SemaphoreSlim _ctnLock = new SemaphoreSlim(1);
 
-        public string Topic => WebPageType.Static;
+        public string ContentType => WebPageType.Static;
 
         public int DownloadingTaskCount
         {

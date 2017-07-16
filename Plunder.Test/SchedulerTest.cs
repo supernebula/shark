@@ -153,7 +153,7 @@ namespace Plunder.Test
 
             public bool IsDefault { get; set; }
 
-            public string Topic => WebPageType.Static;
+            public string ContentType => WebPageType.Static;
 
             public async Task<Response> DownloadAsync(Request request)
             {

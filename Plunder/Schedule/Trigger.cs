@@ -79,7 +79,7 @@ namespace Plunder.Schedule
         {
             _downloaders.ForEach(downloader =>
             {
-                var reqs = messages.Where(e => e.Topic.Equals(downloader.Topic)).Select(m => m.Request).ToList();
+                var reqs = messages.Where(e => e.Topic.Equals(downloader.ContentType)).Select(m => m.Request).ToList();
                 reqs.ForEach(request =>
                 {
                     downloader.DownloadAsync(request)

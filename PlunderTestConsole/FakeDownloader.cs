@@ -27,7 +27,7 @@ namespace PlunderTestConsole
 
         public bool IsDefault { get; set; }
 
-        public string Topic => WebPageType.Static;
+        public string ContentType => WebPageType.Static;
 
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {

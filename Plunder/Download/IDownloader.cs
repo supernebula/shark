@@ -9,7 +9,7 @@ namespace Plunder.Download
     {
         void ReInit();
 
-        string Topic { get; }
+        string ContentType { get; }
 
         bool IsDefault { get; set; }
 

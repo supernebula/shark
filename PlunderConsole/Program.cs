@@ -11,18 +11,6 @@ using System.Collections.Generic;
 
 namespace PlunderConsole
 {
-    public class Topic
-    {
-        /// <summary>
-        /// Static Html
-        /// </summary>
-        public const string Html = "HTML";
-
-        /// <summary>
-        /// Dynamic Html
-        /// </summary>
-        public const string DHtml = "DHTML";
-    }
 
     public class Program
     {
@@ -63,7 +51,7 @@ namespace PlunderConsole
         static DownloaderFactory InitDownloaderFactory()
         {
             var downloaderThunks = new Dictionary<string, Func<IDownloader>>();
-            downloaderThunks.Add(Topic.Html, () => new HttpClientDownloader(4));
+            downloaderThunks.Add(ContentType.HTML, () => new HttpClientDownloader(4));
             var factory = new DownloaderFactory(downloaderThunks);
             return factory;
         }

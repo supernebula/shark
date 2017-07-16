@@ -59,6 +59,7 @@
     <Compile Include="Core\IPageAnalyzerFactory.cs" />
     <Compile Include="Core\IResultItemPipeline.cs" />
     <Compile Include="DownloaderFactory.cs" />
+    <Compile Include="Download\ContentType.cs" />
     <Compile Include="EngineContext.cs" />
     <Compile Include="EngineOptions.cs" />
     <Compile Include="Ioc\IIocManager.cs" />
