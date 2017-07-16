@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26711.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlunderConsole", "PlunderConsole\PlunderConsole.csproj", "{B331FB0F-C127-488B-9C50-33769AA3B1FE}"
 EndProject
@@ -13,11 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Plugin", "Plunder.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlunderTestConsole", "PlunderTestConsole\PlunderTestConsole.csproj", "{9ED59D00-99A3-4C64-AA0D-01286406D7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Plugin.Storage", "Plunder.Plugin.Storage\Plunder.Plugin.Storage.csproj", "{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.WebHost", "OwinWebHost\Plunder.WebHost.csproj", "{51C5442C-2A70-453D-80B9-430C468AF076}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage", "Plunder.Storage\Plunder.Storage.csproj", "{210F0D36-D8F7-4A22-A4BC-E891E96927F4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F9C3819E-D428-49D0-8498-58CB3592A70B}"
 EndProject
@@ -34,6 +30,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		DuplicateAssert.txt = DuplicateAssert.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage.SqlServer", "Plunder.Storage.SqlServer\Plunder.Storage.SqlServer.csproj", "{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage.MongoDB", "Plunder.Storage.MongoDB\Plunder.Storage.MongoDB.csproj", "{210F0D36-D8F7-4A22-A4BC-E891E96927F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Storage.SQLite", "Plunder.Storage.SQLite\Plunder.Storage.SQLite.csproj", "{764AE68E-990B-402F-96DE-401188F4D561}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,18 +63,22 @@ Global
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}.Release|Any CPU.Build.0 = Release|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{210F0D36-D8F7-4A22-A4BC-E891E96927F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764AE68E-990B-402F-96DE-401188F4D561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764AE68E-990B-402F-96DE-401188F4D561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764AE68E-990B-402F-96DE-401188F4D561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764AE68E-990B-402F-96DE-401188F4D561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +86,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{862A23F1-6822-461C-A60B-2F3B8DCBE253} = {094DA403-34E3-478B-9423-8A20E81D2F30}
 		{9ED59D00-99A3-4C64-AA0D-01286406D7C5} = {094DA403-34E3-478B-9423-8A20E81D2F30}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B08FE77A-6189-479A-A2CF-7C086236A09F}
 	EndGlobalSection
 EndGlobal

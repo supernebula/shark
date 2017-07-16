@@ -3,16 +3,19 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
-using Plunder.Util;
 using System.Linq;
 using Plunder.Schedule.Filter;
 
 namespace Plunder.Schedule
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
-    { 
+    {
+        private readonly SchedulerContext _currentContext;
+
+        private readonly Trigger _trigger;
 
         protected readonly BlockingCollection<RequestMessage> Queue;
+
 
         private readonly IDuplicateFilter<string> _duplicateFilter;
 
@@ -20,8 +23,15 @@ namespace Plunder.Schedule
 
         protected int AccumulatedMessageTotal => _accumulatedMessageTotal;
 
-        protected DuplicateRemovedScheduler(IDuplicateFilter<string> duplicateFilter)
+        protected DuplicateRemovedScheduler(IDuplicateFilter<string> duplicateFilter, EngineContext engineContext)
         {
+            _currentContext = new SchedulerContext(engineContext.Scheduler,
+                engineContext.DownloaderFactory,
+                engineContext.ResultPipeline,
+                engineContext.PageAnalyzerFactory);
+
+            _trigger = new Trigger(_currentContext, 10);
+
             _duplicateFilter = duplicateFilter;
             Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
@@ -133,6 +143,16 @@ namespace Plunder.Schedule
         public void Dispose()
         {
             Queue.Dispose();
+        }
+
+        public void Start()
+        {
+            _trigger.Start();
+        }
+
+        public void Stop()
+        {
+            _trigger.Stop();
         }
     }
 }

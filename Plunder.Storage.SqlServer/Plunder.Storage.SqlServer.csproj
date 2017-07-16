@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F8FA39CC-C409-4DEA-94DA-5DD211ACE284}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Plunder.Storage.SqlServer</RootNamespace>
+    <AssemblyName>Plunder.Storage.SqlServer</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="EFRequestMessageProvider.cs" />
+    <Compile Include="Maps\ProductMap.cs" />
+    <Compile Include="Maps\UrlMap.cs" />
+    <Compile Include="Migrations\201603230807413_Create-Database.cs" />
+    <Compile Include="Migrations\201603230807413_Create-Database.Designer.cs">
+      <DependentUpon>201603230807413_Create-Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603230824141_Update-Table-Product.cs" />
+    <Compile Include="Migrations\201603230824141_Update-Table-Product.Designer.cs">
+      <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604270637455_Add-Table-Url.cs" />
+    <Compile Include="Migrations\201604270637455_Add-Table-Url.Designer.cs">
+      <DependentUpon>201604270637455_Add-Table-Url.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604270640272_Add-Table-Url2.cs" />
+    <Compile Include="Migrations\201604270640272_Add-Table-Url2.Designer.cs">
+      <DependentUpon>201604270640272_Add-Table-Url2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BasicEntity.cs" />
+    <Compile Include="Models\IEntity.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Url.cs" />
+    <Compile Include="Models\UrlStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BasicEntityFrameworkRepository.cs" />
+    <Compile Include="Repositories\IBasicRepository.cs" />
+    <Compile Include="Repositories\Interface\IProductRepository.cs" />
+    <Compile Include="Repositories\PlunderDbContext.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\UrlRepository.cs" />
+    <Compile Include="StorageModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Plunder\Plunder.csproj">
+      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
+      <Name>Plunder</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201603230807413_Create-Database.resx">
+      <DependentUpon>201603230807413_Create-Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603230824141_Update-Table-Product.resx">
+      <DependentUpon>201603230824141_Update-Table-Product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604270637455_Add-Table-Url.resx">
+      <DependentUpon>201604270637455_Add-Table-Url.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604270640272_Add-Table-Url2.resx">
+      <DependentUpon>201604270640272_Add-Table-Url2.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

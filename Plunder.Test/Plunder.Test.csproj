@@ -91,10 +91,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plunder.Plugin.Storage\Plunder.Plugin.Storage.csproj">
-      <Project>{f8fa39cc-c409-4dea-94da-5dd211ace284}</Project>
-      <Name>Plunder.Plugin.Storage</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Plunder.Plugin\Plunder.Plugin.csproj">
       <Project>{74951c1e-dc33-45c6-a8eb-536ff0d0f596}</Project>
       <Name>Plunder.Plugin</Name>
