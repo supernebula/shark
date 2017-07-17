@@ -98,6 +98,10 @@
     </Compile>
     <Compile Include="Storage\Models\UrlVisit.cs" />
     <Compile Include="Storage\Models\UrlFind.cs" />
+    <Compile Include="Storage\QueryEntries\IQueryEntry.cs" />
+    <Compile Include="Storage\QueryEntries\IUrlFindQueryEntry.cs" />
+    <Compile Include="Storage\Repositories\IRepository.cs" />
+    <Compile Include="Storage\Repositories\IUrlFindRepositories.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource\UsashopcnSlector.resx">
@@ -110,10 +114,7 @@
     <None Include="packages.config" />
     <None Include="PlunderPluginClassDiagram1.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Storage\QueryEntries\" />
-    <Folder Include="Storage\Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Plunder\Plunder.csproj">
       <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
