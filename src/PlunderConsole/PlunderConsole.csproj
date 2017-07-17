@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9ED59D00-99A3-4C64-AA0D-01286406D7C5}</ProjectGuid>
+    <ProjectGuid>{B331FB0F-C127-488B-9C50-33769AA3B1FE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PlunderTestConsole</RootNamespace>
-    <AssemblyName>PlunderTestConsole</AssemblyName>
+    <RootNamespace>PlunderConsole</RootNamespace>
+    <AssemblyName>PlunderConsole</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -29,12 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="NReco.PhantomJS, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NReco.PhantomJS.1.0.2.0\lib\net40-Client\NReco.PhantomJS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -47,32 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventWaitHandleTest.cs" />
-    <Compile Include="FakeDownloader.cs" />
-    <Compile Include="FakePageAnalyzer.cs" />
+    <Compile Include="DefaultIoCManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ProgramOld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchedulerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plunder.Plugin\Plunder.Plugin.csproj">
-      <Project>{74951c1e-dc33-45c6-a8eb-536ff0d0f596}</Project>
-      <Name>Plunder.Plugin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plunder.Test\Plunder.Test.csproj">
-      <Project>{862a23f1-6822-461c-a60b-2f3b8dcbe253}</Project>
-      <Name>Plunder.Test</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Plunder\Plunder.csproj">
-      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
-      <Name>Plunder</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Log\" />
+    <Content Include="..\packages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
+      <Link>phantomjs.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="phantomjs-license.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

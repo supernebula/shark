@@ -85,12 +85,6 @@
     <Compile Include="StorageModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plunder\Plunder.csproj">
-      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
-      <Name>Plunder</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
