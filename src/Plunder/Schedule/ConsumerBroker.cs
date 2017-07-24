@@ -15,7 +15,7 @@ namespace Plunder.Schedule
     public class ConsumerBroker : IDisposable
     {
         private readonly IMonitorableScheduler _scheduler;
-        private readonly List<IDownloader> _downloaders;
+        private readonly List<IDownloaderOld> _downloaders;
         private readonly ConcurrentDictionary<string, Type> _pageAnalyzerTypes;
         private readonly ResultItemPipeline _resultPipeline;
         private readonly int _maxDownloadThreadNumber;
@@ -24,11 +24,11 @@ namespace Plunder.Schedule
 
         private bool _pulling;
 
-        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloader> downloaders, ResultItemPipeline resultPipeline, IEnumerable<KeyValuePair<string, Type>> pageAnalyzerTypes)
+        public ConsumerBroker(int maxDownloadThreadNumber, IMonitorableScheduler scheduler, IEnumerable<IDownloaderOld> downloaders, ResultItemPipeline resultPipeline, IEnumerable<KeyValuePair<string, Type>> pageAnalyzerTypes)
         {
             _maxDownloadThreadNumber = maxDownloadThreadNumber;
             _scheduler = scheduler;
-            _downloaders = new List<IDownloader>();
+            _downloaders = new List<IDownloaderOld>();
             _downloaders.AddRange(downloaders);
             _downloaders.GroupBy(e => e.PageType).ToList().ForEach(g =>
             {

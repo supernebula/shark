@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -22,10 +23,10 @@ namespace Plunder.Compoment
         public Stream StreamContent { get; set; }
 
         /// <summary>
-        /// 耗时，毫秒
+        /// millisecond
         /// </summary>
-        public long ElapsedTime { get; set; }
+        public long Elapsed { get; set; }
 
-        public string Downloader { get; set; }
+        public Type DownloaderType { get; set; }
     }
 }

@@ -50,8 +50,8 @@ namespace PlunderConsole
 
         static DownloaderFactory InitDownloaderFactory()
         {
-            var downloaderThunks = new Dictionary<PageType, Func<IDownloader>>();
-            downloaderThunks.Add(PageType.Static, () => new HttpClientDownloader(4));
+            var downloaderThunks = new Dictionary<PageType, Func<IDownloaderOld>>();
+            downloaderThunks.Add(PageType.Static, () => new HttpClientDownloaderOld(4));
             var factory = new DownloaderFactory(downloaderThunks);
             return factory;
         }

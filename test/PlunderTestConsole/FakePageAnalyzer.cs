@@ -50,13 +50,13 @@ namespace PlunderTestConsole
                 ReasonPhrase = "OK",
                 IsSuccessCode = true,
                 Content = "测试文本",
-                ElapsedTime = 1000,
+                Elapsed = 1000,
                 Downloader = "FakeDownloader"
             };
 
             return new PageResult()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = request,
                 Response = response
             };

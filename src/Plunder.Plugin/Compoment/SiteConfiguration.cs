@@ -36,12 +36,12 @@ namespace Plunder.Plugin.Compoment
             var sites = new Dictionary<string, Site>();
             var site = Site.NewDefault;
             site.Id = SiteIndex.Usashopcn;
-            site.Topic = WebPageType.Static;
+            site.Topic = WPageType.Static;
             site.IndexUrl = "http://www.usashopcn.com/";
             site.Domain = "www.usashopcn.com";
             site.IsUseHttpProxy = false;
             site.Name = "美国购物网";
-            site.UserAgent = UserAgent.RandomUserAgent().Value;
+            site.UserAgent = UserAgentCollection.RandomUserAgent().Value;
             site.Charset = "utf-8";
             site.SleepMilliseconds = 2000;
             site.RetryTimes = 1;

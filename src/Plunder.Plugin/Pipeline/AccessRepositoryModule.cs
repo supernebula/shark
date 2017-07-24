@@ -32,7 +32,7 @@ namespace Plunder.Plugin.Pipeline
                 Uri = result.Request.Url,
                 StatusCode = result.Response.HttpStatusCode,
                 IsSuccessCode = result.Response.IsSuccessCode,
-                ElapsedTime = result.Response.ElapsedTime,
+                ElapsedTime = result.Response.Elapsed,
                 CreateTime = DateTime.Now
             };
             await AccessLogRepository.AddAsync(accessLog);
@@ -44,7 +44,7 @@ namespace Plunder.Plugin.Pipeline
                 Uri = result.Request.Url,
                 UriSign = HashUtility.Md5(result.Request.Url),
                 IsFetched = result.Response.IsSuccessCode,
-                Elapsed = result.Response.ElapsedTime,
+                Elapsed = result.Response.Elapsed,
                 CreateTime = DateTime.Now
             };
 

@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace Plunder.Download
 {
-    public struct UserAgent
-    {
-        public string Agent { get; }
 
-        public UserAgent(string agent)
-        {
-            Agent = agent;
-        }
+    public enum DownloadStatus
+    {
+        NotStarted = 0,
+
+        Downloading = 1,
+
+        Successful = 2,
+
+        Failed = 3
     }
 }

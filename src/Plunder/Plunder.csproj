@@ -60,7 +60,10 @@
     <Compile Include="Core\IPageAnalyzerFactory.cs" />
     <Compile Include="Core\IResultItemPipeline.cs" />
     <Compile Include="DownloaderFactory.cs" />
-    <Compile Include="Download\ContentType.cs" />
+    <Compile Include="Download\DownloadStatus.cs" />
+    <Compile Include="Download\IDownloader.cs" />
+    <Compile Include="Download\PageType.cs" />
+    <Compile Include="Download\UserAgent.cs" />
     <Compile Include="EngineContext.cs" />
     <Compile Include="EngineOptions.cs" />
     <Compile Include="Ioc\IIocManager.cs" />
@@ -69,7 +72,7 @@
     <Compile Include="Process\Analyze\FieldSelector.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\UrlType.cs" />
-    <Compile Include="Download\IDownloader.cs" />
+    <Compile Include="Download\IDownloaderOld.cs" />
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />
     <Compile Include="Schedule\Filter\IDuplicateFilter.cs" />
     <Compile Include="Compoment\Models\AccessLog.cs" />
@@ -85,7 +88,7 @@
     <Compile Include="Storage\MemoryStorage.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Response.cs" />
-    <Compile Include="Download\UserAgent.cs" />
+    <Compile Include="Download\UserAgentCollection.cs" />
     <Compile Include="IPool.cs" />
     <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IResultPipelineModule.cs" />

@@ -25,7 +25,7 @@ namespace Plunder.Test
         {
             return new RequestMessage()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = new Request()
                 {
                     SiteId = site.Id,
@@ -40,7 +40,7 @@ namespace Plunder.Test
             var list = new List<RequestMessage>();
             list.Add(new RequestMessage()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id,  Url = "http://www.usashopcn.com/Product/Details/126334" }
 
@@ -48,7 +48,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127698" }
 
@@ -56,7 +56,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/127593" }
 
@@ -64,7 +64,7 @@ namespace Plunder.Test
 
             list.Add(new RequestMessage()
             {
-                Topic = WebPageType.Static,
+                Topic = WPageType.Static,
                 Request = new Request()
                 { SiteId = site.Id, Url = "http://www.usashopcn.com/Product/Details/126855" }
 
@@ -141,7 +141,7 @@ namespace Plunder.Test
 
         #region Consume Test
 
-        public class TestDownloader : IDownloader
+        public class TestDownloader : IDownloaderOld
         {
             public int DownloadingTaskCount
             {
@@ -153,14 +153,14 @@ namespace Plunder.Test
 
             public bool IsDefault { get; set; }
 
-            public string ContentType => WebPageType.Static;
+            public string ContentType => WPageType.Static;
 
             public PageType PageType { get; set; }
 
             public async Task<Response> DownloadAsync(Request request)
             {
                 Trace.WriteLine("start download:" + request.Url);
-                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Url, HttpStatusCode = HttpStatusCode.OK, ElapsedTime = 1, ReasonPhrase = "TestReasonPhrase" });
+                return await Task.Run(() => new Response() { Content = "这是正文来至于:" + request.Url, HttpStatusCode = HttpStatusCode.OK, Elapsed = 1, ReasonPhrase = "TestReasonPhrase" });
 
             }
 
@@ -191,7 +191,7 @@ namespace Plunder.Test
                 return 0;
             }
 
-            Task<Tuple<Request, Response>> IDownloader.DownloadAsync(Request request)
+            Task<Tuple<Request, Response>> IDownloaderOld.DownloadAsync(Request request)
             {
                 throw new NotImplementedException();
             }
@@ -250,7 +250,7 @@ namespace Plunder.Test
             resultPipeline.RegisterModule(new TestPipelineMoudle());
             var pageAnalyzers = new List<KeyValuePair<string, Type>>();
             pageAnalyzers.Add(new KeyValuePair<string, Type>(site.Domain, typeof(TestPageAnalyzer)));
-            var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloader>() {new TestDownloader()}, new ResultItemPipeline(), pageAnalyzers);
+            var consumerBroker = new ConsumerBroker(2, lineScheduler, new List<IDownloaderOld>() {new TestDownloader()}, new ResultItemPipeline(), pageAnalyzers);
             consumerBroker.Start();
 
             var timer = new Timer((state) =>

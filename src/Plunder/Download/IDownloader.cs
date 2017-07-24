@@ -1,25 +1,28 @@
-﻿using System;
+﻿using Plunder.Compoment;
+using Plunder.Download.Proxy;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using Plunder.Compoment;
 
 namespace Plunder.Download
 {
     public interface IDownloader
     {
-        void ReInit();
+        Request Request { get; set; }
+
+        UserAgent UserAgent { get; set; }
+
+        HttpProxy Proxy { get; set; }
 
         PageType PageType { get; }
 
-        bool IsDefault { get; set; }
+        DownloadStatus Status { get; }
 
-        bool IsAllowDownload();
+        DateTime? StartDownloadTime { get; }
 
-        int DownloadingTaskCount { get;}
-
-
-        //Task DownloadAsync(Request requests, Action<Request, Response> onDownloaded);
-
-        Task<Tuple<Request, Response>> DownloadAsync(Request request);
+        Task<Response> DownloadAsync();
     }
+
 }

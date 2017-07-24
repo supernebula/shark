@@ -10,7 +10,7 @@ using Plunder.Plugin.Download;
 
 namespace PlunderTestConsole
 { 
-    public class FakeDownloader : IDownloader
+    public class FakeDownloader : IDownloaderOld
     {
         private readonly int _maxTaskNumber;
         private int _currentTaskNumber;
@@ -27,7 +27,7 @@ namespace PlunderTestConsole
 
         public bool IsDefault { get; set; }
 
-        public string ContentType => WebPageType.Static;
+        public string ContentType => WPageType.Static;
 
         public PageType PageType => throw new NotImplementedException();
 

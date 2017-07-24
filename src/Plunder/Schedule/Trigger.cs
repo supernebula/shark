@@ -11,7 +11,7 @@ namespace Plunder.Schedule
     public class Trigger
     {
         private SchedulerContext _context;
-        private readonly List<IDownloader> _downloaders;
+        private readonly List<IDownloaderOld> _downloaders;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
         private bool _pulling;
