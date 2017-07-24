@@ -29,6 +29,8 @@ namespace PlunderTestConsole
 
         public string ContentType => WebPageType.Static;
 
+        public PageType PageType => throw new NotImplementedException();
+
         public void DownloadAsync(IEnumerable<Request> requests, Action<Request, Response> onDownloadComplete, Action onConsumed)
         {
             foreach (Request req in requests)

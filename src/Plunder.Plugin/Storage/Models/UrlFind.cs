@@ -1,4 +1,5 @@
 ﻿using Plunder.Compoment;
+using Plunder.Download;
 using System;
 using System.Net;
 
@@ -10,7 +11,7 @@ namespace Plunder.Plugin.Storage.Models
 
         public string SiteId { get; set; }
 
-        public HtmlType HtmlType { get; set; }
+        public PageType PageType { get; set; }
 
         public string Domian { get; set; }
 

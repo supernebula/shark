@@ -16,29 +16,20 @@ namespace Plunder.Download
 
     //}
 
-    public class ContentType : IEquatable<ContentType>
+    public class PageType : IEquatable<PageType>
     {
         private string type;
 
-        private static readonly ContentType html = new ContentType("HTML");
-        private static readonly ContentType dhtml = new ContentType("DHTML");
-        private static readonly ContentType xml = new ContentType("XML");
-        private static readonly ContentType json = new ContentType("JSON");
-        private static readonly ContentType text = new ContentType("TEXT");
+        private static readonly PageType staticPage = new PageType("static");
+        private static readonly PageType dynamicPage = new PageType("dynamic");
 
-        public static ContentType HTML => html;
+        public static PageType Static => staticPage;
 
-        public static ContentType DHTML => dhtml;
-
-        public static ContentType XML => xml;
-
-        public static ContentType JSON => json;
-
-        public static ContentType TEXT => text;
+        public static PageType Dynamic => dynamicPage;
 
         public string Type => type;
 
-        public ContentType(string type)
+        public PageType(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
             {
@@ -47,20 +38,20 @@ namespace Plunder.Download
             this.type = type;
         }
 
-        public bool Equals(ContentType other)
+        public bool Equals(PageType other)
         {
-            if (other == default(ContentType))
+            if (other == default(PageType))
             {
                 return false;
             }
             return ((this.type == other.type) || (string.Compare(this.type, other.type, StringComparison.OrdinalIgnoreCase) == 0));
         }
 
-        public override bool Equals(object obj) => Equals(obj as ContentType);
+        public override bool Equals(object obj) => Equals(obj as PageType);
 
         public override int GetHashCode() => type.ToUpperInvariant().GetHashCode();
 
-        public static bool operator ==(ContentType left, ContentType right)
+        public static bool operator == (PageType left, PageType right)
         {
             if (left == null)
             {
@@ -73,7 +64,7 @@ namespace Plunder.Download
             return left.Equals(right);
         }
 
-        public static bool operator !=(ContentType left, ContentType right) => !(left == right);
+        public static bool operator != (PageType left, PageType right) => !(left == right);
 
         public override string ToString() => type.ToString();
 

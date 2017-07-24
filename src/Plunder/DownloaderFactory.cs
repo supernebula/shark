@@ -9,14 +9,14 @@ namespace Plunder
 {
     public class DownloaderFactory : IDownloaderFactory
     {
-        private Dictionary<string, Func<IDownloader>> _downloaderThunk = new Dictionary<string, Func<IDownloader>>();
-        private ConcurrentDictionary<string, IDownloader> _topicDownloaderDic;
-        public DownloaderFactory(IEnumerable<KeyValuePair<string, Func<IDownloader>>> topicDownloaderThunks)
+        private Dictionary<PageType, Func<IDownloader>> _downloaderThunk = new Dictionary<PageType, Func<IDownloader>>();
+        private ConcurrentDictionary<PageType, IDownloader> _topicDownloaderDic;
+        public DownloaderFactory(IEnumerable<KeyValuePair<PageType, Func<IDownloader>>> topicDownloaderThunks)
         {
             if (topicDownloaderThunks == null)
                 throw new ArgumentNullException(nameof(topicDownloaderThunks));
 
-            _topicDownloaderDic = new ConcurrentDictionary<string, IDownloader>();
+            _topicDownloaderDic = new ConcurrentDictionary<PageType, IDownloader>();
 
             var thunks = topicDownloaderThunks.ToList();
             _downloaderThunk = thunks.ToDictionary(e => e.Key, e => e.Value);
@@ -26,9 +26,9 @@ namespace Plunder
             
         }
 
-        public void Register<TDownloader>(string topic, Func<TDownloader> thunk) where TDownloader : IDownloader
+        public void Register<TDownloader>(PageType pageType, Func<TDownloader> thunk) where TDownloader : IDownloader
         {
-            _topicDownloaderDic.TryAdd(topic, thunk.Invoke());
+            _topicDownloaderDic.TryAdd(pageType, thunk.Invoke());
         }
 
         public int Count => _downloaderThunk.Values.Count;
@@ -47,10 +47,10 @@ namespace Plunder
 
         //    _downloaderCollection.TryAdd(topic, downloaderType);
 
-        public IDownloader Create(string topic)
+        public IDownloader Create(PageType pageType)
         {
             IDownloader downloader;
-            _topicDownloaderDic.TryGetValue(topic, out downloader);
+            _topicDownloaderDic.TryGetValue(pageType, out downloader);
             return downloader;
         }
     }

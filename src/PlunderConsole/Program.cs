@@ -44,14 +44,14 @@ namespace PlunderConsole
         {
             var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
             //var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379, true);
-            var scheduler = new SequenceScheduler(bloomFilter);
+            var scheduler = new SequenceScheduler(bloomFilter, default(EngineContext));
             return scheduler;
         }
 
         static DownloaderFactory InitDownloaderFactory()
         {
-            var downloaderThunks = new Dictionary<string, Func<IDownloader>>();
-            downloaderThunks.Add(ContentType.HTML, () => new HttpClientDownloader(4));
+            var downloaderThunks = new Dictionary<PageType, Func<IDownloader>>();
+            downloaderThunks.Add(PageType.Static, () => new HttpClientDownloader(4));
             var factory = new DownloaderFactory(downloaderThunks);
             return factory;
         }

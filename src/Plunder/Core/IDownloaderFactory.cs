@@ -5,7 +5,7 @@ namespace Plunder.Core
 {
     public interface IDownloaderFactory
     {
-        IDownloader Create(string topic);
+        IDownloader Create(PageType pageType);
 
         int Count { get; }
 

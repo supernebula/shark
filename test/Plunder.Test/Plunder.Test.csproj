@@ -78,17 +78,27 @@
     <Compile Include="SchedulerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\packages\PhantomJS.2.0.0\tools\phantomjs\phantomjs.exe">
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Plunder.Plugin\Plunder.Plugin.csproj">
+      <Project>{74951c1e-dc33-45c6-a8eb-536ff0d0f596}</Project>
+      <Name>Plunder.Plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Plunder\Plunder.csproj">
+      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
+      <Name>Plunder</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\packages\PhantomJS.2.1.1\tools\phantomjs\phantomjs.exe">
       <Link>phantomjs.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="phantomjs-license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Plunder.Compoment
 {
-    public enum HtmlType
-    {
-        StaticHtml,
+    //public enum HtmlType
+    //{
+    //    StaticHtml,
 
-        DynamicHtml
-    }
+    //    DynamicHtml
+    //}
 }
