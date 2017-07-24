@@ -84,10 +84,6 @@ namespace Plunder.Schedule
         {
             if (_duplicateFilter.Contains(message.Request.Url))
             {
-                //var originalColor = Console.ForegroundColor;
-                //Console.ForegroundColor = ConsoleColor.Yellow;
-                //Console.WriteLine($"------------------------------------------------重复:{message.Request.Url}");
-                //Console.ForegroundColor = originalColor;
                 return true;
             }
                 
