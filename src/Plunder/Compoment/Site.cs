@@ -66,7 +66,7 @@ namespace Plunder.Compoment
         public Dictionary<string, string> Headers { get; set; }
 
         [DataMember]
-        public bool IsUseHttpProxy { get; set; }
+        public bool EnableHttpProxy { get; set; }
 
         [DataMember]
         public bool UseGzip { get; set; }

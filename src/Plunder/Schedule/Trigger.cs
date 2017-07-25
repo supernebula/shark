@@ -1,8 +1,8 @@
 ﻿using Plunder.Download;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,6 +12,8 @@ namespace Plunder.Schedule
     {
         private SchedulerContext _context;
         private readonly List<IDownloaderOld> _downloaders;
+        
+        private readonly ConcurrentDictionary<string, IDownloader> _downloaderCollection;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
         private bool _pulling;
@@ -27,7 +29,7 @@ namespace Plunder.Schedule
 
         public int DownloadingTaskCount()
         {
-            return _downloaders.Sum(e => e.DownloadingTaskCount);
+            return _downloaders.Count();
         }
 
         public void Start()
@@ -77,6 +79,8 @@ namespace Plunder.Schedule
 
         private void Working(params RequestMessage[] messages)
         {
+            //var downloader = ne
+
             _downloaders.ForEach(downloader =>
             {
                 var reqs = messages.Where(e => e.Topic.Equals(downloader.PageType)).Select(m => m.Request).ToList();

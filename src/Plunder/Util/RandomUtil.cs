@@ -3,10 +3,10 @@ using System.Security.Cryptography;
 
 namespace Plunder.Util
 {
-    public static class RandomUnitily
+    public static class RandomUtil
     {
         static RNGCryptoServiceProvider _RNGCryptoServiceProvider;
-        static RandomUnitily()
+        static RandomUtil()
         {
             _RNGCryptoServiceProvider = new RNGCryptoServiceProvider();
         }

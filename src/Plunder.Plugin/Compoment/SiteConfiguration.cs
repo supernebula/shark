@@ -39,7 +39,7 @@ namespace Plunder.Plugin.Compoment
             site.Topic = WPageType.Static;
             site.IndexUrl = "http://www.usashopcn.com/";
             site.Domain = "www.usashopcn.com";
-            site.IsUseHttpProxy = false;
+            site.EnableHttpProxy = false;
             site.Name = "美国购物网";
             site.UserAgent = UserAgentCollection.RandomUserAgent().Value;
             site.Charset = "utf-8";

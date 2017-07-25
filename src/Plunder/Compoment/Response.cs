@@ -10,9 +10,9 @@ namespace Plunder.Compoment
         public Request Request { get; set; }
         public HttpStatusCode HttpStatusCode { get; set; }
 
-        public string ReasonPhrase { get; set; }
-
         public bool IsSuccessCode { get; set; }
+
+        public string ReasonPhrase { get; set; }
 
         public string CharSet { get; set; }
 
@@ -25,7 +25,7 @@ namespace Plunder.Compoment
         /// <summary>
         /// millisecond
         /// </summary>
-        public long Elapsed { get; set; }
+        public int Elapsed { get; set; }
 
         public Type DownloaderType { get; set; }
     }

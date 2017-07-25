@@ -1,16 +1,13 @@
-﻿using Plunder.Compoment;
-using Plunder.Download.Proxy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using Plunder.Compoment;
+using Plunder.Download.Proxy;
 
 namespace Plunder.Download
 {
     public interface IDownloader
     {
-        Request Request { get; set; }
+        Request Request { get;}
 
         UserAgent UserAgent { get; set; }
 
@@ -20,7 +17,12 @@ namespace Plunder.Download
 
         DownloadStatus Status { get; }
 
-        DateTime? StartDownloadTime { get; }
+        DateTime? DownloadStartTime { get; }
+
+        /// <summary>
+        /// millisecond
+        /// </summary>
+        int HasElapsed { get; }
 
         Task<Response> DownloadAsync();
     }

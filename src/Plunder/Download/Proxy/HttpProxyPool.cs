@@ -19,7 +19,7 @@ namespace Plunder.Download.Proxy
             }
         }
 
-        public HttpProxy RandomProxy()
+        public static HttpProxy RandomProxy()
         {
             throw new NotImplementedException();
         }

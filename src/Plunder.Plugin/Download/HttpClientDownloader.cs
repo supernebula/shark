@@ -1,19 +1,18 @@
-﻿using Plunder.Download;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using Plunder.Download;
 using Plunder.Download.Proxy;
-using System.Net.Http;
-using System.Net;
+using System.Diagnostics;
+using Plunder.Util;
 
 namespace Plunder.Plugin.Download
 {
     public class HttpClientDownloader : IDownloader
     {
-        public Request Request { get; set; }
+
+        public Request Request { get; private set; }
         public UserAgent UserAgent { get; set; }
         public HttpProxy Proxy { get; set; }
 
@@ -21,19 +20,54 @@ namespace Plunder.Plugin.Download
 
         public DownloadStatus Status { get; private set; }
 
-        public DateTime? StartDownloadTime { get; private set; }
+        public DateTime? DownloadStartTime { get; private set; }
 
         private HttpClient _httpClient { get; set; }
 
-        public HttpClientDownloader(PageType pageType)
-        {
-            PageType = pageType;
+        public int? _elapsed;
+
+        public int HasElapsed {
+            get
+            {
+                if (_elapsed != null)
+                    return _elapsed.Value;
+                if (DownloadStartTime == null)
+                    return 0;
+                return (int)(DateTime.Now.Ticks - DownloadStartTime.Value.Ticks);
+            }
         }
 
-        public Task<Response> DownloadAsync()
+        private int _hasElapsed;
+
+        public HttpClientDownloader(Request request, PageType pageType)
         {
-            _httpClient = new HttpClient();
-            throw new NotImplementedException();
+            Request = request;
+            PageType = pageType;
+            Id = HashUtil.Md5(this.GetType().FullName + request.Id);
+        }
+
+        public async Task<Response> DownloadAsync()
+        {
+            _httpClient = HttpClientBuilder.GetClient(Request);
+            var watch = new Stopwatch();
+            watch.Start();
+            var result = await _httpClient.GetAsync(Request.Url);
+            watch.Stop();
+            _elapsed = watch.Elapsed.Milliseconds;
+            var resposne = new Response();
+            resposne.Request = Request;
+            resposne.IsSuccessCode = result.IsSuccessStatusCode;
+            resposne.HttpStatusCode = result.StatusCode;
+            resposne.ReasonPhrase = result.ReasonPhrase;
+            if (!result.IsSuccessStatusCode)
+                return resposne;
+
+            resposne.Content = await result.Content.ReadAsStringAsync();
+            resposne.StreamContent = await result.Content.ReadAsStreamAsync();
+            resposne.Elapsed = _elapsed.Value;
+            resposne.DownloaderType = this.GetType();
+
+            return resposne;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Plunder.Download
         public static KeyValuePair<string, string> RandomUserAgent()
         {
             
-            var index = RandomUnitily.RealRandom(0, PcUserAgents.Count - 1);
+            var index = RandomUtil.RealRandom(0, PcUserAgents.Count - 1);
             return PcUserAgents[index];
         }
 

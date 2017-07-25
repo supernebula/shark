@@ -1,14 +1,18 @@
-﻿
-using System.Net.Http;
+﻿using System.Net.Http;
+using Plunder.Util;
 
 namespace Plunder.Compoment
 {
     public class Request
     {
-        public Request()
+        public Request(string url)
         {
+            Url = url;
+            Id = HashUtil.Md5(url);
             HttpMethod = HttpMethod.Get;
         }
+
+        public string Id { get; private set; }
 
         public string SiteId { get; set; }
 
@@ -16,7 +20,7 @@ namespace Plunder.Compoment
 
         public string Domain { get; set; }
 
-        public string Url { get; set; }
+        public string Url { get; private set; }
 
         public string Hash => this.Url.GetHashCode().ToString();
 
