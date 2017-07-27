@@ -72,38 +72,39 @@ namespace Plunder.Schedule
                 if (message == null)
                     message = _context.Scheduler.WaitUntillPoll();
                 _messagePullAutoResetEvent.Reset();
-                Working(message);
+
+                Task.Run(async () => {
+                    await WorkingAsync(message);
+                });
+                
             }
         }
 
-
-        private void Working(params RequestMessage[] messages)
+        private async Task WorkingAsync(params RequestMessage[] messages)
         {
-            //var downloader = ne
+            if (messages == null || !messages.Any())
+                return;
 
-            _downloaders.ForEach(downloader =>
+            foreach (var item in messages)
             {
-                var reqs = messages.Where(e => e.Topic.Equals(downloader.PageType)).Select(m => m.Request).ToList();
-                reqs.ForEach(request =>
-                {
-                    downloader.DownloadAsync(request)
-                    .ContinueWith(t => {
-                        Downloaded();
-                        return t.Result;
-                    })
+                var downloader = _context.DownloaderFactory.Create(item.Request.PageType);
+                _downloaderCollection.TryAdd(item.Request.Id, downloader);
+                await downloader.DownloadAsync()
                     .ContinueWith(t =>
                     {
+                        Downloaded();
+                        return t.Result;
+                    }).ContinueWith(t => {
 
-                        //Console.WriteLine("Downloaded Html:" + t.Result.Item2.Content);
 #if DEBUG
-                        Console.WriteLine("Downloaded:" + t.Result.Item1.Url);
+                        Console.WriteLine("Downloaded:" + t.Result.Request.Url);
 #endif
-                        var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Item1.SiteId, t.Result.Item1.Channel);
-                        var pageResult = pageAnalyzer.Analyze(t.Result.Item1, t.Result.Item2);
+
+                        var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Channel);
+                        var pageResult = pageAnalyzer.Analyze(t.Result);
                         _context.ResultPipeline.Inject(pageResult);
                     });
-                });
-            });
+            }
         }
 
         private void Downloaded()

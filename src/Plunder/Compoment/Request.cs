@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using Plunder.Util;
+using Plunder.Download;
 
 namespace Plunder.Compoment
 {
@@ -21,6 +22,8 @@ namespace Plunder.Compoment
         public string Domain { get; set; }
 
         public string Url { get; private set; }
+
+        public PageType PageType { get; }
 
         public string Hash => this.Url.GetHashCode().ToString();
 

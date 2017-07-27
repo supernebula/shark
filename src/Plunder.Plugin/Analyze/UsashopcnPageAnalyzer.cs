@@ -39,8 +39,9 @@ namespace Plunder.Plugin.Analyze
             }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value }).ToList();
         }
 
-        public PageResult Analyze(Request request, Response response)
+        public PageResult Analyze(Response response)
         {
+            var request = response.Request;
             var doc = new HtmlDocument();
             if (string.IsNullOrWhiteSpace(response.Content))
                 return PageResult.EmptyResponse(Site.Topic, request, response, Channel.Product);
@@ -54,7 +55,7 @@ namespace Plunder.Plugin.Analyze
                 resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
                 resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
                 resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.Elapsed.ToString() });
-                resultFields.Add(new ResultField() { Name = "Downloader", Value = response.Downloader });
+                resultFields.Add(new ResultField() { Name = "Downloader", Value = response.DownloaderType.FullName });
                 resultFields.Add(new ResultField() { Name = "CommentCount", Value = "0" });
             }
 

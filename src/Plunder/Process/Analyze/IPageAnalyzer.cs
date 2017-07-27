@@ -10,6 +10,6 @@ namespace Plunder.Process.Analyze
 
         string PageTag { get; }
 
-        PageResult Analyze(Request request, Response response);
+        PageResult Analyze(Response response);
     }
 }
