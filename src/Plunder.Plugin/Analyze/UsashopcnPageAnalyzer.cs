@@ -32,10 +32,10 @@ namespace Plunder.Plugin.Analyze
         {
             Site = SiteConfiguration.Instance.GetSite(SiteId);
             _fieldXPaths = new Dictionary<string, string> {
-                { "Title","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/h2[1]"},
-                { "Price","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/span[1]"},
-                { "Description","/html[1]/body[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[2]"},
-                { "PicUri","/html[1]/body[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/img[1]/@src[1]"},
+                { "Title","//*[@id=\"p_mid\"]/div[2]/h2"},
+                { "PicUri","//img[@id=\"productImage\"]/@src"},
+                { "Price","//*[@id=\"p_mid\"]/div[2]/div[1]/div[2]/span" },
+                { "Description","//*[@id=\"intro_0\"]"}
             }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value }).ToList();
         }
 
@@ -52,6 +52,7 @@ namespace Plunder.Plugin.Analyze
             {
                 resultFields = XpathSelect(doc, _fieldXPaths);
                 resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url });
+                resultFields.Add(new ResultField() { Name = "Image", Value = "" });
                 resultFields.Add(new ResultField() { Name = "SiteName", Value = Site.Name });
                 resultFields.Add(new ResultField() { Name = "SiteDomain", Value = Site.Domain });
                 resultFields.Add(new ResultField() { Name = "ElapsedSecond", Value = response.Elapsed.ToString() });
@@ -78,9 +79,13 @@ namespace Plunder.Plugin.Analyze
             var newRegex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
             //var extractRegex = new Regex(extractUrlPattern, RegexOptions.IgnoreCase);
             var newRequests = new List<Request>();
-            var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase); 
+            var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase);
 
-            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
+            var linkNodes = doc.DocumentNode.SelectNodes("//a[@href]");
+            if (linkNodes == null)
+                return newRequests;
+
+            foreach (HtmlNode link in linkNodes)
             {
                 var href = link.GetAttributeValue("href", String.Empty).Trim();
                 href = AbsoluteUrl(href);
@@ -119,6 +124,13 @@ namespace Plunder.Plugin.Analyze
                 if(String.IsNullOrWhiteSpace(selector.Selector))
                     continue;
                 var node = doc.DocumentNode.SelectSingleNode(selector.Selector);
+                if (node.Name == "img")
+                {
+                    var src = node.Attributes["src"] != null ? node.Attributes["src"].Value : string.Empty;
+                    fields.Add(new ResultField { Name = selector.FieldName, Value = src });
+                    continue;
+                }
+                    
                 fields.Add(new ResultField { Name = selector.FieldName, Value = node == null ? null : node.InnerText.Trim() });
             }
             return fields;
