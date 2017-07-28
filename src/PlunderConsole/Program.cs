@@ -26,7 +26,8 @@ namespace PlunderConsole
             var options = BuildOptions();
             _engine = new Engine(options);
             //_engine.Start(new List<RequestMessage> { new RequestMessage() {  } }); //添加起始链接
-            _engine.Start("www.usashopcn.com", "http://www.usashopcn.com/Product/List/?category=162"); //添加起始链接
+            //_engine.Start("www.usashopcn.com", "http://www.usashopcn.com/Product/List/?category=162"); //添加起始链接
+            _engine.Start("www.usashopcn.com", "http://www.baidu.com/"); //添加起始链接
         }
 
         static EngineOptions BuildOptions()
