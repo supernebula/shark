@@ -23,7 +23,7 @@ namespace Plunder.Compoment.Models
         /// <summary>
         /// 耗时毫秒数
         /// </summary>
-        public long ElapsedTime { get; set; }
+        public int Elapsed { get; set; }
 
         public DateTime CreateTime { get; set; }
 

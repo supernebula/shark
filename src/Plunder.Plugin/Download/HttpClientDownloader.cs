@@ -43,7 +43,7 @@ namespace Plunder.Plugin.Download
         {
             Request = request;
             PageType = pageType;
-            Id = HashUtil.Md5(this.GetType().FullName + request.Id);
+            //Id = HashUtil.Md5(this.GetType().FullName + request.Id);
         }
 
         public async Task<Response> DownloadAsync()

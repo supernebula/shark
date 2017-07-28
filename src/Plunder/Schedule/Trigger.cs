@@ -11,7 +11,7 @@ namespace Plunder.Schedule
     public class Trigger
     {
         private SchedulerContext _context;
-        private readonly List<IDownloaderOld> _downloaders;
+        //private readonly List<IDownloaderOld> _downloaders;
         
         private readonly ConcurrentDictionary<string, IDownloader> _downloaderCollection;
         private readonly int _maxDownloadThreadNumber;
@@ -24,12 +24,14 @@ namespace Plunder.Schedule
                 throw new ArgumentNullException(nameof(schedulerContext));
             _context = schedulerContext;
             _maxDownloadThreadNumber = maxDownLoadThreadNumber;
+            _downloaderCollection = new ConcurrentDictionary<string, IDownloader>();
             _messagePullAutoResetEvent = new AutoResetEvent(false);
         }
 
         public int DownloadingTaskCount()
         {
-            return _downloaders.Count();
+            //return _downloaders.Count();
+            return _downloaderCollection.Count();
         }
 
         public void Start()
@@ -74,7 +76,16 @@ namespace Plunder.Schedule
                 _messagePullAutoResetEvent.Reset();
 
                 Task.Run(async () => {
-                    await WorkingAsync(message);
+                    try
+                    {
+                        await WorkingAsync(message);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        throw;
+                    }
+                    
                 });
                 
             }
@@ -87,14 +98,10 @@ namespace Plunder.Schedule
 
             foreach (var item in messages)
             {
-                var downloader = _context.DownloaderFactory.Create(item.Request.PageType);
+                var downloader = _context.DownloaderFactory.Create(item.Request, item.Request.PageType);
                 _downloaderCollection.TryAdd(item.Request.Id, downloader);
                 await downloader.DownloadAsync()
-                    .ContinueWith(t =>
-                    {
-                        Downloaded();
-                        return t.Result;
-                    }).ContinueWith(t => {
+                    .ContinueWith(t => {
 
 #if DEBUG
                         Console.WriteLine("Downloaded:" + t.Result.Request.Url);
@@ -103,6 +110,7 @@ namespace Plunder.Schedule
                         var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Channel);
                         var pageResult = pageAnalyzer.Analyze(t.Result);
                         _context.ResultPipeline.Inject(pageResult);
+                        Downloaded();
                     });
             }
         }

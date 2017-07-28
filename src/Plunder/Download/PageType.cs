@@ -16,7 +16,7 @@ namespace Plunder.Download
 
     //}
 
-    public class PageType : IEquatable<PageType>
+    public struct PageType /*: IEquatable<PageType>*/
     {
         private string type;
 
@@ -38,35 +38,35 @@ namespace Plunder.Download
             this.type = type;
         }
 
-        public bool Equals(PageType other)
-        {
-            if (other == default(PageType))
-            {
-                return false;
-            }
-            return ((this.type == other.type) || (string.Compare(this.type, other.type, StringComparison.OrdinalIgnoreCase) == 0));
-        }
+        //public bool Equals(PageType other)
+        //{
+        //    if (other == default(PageType))
+        //    {
+        //        return false;
+        //    }
+        //    return ((this.type == other.type) || (string.Compare(this.type, other.type, StringComparison.OrdinalIgnoreCase) == 0));
+        //}
 
-        public override bool Equals(object obj) => Equals(obj as PageType);
+        //public override bool Equals(object obj) => Equals(obj as PageType);
 
-        public override int GetHashCode() => type.ToUpperInvariant().GetHashCode();
+       // public override int GetHashCode() => type.ToUpperInvariant().GetHashCode();
 
-        public static bool operator == (PageType left, PageType right)
-        {
-            if (left == null)
-            {
-                return (right == null);
-            }
-            if (right == null)
-            {
-                return (left == null);
-            }
-            return left.Equals(right);
-        }
+        //public static bool operator == (PageType left, PageType right)
+        //{
+        //    if (left == null)
+        //    {
+        //        return (right == null);
+        //    }
+        //    if (right == null)
+        //    {
+        //        return (left == null);
+        //    }
+        //    return left.Equals(right);
+        //}
 
-        public static bool operator != (PageType left, PageType right) => !(left == right);
+        //public static bool operator != (PageType left, PageType right) => !(left == right);
 
-        public override string ToString() => type.ToString();
+        //public override string ToString() => type.ToString();
 
     }
 

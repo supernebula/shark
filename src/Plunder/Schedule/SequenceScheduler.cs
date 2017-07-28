@@ -7,7 +7,7 @@ namespace Plunder.Schedule
 {
     public class SequenceScheduler : DuplicateRemovedScheduler
     {
-        public SequenceScheduler(IDuplicateFilter<string> duplicateFilter, EngineContext engineContext) : base(duplicateFilter, engineContext)
+        public SequenceScheduler(IDuplicateFilter<string> duplicateFilter) : base(duplicateFilter)
         {
         }
     }

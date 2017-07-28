@@ -6,5 +6,7 @@ namespace Plunder.Schedule
         int CurrentQueueCount();
 
         int AccumulatedTotal();
+
+        void RegisterContext(EngineContext engineContext);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Plunder.Core;
+﻿using Plunder.Compoment;
+using Plunder.Core;
 using Plunder.Download;
 using System;
 using System.Collections.Concurrent;
@@ -9,26 +10,26 @@ namespace Plunder
 {
     public class DownloaderFactory : IDownloaderFactory
     {
-        private Dictionary<PageType, Func<IDownloader>> _downloaderThunk = new Dictionary<PageType, Func<IDownloader>>();
-        private ConcurrentDictionary<PageType, IDownloader> _topicDownloaderDic;
-        public DownloaderFactory(IEnumerable<KeyValuePair<PageType, Func<IDownloader>>> topicDownloaderThunks)
+        private Dictionary<PageType, Func<Request, PageType, IDownloader>> _downloaderThunk = new Dictionary<PageType, Func<Request, PageType, IDownloader>>();
+        private ConcurrentDictionary<PageType, Func<Request, PageType, IDownloader>> _topicDownloaderDic;
+        public DownloaderFactory(Dictionary<PageType, Func<Request, PageType, IDownloader>> topicDownloaderThunks)
         {
             if (topicDownloaderThunks == null)
                 throw new ArgumentNullException(nameof(topicDownloaderThunks));
 
-            _topicDownloaderDic = new ConcurrentDictionary<PageType, IDownloader>();
+            _topicDownloaderDic = new ConcurrentDictionary<PageType, Func<Request, PageType, IDownloader>>();
 
             var thunks = topicDownloaderThunks.ToList();
             _downloaderThunk = thunks.ToDictionary(e => e.Key, e => e.Value);
             thunks.ForEach(e => {
-                _topicDownloaderDic.TryAdd(e.Key, e.Value.Invoke());
+                _topicDownloaderDic.TryAdd(e.Key, e.Value);
             });
             
         }
 
-        public void Register<TDownloader>(PageType pageType, Func<TDownloader> thunk) where TDownloader : IDownloader
+        public void Register<TDownloader>(PageType pageType, Func<Request, PageType, IDownloader> thunk) where TDownloader : IDownloader
         {
-            _topicDownloaderDic.TryAdd(pageType, thunk.Invoke());
+            _topicDownloaderDic.TryAdd(pageType, thunk);
         }
 
         public int Count => _downloaderThunk.Values.Count;
@@ -38,19 +39,12 @@ namespace Plunder
             return Count > 0;
         }
 
-        //public void Register(string topic, Type downloaderType)
-        //{
-        //    if (!string.IsNullOrWhiteSpace(topic))
-        //        throw new ArgumentNullException(nameof(topic));
-        //    if (!downloaderType.IsAssignableFrom(typeof(IDownloader)))
-        //        throw new ArgumentException($"{nameof(downloaderType)}不是类型：{typeof(IDownloader).FullName}");
 
-        //    _downloaderCollection.TryAdd(topic, downloaderType);
-
-        public IDownloader Create(PageType pageType)
+        public IDownloader Create(Request request,PageType pageType)
         {
-            IDownloader downloader;
-            _topicDownloaderDic.TryGetValue(pageType, out downloader);
+            Func<Request, PageType, IDownloader> downloaderThunk;
+            _topicDownloaderDic.TryGetValue(pageType, out downloaderThunk);
+            var downloader = downloaderThunk.Invoke(request, pageType);
             return downloader;
         }
     }

@@ -30,7 +30,7 @@ namespace Plunder.Storage.MongoDB
                 Uri = result.Request.Url,
                 StatusCode = result.Response.HttpStatusCode,
                 IsSuccessCode = result.Response.IsSuccessCode,
-                ElapsedTime = result.Response.Elapsed,
+                Elapsed = result.Response.Elapsed,
                 CreateTime = DateTime.Now
             });
 

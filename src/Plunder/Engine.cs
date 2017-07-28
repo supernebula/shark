@@ -4,6 +4,8 @@ using System.Linq;
 using Plunder.Compoment;
 using Plunder.Schedule;
 using Plunder.Pipeline;
+using Plunder.Core;
+using Plunder.Download;
 
 namespace Plunder
 {
@@ -12,19 +14,37 @@ namespace Plunder
     {
         private readonly EngineOptions _options;
 
+        public EngineContext Context { get; private set; }
+
         public IMonitorableScheduler Scheduler { get; private set; }
 
-        public DownloaderFactory DownloaderFactory { get; private set; } //private readonly List<IDownloader> _downloaders;
+        public IDownloaderFactory DownloaderFactory { get; private set; } //private readonly List<IDownloader> _downloaders;
 
-        public PageAnalyzerFactory PageAnalyzerFactory { get; private set; } //private readonly Dictionary<string, Type> _pageAnalyzerTypes;
+        public IPageAnalyzerFactory PageAnalyzerFactory { get; private set; } //private readonly Dictionary<string, Type> _pageAnalyzerTypes;
 
-        public ResultItemPipeline ResultPipeline { get; private set; } //private readonly ResultItemPipeline _resultPipeline;
+        public IResultItemPipeline ResultPipeline { get; private set; } //private readonly ResultItemPipeline _resultPipeline;
 
         public List<RequestMessage> SeekRequests { get; private set; } //private List<RequestMessage> _seedRequests;
 
         public Engine(EngineOptions options)
         {
             _options = options;
+            Context = new EngineContext {
+                Scheduler = options.Scheduler,
+                DownloaderFactory = options.DownloaderFactory,
+                PageAnalyzerFactory = options.PageAnalyzerFactory,
+                ResultPipeline = options.ResultPipeline
+            };
+
+            Scheduler = options.Scheduler;
+            DownloaderFactory = options.DownloaderFactory;
+            PageAnalyzerFactory = options.PageAnalyzerFactory;
+            ResultPipeline = options.ResultPipeline;
+
+            Scheduler.RegisterContext(Context);
+            ResultPipeline.RegisterModule(new DefaultMomeryProducerModule(Scheduler));
+            SeekRequests = new List<RequestMessage>();
+            
         }
 
         public void Start(IEnumerable<RequestMessage> seedRequests)
@@ -40,15 +60,15 @@ namespace Plunder
             Run();
         }
 
-        public void Start(string topic, string siteId, params string[] urls)
+        public void Start(/*string topic, */string siteId, params string[] urls)
         {
             var seeds = new List<RequestMessage>();
             foreach (var url in urls)
             {
                 var seed = new RequestMessage()
                 {
-                    Topic = topic,
-                    Request = new Request() { SiteId = siteId, Url = url }
+                    //Topic = topic,
+                    Request = new Request(url) { SiteId = siteId, PageType = PageType.Static, Channel = "product.detail" }
                 };
                 seeds.Add(seed);
             }
@@ -105,9 +125,9 @@ namespace Plunder
             var status = new EngineMonitor()
             {
                 QueueCount = Scheduler.CurrentQueueCount(),
-                TaskCount = _consumerBroker.DownloadingTaskCount(),
-                ConsumeTotal = _consumerBroker.ConsumeTotal,
-                ResultTotal = ResultPipeline.ResultTotal
+                //TaskCount = Scheduler.DownloadingTaskCount(),
+                //ConsumeTotal = Scheduler.ConsumeTotal,
+                ModuleTotal = ResultPipeline.ModuleCount
             };
             return status;
         }
@@ -119,7 +139,7 @@ namespace Plunder
 
 
 
-        private ConsumerBroker _consumerBroker;
+        //private ConsumerBroker _consumerBroker;
         
         private IRequestMessageProvider _requestMessageProvider;
 

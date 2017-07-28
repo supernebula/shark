@@ -9,7 +9,10 @@ namespace Plunder.Schedule
             IResultItemPipeline resultItemPipeline,
             IPageAnalyzerFactory pageAnalyzerFactory)
         {
-
+            Scheduler = scheduler;
+            DownloaderFactory = downloaderFactory;
+            ResultPipeline = resultItemPipeline;
+            PageAnalyzerFactory = pageAnalyzerFactory;
         }
 
         public IMonitorableScheduler Scheduler { get; private set; }

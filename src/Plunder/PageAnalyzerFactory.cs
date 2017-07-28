@@ -31,10 +31,10 @@ namespace Plunder
 
         public IPageAnalyzer Create(string siteId, string topic)
         {
-            if (!string.IsNullOrWhiteSpace(siteId))
+            if (string.IsNullOrWhiteSpace(siteId))
                 throw new ArgumentNullException(nameof(siteId));
 
-            if (!string.IsNullOrWhiteSpace(topic))
+            if (string.IsNullOrWhiteSpace(topic))
                 throw new ArgumentNullException(nameof(topic));
             var key = GenerateKey(siteId, topic);
             Func<IPageAnalyzer> thunk;

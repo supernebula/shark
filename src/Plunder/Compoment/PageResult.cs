@@ -5,7 +5,7 @@ namespace Plunder.Compoment
 {
     public class PageResult
     {
-        public string Topic { get; set; }
+        //public string Topic { get; set; }
 
         public Request Request { get; set; }
 
@@ -17,11 +17,11 @@ namespace Plunder.Compoment
 
         public IEnumerable<ResultField> Data { get; set; }
 
-        public static PageResult EmptyResponse(string topic, Request request, Response response, string channel)
+        public static PageResult EmptyResponse(/*string topic, */Request request, Response response, string channel)
         {
             return new PageResult
             {
-                Topic = topic,
+                //Topic = topic,
                 Request = request,
                 Response = response,
                 Channel = channel

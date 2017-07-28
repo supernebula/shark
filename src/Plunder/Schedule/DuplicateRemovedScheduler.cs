@@ -10,9 +10,9 @@ namespace Plunder.Schedule
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     {
-        private readonly SchedulerContext _currentContext;
+        private SchedulerContext _currentContext;
 
-        private readonly Trigger _trigger;
+        private Trigger _trigger;
 
         protected readonly BlockingCollection<RequestMessage> Queue;
 
@@ -23,18 +23,21 @@ namespace Plunder.Schedule
 
         protected int AccumulatedMessageTotal => _accumulatedMessageTotal;
 
-        protected DuplicateRemovedScheduler(IDuplicateFilter<string> duplicateFilter, EngineContext engineContext)
+        protected DuplicateRemovedScheduler(IDuplicateFilter<string> duplicateFilter)
         {
-            _currentContext = new SchedulerContext(engineContext.Scheduler,
-                engineContext.DownloaderFactory,
-                engineContext.ResultPipeline,
-                engineContext.PageAnalyzerFactory);
-
-            _trigger = new Trigger(_currentContext, 10);
-
             _duplicateFilter = duplicateFilter;
             Queue = new BlockingCollection<RequestMessage>(new ConcurrentQueue<RequestMessage>());
             _accumulatedMessageTotal = 0;
+        }
+
+
+        public void RegisterContext(EngineContext engineContext)
+        {
+            _currentContext = new SchedulerContext(engineContext.Scheduler,
+            engineContext.DownloaderFactory,
+            engineContext.ResultPipeline,
+            engineContext.PageAnalyzerFactory);
+            _trigger = new Trigger(_currentContext, 10);
         }
 
         public RequestMessage WaitUntillPoll()

@@ -17,11 +17,11 @@ namespace Plunder
 
         public int ConsumeTotal { get; set; }
 
-        public int ResultTotal { get; set; }
+        public int ModuleTotal { get; set; }
 
         public override string ToString()
         {
-            return String.Format("Queue count:{0}\r\nTask count:{1}\r\nConsume total:{2}\r\nResult total:{3}", QueueCount, TaskCount, ConsumeTotal, ResultTotal);
+            return String.Format("Queue count:{0}\r\nTask count:{1}\r\nConsume total:{2}\r\nModule total:{3}", QueueCount, TaskCount, ConsumeTotal, ModuleTotal);
         }
     }
 }

@@ -19,12 +19,12 @@ namespace Plunder.Plugin.Analyze
     {
         public const string SiteIdValue = SiteIndex.Usashopcn;
 
-        public const string PageTagValue = "product.detail" ;
+        public const string TargetPageFlagValue = "product.detail" ;
         public Site Site { get; }
 
         public string SiteId => SiteIdValue;
 
-        public string PageTag => PageTagValue;
+        public string TargetPageFlag => TargetPageFlagValue;
 
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
 
@@ -44,7 +44,7 @@ namespace Plunder.Plugin.Analyze
             var request = response.Request;
             var doc = new HtmlDocument();
             if (string.IsNullOrWhiteSpace(response.Content))
-                return PageResult.EmptyResponse(Site.Topic, request, response, Channel.Product);
+                return PageResult.EmptyResponse(/*Site.Topic,*/ request, response, Channel.Product);
             doc.LoadHtml(response.Content);
             var newRequests = FindNewRequest(doc, request, @"[\s\S]*", "/Product/Details/");//todo: regexPattern
             List<ResultField> resultFields = null;
@@ -66,7 +66,7 @@ namespace Plunder.Plugin.Analyze
                 NewRequests = newRequests,
                 Channel = Channel.Product,
                 Data = resultFields,
-                Topic = Site.Topic
+                //Topic = Site.Topic
             };
             return pageResult;
         }
@@ -98,7 +98,7 @@ namespace Plunder.Plugin.Analyze
                 var urlTye = UrlType.Navigation;
                 if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
                     urlTye = UrlType.Extracting;
-                newRequests.Add(new Request() { Url = href, UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod });
+                newRequests.Add(new Request(href) {UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType , Channel = TargetPageFlagValue });
             }
             return newRequests;
         }

@@ -5,7 +5,7 @@ namespace Plunder.Schedule
 {
     public class RequestMessage
     {
-        public string Topic { get; set; }
+        //public string Topic { get; set; }
 
         public Request Request { get; set; }
 

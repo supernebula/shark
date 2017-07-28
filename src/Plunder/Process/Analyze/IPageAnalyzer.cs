@@ -8,7 +8,7 @@ namespace Plunder.Process.Analyze
 
         string SiteId { get;  }
 
-        string PageTag { get; }
+        string TargetPageFlag { get; }
 
         PageResult Analyze(Response response);
     }

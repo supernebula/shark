@@ -33,7 +33,7 @@ namespace Plunder.Pipeline
         {
             var reqMegs = result.NewRequests.Select(e => new RequestMessage()
             {
-                Topic = result.Topic,
+                //Topic = result.Topic,
                 Request = e
             }).ToArray();
 

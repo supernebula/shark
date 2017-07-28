@@ -69,7 +69,7 @@
     <Compile Include="Compoment\SiteIndex.cs" />
     <Compile Include="Download\HttpClientBuilder.cs" />
     <Compile Include="Download\HttpClientDownloader.cs" />
-    <Compile Include="Download\HttpClientDownloaderOld.cs" />
+    <Compile Include="Download\~HttpClientDownloaderOld.cs" />
     <Compile Include="Download\~WebPageType.cs" />
     <Compile Include="Filter\MongodbDuplicateFilter.cs" />
     <Compile Include="Filter\RedisBloomFilter.cs" />

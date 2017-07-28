@@ -16,7 +16,7 @@ namespace Plunder.Compoment
 
         public static Site NewDefault => DefaultSite();
 
-        public string Topic { get; set; }
+        //public string Topic { get; set; }
 
         [DataMember]
         public string Name { get; set; }

@@ -23,7 +23,7 @@ namespace Plunder.Compoment
 
         public string Url { get; private set; }
 
-        public PageType PageType { get; }
+        public PageType PageType { get; set; }
 
         public string Hash => this.Url.GetHashCode().ToString();
 

@@ -32,14 +32,14 @@ namespace Plunder.Plugin.Pipeline
                 Uri = result.Request.Url,
                 StatusCode = result.Response.HttpStatusCode,
                 IsSuccessCode = result.Response.IsSuccessCode,
-                ElapsedTime = result.Response.Elapsed,
+                Elapsed = result.Response.Elapsed,
                 CreateTime = DateTime.Now
             };
             await AccessLogRepository.AddAsync(accessLog);
 
             var page = new Page()
             {
-                Topic = result.Topic,
+                //Topic = result.Topic,
                 Domain = result.Request.Domain,
                 Uri = result.Request.Url,
                 UriSign = HashUtility.Md5(result.Request.Url),

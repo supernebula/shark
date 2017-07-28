@@ -16,13 +16,22 @@ namespace Plunder.Plugin.Pipeline
 
         public void Init(object context)
         {
-            throw new NotImplementedException();
         }
 
         public Task ProcessAsync(PageResult result)
         {
             Console.WriteLine($"{result.Request.Url}");
+            if(result.Data != null)
+                ShowResultField(result.Data);
             return Task.FromResult(1);
+        }
+
+        private void ShowResultField(IEnumerable<ResultField> data)
+        {
+            foreach (var field in data)
+            {
+                Console.WriteLine($"{field.Name}:{field.Value}");
+            }
         }
     }
 }
