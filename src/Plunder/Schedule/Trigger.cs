@@ -98,7 +98,7 @@ namespace Plunder.Schedule
 
             foreach (var item in messages)
             {
-                Thread.Sleep(20000);
+                Thread.Sleep(2000);
                 var downloader = _context.DownloaderFactory.Create(item.Request, item.Request.PageType);
                 _downloaderCollection.TryAdd(item.Request.Id, downloader);
                 await downloader.DownloadAsync()
