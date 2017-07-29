@@ -61,6 +61,7 @@
     <Compile Include="DownloaderFactory.cs" />
     <Compile Include="Download\DownloaderBuilder.cs" />
     <Compile Include="Download\DownloadStatus.cs" />
+    <Compile Include="Download\DownloadTaskState.cs" />
     <Compile Include="Download\IDownloader.cs" />
     <Compile Include="Download\PageType.cs" />
     <Compile Include="Download\UserAgent.cs" />

@@ -1,4 +1,5 @@
-﻿using Plunder.Download;
+﻿using Plunder.Compoment;
+using Plunder.Download;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -75,6 +76,8 @@ namespace Plunder.Schedule
                     message = _context.Scheduler.WaitUntillPoll();
                 _messagePullAutoResetEvent.Reset();
 
+                
+
                 Task.Run(async () => {
                     try
                     {
@@ -87,7 +90,17 @@ namespace Plunder.Schedule
                     }
                     
                 });
-                
+
+                var downloadTask = Task.Factory.StartNew(async (state) => {
+                        await WorkingAsync();
+                    }, 
+                    new DownloadTaskState() { Context = _context, Requests = new List<Request> { message.Request } },
+                    new CancellationToken()
+                );
+
+                //downloadTask.Start(TaskScheduler.Default);
+
+
             }
         }
 
