@@ -19,8 +19,8 @@ namespace Plunder.Plugin.Download
             var httpClientHandler = new HttpClientHandler {CookieContainer = new CookieContainer() {}};
             if(site != null && site.EnableHttpProxy)
                 httpClientHandler.Proxy = HttpProxyPool.RandomProxy();
-            httpClientHandler.UseProxy = true;
-            httpClientHandler.UseCookies = true;
+            httpClientHandler.UseProxy = false;
+            httpClientHandler.UseCookies = false;
             return new HttpClient(httpClientHandler);
         }
     }

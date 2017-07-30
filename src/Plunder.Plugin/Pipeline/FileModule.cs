@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Pipeline;
-using log4net;
 
 namespace Plunder.Plugin.Pipeline
 {

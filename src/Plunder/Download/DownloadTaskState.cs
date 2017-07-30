@@ -8,6 +8,6 @@ namespace Plunder.Download
     {
         public SchedulerContext Context { get; set; }
 
-        public IEnumerable<Request> Requests {get;set;}
+        public Request Request {get;set;}
     }
 }

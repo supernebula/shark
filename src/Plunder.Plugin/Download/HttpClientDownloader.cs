@@ -6,6 +6,7 @@ using Plunder.Download;
 using Plunder.Download.Proxy;
 using System.Diagnostics;
 using Plunder.Util;
+using System.Threading;
 
 namespace Plunder.Plugin.Download
 {
@@ -46,12 +47,14 @@ namespace Plunder.Plugin.Download
             //Id = HashUtil.Md5(this.GetType().FullName + request.Id);
         }
 
-        public async Task<Response> DownloadAsync()
+        public async Task<Response> DownloadAsync(CancellationToken token)
         {
             _httpClient = HttpClientBuilder.GetClient(Request);
             var watch = new Stopwatch();
+            _httpClient.Timeout = TimeSpan.FromSeconds(5);
+
             watch.Start();
-            var result = await _httpClient.GetAsync(Request.Url);
+            var result = await _httpClient.GetAsync(Request.Url, token);
             watch.Stop();
             _elapsed = watch.Elapsed.Milliseconds;
             var resposne = new Response();

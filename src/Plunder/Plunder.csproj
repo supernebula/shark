@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="Evol.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\Evol.Common.dll</HintPath>
+      <HintPath>..\..\Library\Evol.Common.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
@@ -85,6 +85,7 @@
     <Compile Include="EngineMonitor.cs" />
     <Compile Include="Schedule\SchedulerContext.cs" />
     <Compile Include="Schedule\Trigger.cs" />
+    <Compile Include="Schedule\TriggerTaskItem.cs" />
     <Compile Include="Storage\MemoryDuplicateFilter.cs" />
     <Compile Include="Storage\MemoryStorage.cs" />
     <Compile Include="Compoment\PageResult.cs" />

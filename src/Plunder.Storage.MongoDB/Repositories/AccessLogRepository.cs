@@ -4,7 +4,10 @@ using Plunder.Plugin.Repositories;
 
 namespace Plunder.Storage.MongoDB.Repositories
 {
-    public class AccessLogRepository : BaseMongoDbRepository<AccessLog, PlunderMongoDBContext> , IRepository<AccessLog>
+    public class AccessLogRepository : BaseMongoDbRepository<AccessLog, PlunderMongoDBContext>, IRepository<AccessLog>
     {
+        protected AccessLogRepository(IMongoDbContextProvider mongoDbContextProvider) : base(mongoDbContextProvider)
+        {
+        }
     }
 }

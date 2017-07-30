@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Download.Proxy;
+using System.Threading;
 
 namespace Plunder.Download
 {
@@ -24,7 +25,7 @@ namespace Plunder.Download
         /// </summary>
         int HasElapsed { get; }
 
-        Task<Response> DownloadAsync();
+        Task<Response> DownloadAsync(CancellationToken token);
     }
 
 }

@@ -34,10 +34,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Evol.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Evol.MongoDB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Library\Evol.MongoDB.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -49,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MongoDbContextProvider.cs" />
+    <Compile Include="MongoPipelineModule.cs" />
     <Compile Include="MongoStorageModule.cs" />
     <Compile Include="PlunderMongoDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +56,10 @@
     <Compile Include="Repositories\PageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Evol.MongoDB\Evol.MongoDB.csproj">
+      <Project>{c8b100e1-5a17-40b9-8621-b5da6c0f1fec}</Project>
+      <Name>Evol.MongoDB</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Plunder.Plugin\Plunder.Plugin.csproj">
       <Project>{74951c1e-dc33-45c6-a8eb-536ff0d0f596}</Project>
       <Name>Plunder.Plugin</Name>

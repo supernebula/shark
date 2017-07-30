@@ -9,16 +9,28 @@ using Plunder.Schedule;
 using Plunder.Schedule.Filter;
 using System;
 using System.Collections.Generic;
+using Autofac;
+using Plunder.Storage.MongoDB;
 
 namespace PlunderConsole
 {
 
     public class Program
     {
+
+
+
         static Engine _engine;
         static void Main(string[] args)
         {
+            InitAppConfig();
             LaunchEngine();
+        }
+
+        static void InitAppConfig()
+        {
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<PlunderMongoDBContext>();
         }
 
         static void LaunchEngine()
