@@ -71,6 +71,8 @@ namespace Plunder.Schedule
                     continue;
                 }
 
+                Thread.Sleep(500);
+;
                 _pulling = true;
                 var message = _context.Scheduler.Poll();
                 _pulling = false;
