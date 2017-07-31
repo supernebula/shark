@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Plunder.Schedule.Filter
     /// <typeparam name="T"></typeparam>
     public class MemoryBloomFilter<T> : IBloomFilter<T>
     {
+        private ILogger Logger = LogManager.GetLogger("filter");
+
         #region Fields
 
         /// <summary>
@@ -116,6 +119,8 @@ namespace Plunder.Schedule.Filter
                 if (!_bitArray[random.Next(_spaceSize)])
                     return false;
             }
+
+            Logger.Info(item.ToString());
             return true;
         }
 

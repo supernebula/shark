@@ -40,7 +40,7 @@ namespace Plunder.Schedule
             engineContext.DownloaderFactory,
             engineContext.ResultPipeline,
             engineContext.PageAnalyzerFactory);
-            _trigger = new Trigger(_currentContext, 10);
+            _trigger = new Trigger(_currentContext, 5);
         }
 
         public RequestMessage WaitUntillPoll()

@@ -23,7 +23,7 @@ namespace Plunder.Plugin.Pipeline
 
         public Task ProcessAsync(PageResult result)
         {
-            Console.WriteLine($"{result.Request.Url}");
+            //Console.WriteLine($"{result.Request.Url}");
             if(result.Data != null)
                 ShowResultField(result.Data);
             return Task.FromResult(1);
@@ -31,11 +31,13 @@ namespace Plunder.Plugin.Pipeline
 
         private void ShowResultField(IEnumerable<ResultField> data)
         {
+            var strBuilder = new StringBuilder();
+
             foreach (var field in data)
             {
-                Logger.Info($"{field.Name}:{field.Value}");
-                //Console.WriteLine($"{field.Name}:{field.Value}");
+                strBuilder.AppendLine($"{field.Name}:{field.Value.Replace(" ","").Replace("\r\n", "")}");
             }
+            Logger.Info($"\r\n\r\n{strBuilder.ToString()}");
         }
     }
 }

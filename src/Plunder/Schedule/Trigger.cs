@@ -15,6 +15,8 @@ namespace Plunder.Schedule
         private ILogger Logger = LogManager.GetLogger("trigger");
         private SchedulerContext _context;
         private readonly ConcurrentDictionary<string, TriggerTaskItem> _downloadTaskCollection = new ConcurrentDictionary<string, TriggerTaskItem>();
+        private int _downloadTaskCount = 0;
+        private object downCountLock = new object();
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
         private bool _pulling;
@@ -31,8 +33,9 @@ namespace Plunder.Schedule
 
         public int DownloadingTaskCount()
         {
+            return _downloadTaskCount;
             //return _downloaders.Count();
-            return _downloadTaskCollection.Count();
+            //return _downloadTaskCollection.Count();
         }
 
         public void Start()
@@ -87,7 +90,7 @@ namespace Plunder.Schedule
 
                 }, 
                     new DownloadTaskState() { Context = _context, Request = message.Request },
-                    new CancellationToken()
+                    token
                 );
 
                 downloadTask.ContinueWith(t => {
@@ -102,6 +105,10 @@ namespace Plunder.Schedule
                 };
 
                 _downloadTaskCollection.TryAdd(taskItem.Id, taskItem);
+                lock (downCountLock)
+                {
+                    _downloadTaskCount++;
+                }
             }
         }
 
@@ -133,6 +140,10 @@ namespace Plunder.Schedule
             //ConsumeTotal++;
             TriggerTaskItem taskItem = null;
             _downloadTaskCollection.TryRemove(downTaskId, out taskItem);
+            lock (downCountLock)
+            {
+                _downloadTaskCount--;
+            }
             _messagePullAutoResetEvent.Set();
         }
     }
