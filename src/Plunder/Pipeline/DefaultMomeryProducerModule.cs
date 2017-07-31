@@ -3,11 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Plunder.Compoment;
 using Plunder.Schedule;
+using NLog;
 
 namespace Plunder.Pipeline
 {
     public class DefaultMomeryProducerModule : IProducerModule, IResultPipelineModule
     {
+        private ILogger Logger = LogManager.GetLogger("producer");
         public IScheduler Scheduler { get; private set; }
 
         public DefaultMomeryProducerModule(IScheduler scheduler)
@@ -46,7 +48,8 @@ namespace Plunder.Pipeline
             {
                 foreach (var item in reqMsgs)
                 {
-                    Console.WriteLine("ProducerPushAsync:" + item.Request.Url);
+                    Logger.Debug(item.Request.Url);
+                    //Console.WriteLine("ProducerPushAsync:" + item.Request.Url);
                 }
             });
         }

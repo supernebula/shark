@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using Plunder.Schedule.Filter;
+using NLog;
 
 namespace Plunder.Schedule
 {
     public abstract class DuplicateRemovedScheduler : IMonitorableScheduler
     {
+        private ILogger Logger = LogManager.GetLogger("scheduler");
+
         private SchedulerContext _currentContext;
 
         private Trigger _trigger;

@@ -6,7 +6,7 @@ namespace Plunder.Storage.MongoDB.Repositories
 {
     public class AccessLogRepository : BaseMongoDbRepository<AccessLog, PlunderMongoDBContext>, IRepository<AccessLog>
     {
-        protected AccessLogRepository(IMongoDbContextProvider mongoDbContextProvider) : base(mongoDbContextProvider)
+        public AccessLogRepository(IMongoDbContextProvider mongoDbContextProvider) : base(mongoDbContextProvider)
         {
         }
     }

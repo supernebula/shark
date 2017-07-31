@@ -12,11 +12,14 @@ using Plunder.Plugin.Compoment;
 using Plunder.Process.Analyze;
 using HtmlAgilityPack;
 using Site = Plunder.Compoment.Site;
+using NLog;
 
 namespace Plunder.Plugin.Analyze
 {
     public class UsashopcnPageAnalyzer : IPageAnalyzer
     {
+        private ILogger Logger = LogManager.GetLogger("usashopcnAnalyzer");
+
         public const string SiteIdValue = SiteIndex.Usashopcn;
 
         public const string TargetPageFlagValue = "product.detail" ;

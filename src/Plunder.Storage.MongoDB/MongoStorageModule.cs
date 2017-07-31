@@ -23,7 +23,7 @@ namespace Plunder.Storage.MongoDB
 
         public async Task ProcessAsync(PageResult result)
         {
-            var accesslogRepos = new AccessLogRepository();
+            var accesslogRepos = new AccessLogRepository(null);
             await accesslogRepos.AddAsync(new AccessLog() {
                 Id = Guid.NewGuid().ToString().ToLower(),
                 Domian = result.Request.Domain,
@@ -34,7 +34,7 @@ namespace Plunder.Storage.MongoDB
                 CreateTime = DateTime.Now
             });
 
-            var pageRepos = new PageRepository();
+            var pageRepos = new PageRepository(null);
             await pageRepos.AddAsync(new Page() {
                 Id = Guid.NewGuid().ToString().ToLower(),
                 Domain = result.Request.Domain,

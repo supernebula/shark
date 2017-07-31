@@ -6,12 +6,15 @@ using Plunder.Schedule;
 using Plunder.Pipeline;
 using Plunder.Core;
 using Plunder.Download;
+using NLog;
 
 namespace Plunder
 {
 
     public class Engine
     {
+        private ILogger Logger = LogManager.GetLogger("error");
+
         private readonly EngineOptions _options;
 
         public EngineContext Context { get; private set; }
@@ -44,20 +47,31 @@ namespace Plunder
             Scheduler.RegisterContext(Context);
             ResultPipeline.RegisterModule(new DefaultMomeryProducerModule(Scheduler));
             SeekRequests = new List<RequestMessage>();
-            
+
+            List<string> errors;
+            if (!CheckOptions(_options, out errors))
+            {
+                
+                Console.WriteLine(string.Join("\r\n", errors));
+            }
+
         }
 
         public void Start(IEnumerable<RequestMessage> seedRequests)
         {
-            if (seedRequests == null || !seedRequests.Any())
-                throw new ArgumentNullException(nameof(seedRequests));
-            SeekRequests.AddRange(seedRequests);
-            List<string> errors;
-            if (!CheckOptions(_options, out errors))
+            try
             {
-                Console.WriteLine(string.Join("\r\n", errors));
+                if (seedRequests == null || !seedRequests.Any())
+                    throw new ArgumentNullException(nameof(seedRequests));
+                SeekRequests.AddRange(seedRequests);
+                Run();
             }
-            Run();
+            catch (Exception ex)
+            {
+                var exStr =$"\r\n[Exception]:{ex.Message}\r\n{ex.InnerException?.InnerException}";
+                Logger.Error(exStr);
+            }
+
         }
 
         public void Start(/*string topic, */string siteId, params string[] urls)

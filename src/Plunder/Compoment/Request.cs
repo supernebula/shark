@@ -11,7 +11,10 @@ namespace Plunder.Compoment
             Url = url;
             Id = HashUtil.Md5(url);
             HttpMethod = HttpMethod.Get;
+            DelaySecond = 3;
         }
+
+        public int DelaySecond { get; set; }
 
         public string Id { get; private set; }
 

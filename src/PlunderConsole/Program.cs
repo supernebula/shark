@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using Autofac;
 using Plunder.Storage.MongoDB;
+using System.Threading.Tasks;
 
 namespace PlunderConsole
 {
@@ -30,7 +31,7 @@ namespace PlunderConsole
         static void InitAppConfig()
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterType<PlunderMongoDBContext>();
+            containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
         }
 
         static void LaunchEngine()
@@ -51,6 +52,7 @@ namespace PlunderConsole
                 PageAnalyzerFactory = InitPageAnalyzerFactory(),
                 ResultPipeline = InitResultItemPipeline()
             };
+
 
             return options;
         }

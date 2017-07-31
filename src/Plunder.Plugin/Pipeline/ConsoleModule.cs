@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Plunder.Compoment;
+using NLog;
 
 namespace Plunder.Plugin.Pipeline
 {
     public class ConsoleResultModule : IResultPipelineModule
     {
+        private ILogger Logger = LogManager.GetLogger("result");
+
         public string Description => "简单控制台结果中间件";
 
         public string Name => "简单控制台结果中间件";
@@ -30,7 +33,8 @@ namespace Plunder.Plugin.Pipeline
         {
             foreach (var field in data)
             {
-                Console.WriteLine($"{field.Name}:{field.Value}");
+                Logger.Info($"{field.Name}:{field.Value}");
+                //Console.WriteLine($"{field.Name}:{field.Value}");
             }
         }
     }

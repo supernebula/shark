@@ -1,4 +1,5 @@
-﻿using Plunder.Compoment;
+﻿using NLog;
+using Plunder.Compoment;
 using Plunder.Download;
 using System;
 using System.Collections.Concurrent;
@@ -11,10 +12,8 @@ namespace Plunder.Schedule
 {
     public class Trigger
     {
+        private ILogger Logger = LogManager.GetLogger("trigger");
         private SchedulerContext _context;
-        //private readonly List<IDownloaderOld> _downloaders;
-        
-        //private readonly ConcurrentDictionary<string, IDownloader> _downloaderCollection;
         private readonly ConcurrentDictionary<string, TriggerTaskItem> _downloadTaskCollection = new ConcurrentDictionary<string, TriggerTaskItem>();
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
@@ -110,15 +109,17 @@ namespace Plunder.Schedule
         {
             if (request == null)
                 return;
-
-            Thread.Sleep(2000);
+            var delay = request.DelaySecond * 1000;
+            if(delay > 0)
+                Thread.Sleep(delay);
             var downloader = _context.DownloaderFactory.Create(request, request.PageType);
             //_downloaderCollection.TryAdd(request.Id, downloader);
             await downloader.DownloadAsync(token)
                 .ContinueWith(t => {
 
 #if DEBUG
-                        Console.WriteLine("Downloaded:" + t.Result.Request.Url);
+                    Logger.Debug("Downloaded:" + t.Result.Request.Url);
+                    //Console.WriteLine("Downloaded:" + t.Result.Request.Url);
 #endif
 
                         var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Channel);
