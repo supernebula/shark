@@ -61,8 +61,8 @@ namespace Plunder.Schedule
                 Logger.Debug($"downingCount:{_downloadingTaskCount}");
                 if (_pulling || _downloadingTaskCount >= _maxDownloadThreadNumber)
                 {
-                    if(_messagePullAutoResetEvent.Reset())
-                        continue;
+                    _messagePullAutoResetEvent.Reset();
+                    continue;
                 }
 
                 Thread.Sleep(300);
@@ -116,7 +116,12 @@ namespace Plunder.Schedule
             var downloader = _context.DownloaderFactory.Create(request, request.PageType);
             await downloader.DownloadAsync(token)
                 .ContinueWith(t => {
-
+                    if (t.IsCanceled)
+                    {
+                        Logger.Debug("Download Task Canceled:" + t.Exception?.Message);
+                        return;
+                    }
+                        
 #if DEBUG
                     Logger.Debug("Downloaded:" + t.Result.Request.Url);
 #endif
