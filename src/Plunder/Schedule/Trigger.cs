@@ -15,28 +15,22 @@ namespace Plunder.Schedule
         private ILogger Logger = LogManager.GetLogger("trigger");
         private SchedulerContext _context;
         private readonly ConcurrentDictionary<string, TriggerTaskItem> _downloadTaskCollection = new ConcurrentDictionary<string, TriggerTaskItem>();
-        private int _downloadTaskCount = 0;
-        private object downCountLock = new object();
+        private int _downloadingTaskCount = 0;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
-        private bool _pulling;
+        private bool _pulling = false;
 
         public Trigger(SchedulerContext schedulerContext, int maxDownLoadThreadNumber)
         {
-            if (schedulerContext == null)
-                throw new ArgumentNullException(nameof(schedulerContext));
-            _context = schedulerContext;
+            _context = schedulerContext ?? throw new ArgumentNullException(nameof(schedulerContext));
             _maxDownloadThreadNumber = maxDownLoadThreadNumber;
-            //_downloaderCollection = new ConcurrentDictionary<string, IDownloader>();
             _messagePullAutoResetEvent = new AutoResetEvent(false);
         }
 
-        public int DownloadingTaskCount()
-        {
-            return _downloadTaskCount;
-            //return _downloaders.Count();
-            //return _downloadTaskCollection.Count();
-        }
+        //public int DownloadingTaskCount()
+        //{
+        //    return _downloadingTaskCount;
+        //}
 
         public void Start()
         {
@@ -63,19 +57,21 @@ namespace Plunder.Schedule
                         _first = false;
                 }
 
-                var downloadingNumber = DownloadingTaskCount();
-
-                if (_pulling || downloadingNumber >= _maxDownloadThreadNumber)
+                //var downloadingNumber = DownloadingTaskCount();
+                Logger.Debug($"downingCount:{_downloadingTaskCount}");
+                if (_pulling || _downloadingTaskCount >= _maxDownloadThreadNumber)
                 {
                     if(_messagePullAutoResetEvent.Reset())
                         continue;
                 }
 
-                Thread.Sleep(500);
+                
+
+                Thread.Sleep(300);
 ;
-                _pulling = true;
+                //_pulling = true;
                 var message = _context.Scheduler.Poll();
-                _pulling = false;
+                //_pulling = false;
 
                 if (message == null)
                     message = _context.Scheduler.WaitUntillPoll();
@@ -107,10 +103,8 @@ namespace Plunder.Schedule
                 };
 
                 _downloadTaskCollection.TryAdd(taskItem.Id, taskItem);
-                lock (downCountLock)
-                {
-                    _downloadTaskCount++;
-                }
+                //_downloadTaskCount++;
+                Interlocked.Add(ref _downloadingTaskCount, 1);
             }
         }
 
@@ -122,13 +116,11 @@ namespace Plunder.Schedule
             if(delay > 0)
                 Thread.Sleep(delay);
             var downloader = _context.DownloaderFactory.Create(request, request.PageType);
-            //_downloaderCollection.TryAdd(request.Id, downloader);
             await downloader.DownloadAsync(token)
                 .ContinueWith(t => {
 
 #if DEBUG
                     Logger.Debug("Downloaded:" + t.Result.Request.Url);
-                    //Console.WriteLine("Downloaded:" + t.Result.Request.Url);
 #endif
 
                         var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Channel);
@@ -142,10 +134,9 @@ namespace Plunder.Schedule
             //ConsumeTotal++;
             TriggerTaskItem taskItem = null;
             _downloadTaskCollection.TryRemove(downTaskId, out taskItem);
-            lock (downCountLock)
-            {
-                _downloadTaskCount--;
-            }
+
+            //_downloadTaskCount--
+            Interlocked.Add(ref _downloadingTaskCount, -1);
             _messagePullAutoResetEvent.Set();
         }
     }

@@ -103,8 +103,8 @@ namespace Plunder.Plugin.Analyze
                 if(!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("/Product/List/", StringComparison.CurrentCultureIgnoreCase) < 0)
-                    continue;
+                //if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("/Product/List/", StringComparison.CurrentCultureIgnoreCase) < 0)
+                //    continue;
 
                 var urlTye = UrlType.Navigation;
                 if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)

@@ -40,40 +40,46 @@ namespace Plunder.Schedule
             engineContext.DownloaderFactory,
             engineContext.ResultPipeline,
             engineContext.PageAnalyzerFactory);
-            _trigger = new Trigger(_currentContext, 5);
+            _trigger = new Trigger(_currentContext, 10);
         }
 
         public RequestMessage WaitUntillPoll()
         {
             //AccumulatedMessageTotal++;
-            Interlocked.Increment(ref _accumulatedMessageTotal);
-            
+            Interlocked.Exchange(ref _accumulatedMessageTotal, _accumulatedMessageTotal + 1);
             return Queue.Take();
         }
 
+        private AutoResetEvent pollEventLock = new AutoResetEvent(true);
         public RequestMessage Poll()
         {
             //AccumulatedMessageTotal++;
-            Interlocked.Increment(ref _accumulatedMessageTotal);
+            Interlocked.Add(ref _accumulatedMessageTotal, 1);
             RequestMessage message;
             Queue.TryTake(out message, 0);
             return message;
         }
 
+        private AutoResetEvent pollMultiEventLock = new AutoResetEvent(true);
+
         public List<RequestMessage> Poll(int size)
         {
+            pollMultiEventLock.WaitOne();
+            pollMultiEventLock.Reset();
             var result = new List<RequestMessage>();
             while (size > 0)
             {
                 RequestMessage message;
-                if (Queue.TryTake(out message, 0))
+                if (Queue.TryTake(out message, 1))
                 {
                     result.Add(message);
                     //AccumulatedMessageTotal++;
-                    Interlocked.Increment(ref _accumulatedMessageTotal);
+                    Interlocked.Add(ref _accumulatedMessageTotal, 1);
                 }
                 size--;
             }
+
+            pollEventLock.Set();
             return result;
         }
 
