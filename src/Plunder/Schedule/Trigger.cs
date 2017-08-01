@@ -65,8 +65,6 @@ namespace Plunder.Schedule
                         continue;
                 }
 
-                
-
                 Thread.Sleep(300);
 ;
                 //_pulling = true;
