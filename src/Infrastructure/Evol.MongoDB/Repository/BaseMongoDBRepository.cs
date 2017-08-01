@@ -10,7 +10,7 @@ using Evol.Common;
 
 namespace Evol.MongoDB.Repository
 {
-    public class BaseMongoDbRepository<T, TMongoDbContext> where TMongoDbContext : NamedMongoDbContext, new() where T : IEntity<string> 
+    public class BaseMongoDbRepository<T, TMongoDbContext> where TMongoDbContext : NamedMongoDbContext, new() where T : IEntity<Guid> 
     {
         private NamedMongoDbContext MongoDbContext => MongoDbContextProvider.Get<TMongoDbContext>();
 
@@ -45,7 +45,7 @@ namespace Evol.MongoDB.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<T> FindAsync(string id)
+        public virtual async Task<T> FindAsync(Guid id)
         {
             if(id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -275,7 +275,7 @@ namespace Evol.MongoDB.Repository
         /// <param name="id"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public virtual async Task<bool> UpdateAsync(string id, UpdateDefinition<T> data)
+        public virtual async Task<bool> UpdateAsync(Guid id, UpdateDefinition<T> data)
         {
             //if (string.IsNullOrWhiteSpace(id))
             //    throw new ArgumentNullException(nameof(id));
@@ -292,7 +292,7 @@ namespace Evol.MongoDB.Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<bool> DeleteAsync(string id)
+        public virtual async Task<bool> DeleteAsync(Guid id)
         {
             //if (string.IsNullOrWhiteSpace(id))
             //    throw new ArgumentNullException(nameof(id));
@@ -305,7 +305,7 @@ namespace Evol.MongoDB.Repository
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public virtual async Task<bool> DeleteBatchAsync(IEnumerable<string> ids)
+        public virtual async Task<bool> DeleteBatchAsync(IEnumerable<Guid> ids)
         {
             if (ids == null)
                 throw new ArgumentNullException(nameof(ids));

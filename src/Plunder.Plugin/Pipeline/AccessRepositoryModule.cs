@@ -27,7 +27,7 @@ namespace Plunder.Plugin.Pipeline
         async Task IResultPipelineModule.ProcessAsync(PageResult result)
         {
             var accessLog = new AccessRecord() {
-                Id = Guid.NewGuid().ToString().ToLower(),
+                Id = Guid.NewGuid(),
                 Domian = result.Request.Domain,
                 Url = result.Request.Url,
                 StatusCode = result.Response.HttpStatusCode,

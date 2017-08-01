@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Evol.MongoDB.Repository
 {
-    public class BaseQueryEntry<T, TMongoDbContext> where TMongoDbContext : NamedMongoDbContext, new() where T : IEntity<string>
+    public class BaseQueryEntry<T, TMongoDbContext> where TMongoDbContext : NamedMongoDbContext, new() where T : IEntity<Guid>
     {
         public BaseMongoDbRepository<T, TMongoDbContext> MongoDbRepository { get; set; }
 
-        public virtual async Task<T> FindAsync(string id)
+        public virtual async Task<T> FindAsync(Guid id)
         {
             return await MongoDbRepository.FindAsync(id);
         }

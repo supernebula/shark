@@ -4,9 +4,9 @@ using System.Net;
 
 namespace Plunder.Compoment.Models
 {
-    public class AccessRecord : IEntity<string>
+    public class AccessRecord : IEntity<Guid>
     {
-        public virtual string Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Domian { get; set; }
 

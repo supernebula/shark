@@ -8,7 +8,6 @@ using Plunder.Pipeline;
 using Plunder.Storage.MongoDB.Repositories;
 using Plunder.Compoment.Models;
 using Evol.Utilities.Hash;
-using Plunder.Storage.MongoDB.Entities;
 
 namespace Plunder.Storage.MongoDB
 {
@@ -28,9 +27,9 @@ namespace Plunder.Storage.MongoDB
             try
             {
                 var accesslogRepos = AppConfig.Current.IocManager.GetService<AccessRecordRepository>();
-                await accesslogRepos.AddAsync(new AccessRecordEntity()
+                await accesslogRepos.AddAsync(new AccessRecord()
                 {
-                    Id = Guid.NewGuid().ToString().ToLower(),
+                    Id = Guid.NewGuid(),
                     Domian = result.Request.Domain,
                     Url = result.Request.Url,
                     UrlSign = HashUtility.Md5(result.Request.Url),

@@ -11,7 +11,7 @@ namespace Plunder.Plugin.Repositories
 
     public interface IRepository<T> : IRepository
     {
-        Task<T> FindAsync(string id);
+        Task<T> FindAsync(Guid id);
 
         Task<T> FindOneAsync(Expression<Func<T, bool>> predicate);
 
@@ -21,9 +21,9 @@ namespace Plunder.Plugin.Repositories
 
         Task<bool> UpdateAsync(T item);
 
-        Task<bool> DeleteAsync(string id);
+        Task<bool> DeleteAsync(Guid id);
 
-        Task<bool> DeleteBatchAsync(IEnumerable<string> ids);
+        Task<bool> DeleteBatchAsync(IEnumerable<Guid> ids);
 
         Task<bool> DeleteByAsync(Expression<Func<T, bool>> predicate);
     }
