@@ -8,7 +8,7 @@ using Plunder.Compoment;
 
 namespace Plunder.Storage.MongoDB
 {
-    class MongoPipelineModule : IResultPipelineModule
+    class MongoPipelineModule2 : IResultPipelineModule
     {
         public string Name => "MongoDB存储中间件";
 

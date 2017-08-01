@@ -40,7 +40,7 @@ namespace Plunder.Schedule
             engineContext.DownloaderFactory,
             engineContext.ResultPipeline,
             engineContext.PageAnalyzerFactory);
-            _trigger = new Trigger(_currentContext, 50);
+            _trigger = new Trigger(_currentContext, 20);
         }
 
         public RequestMessage WaitUntillPoll()
@@ -60,27 +60,30 @@ namespace Plunder.Schedule
             return message;
         }
 
-        private AutoResetEvent pollMultiEventLock = new AutoResetEvent(true);
+        private object pollSizeLock = new object();
 
         public List<RequestMessage> Poll(int size)
         {
-            pollMultiEventLock.WaitOne();
-            pollMultiEventLock.Reset();
-            var result = new List<RequestMessage>();
-            while (size > 0)
+
+            lock (pollSizeLock)
             {
-                RequestMessage message;
-                if (Queue.TryTake(out message, 1))
+                var result = new List<RequestMessage>();
+                while (size > 0)
                 {
-                    result.Add(message);
-                    //AccumulatedMessageTotal++;
-                    Interlocked.Add(ref _accumulatedMessageTotal, 1);
+                    RequestMessage message;
+                    if (Queue.TryTake(out message, 1))
+                    {
+                        result.Add(message);
+                        //AccumulatedMessageTotal++;
+                        Interlocked.Add(ref _accumulatedMessageTotal, 1);
+                    }
+                    else
+                        return result;
+                    size--;
                 }
-                size--;
+                return result;
             }
 
-            pollEventLock.Set();
-            return result;
         }
 
         public bool Push(RequestMessage message)

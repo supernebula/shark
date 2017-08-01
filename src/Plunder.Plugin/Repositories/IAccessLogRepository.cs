@@ -2,7 +2,7 @@
 
 namespace Plunder.Plugin.Repositories
 {
-    public interface IAccessLogRepository : IRepository<AccessLog>
+    public interface IAccessLogRepository : IRepository<AccessRecord>
     {
     }
 }

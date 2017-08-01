@@ -5,13 +5,18 @@ namespace Plunder.Compoment
     public enum UrlType
     {
         /// <summary>
-        /// 导航页url，可以直接或间接跳转到数据页
+        /// 入口页
         /// </summary>
-        Navigation,
+        Entry = 0,
 
         /// <summary>
-        /// 数据页url，例如：商品详情页，可抽取商品数据
+        /// 导航页url，可以直接或间接跳转到目标页
         /// </summary>
-        Extracting
+        Navigation = 1,
+
+        /// <summary>
+        /// 目标页，抽取数据
+        /// </summary>
+        Target = 2
     }
 }

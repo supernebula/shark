@@ -15,7 +15,7 @@ namespace Plunder.Schedule
         private ILogger Logger = LogManager.GetLogger("trigger");
         private SchedulerContext _context;
         private readonly ConcurrentDictionary<string, TriggerTaskItem> _downloadTaskCollection = new ConcurrentDictionary<string, TriggerTaskItem>();
-        private int _downloadingTaskCount = 0;
+        //private int _downloadingTaskCount = 0;
         private readonly int _maxDownloadThreadNumber;
         private AutoResetEvent _messagePullAutoResetEvent;
         private bool _pulling = false;
@@ -27,10 +27,10 @@ namespace Plunder.Schedule
             _messagePullAutoResetEvent = new AutoResetEvent(false);
         }
 
-        //public int DownloadingTaskCount()
-        //{
-        //    return _downloadingTaskCount;
-        //}
+        public int DownloadingTaskCount()
+        {
+            return _downloadTaskCollection.Count();
+        }
 
         public void Start()
         {
@@ -57,52 +57,58 @@ namespace Plunder.Schedule
                         _first = false;
                 }
 
-                //var downloadingNumber = DownloadingTaskCount();
-                Logger.Debug($"downingCount:{_downloadingTaskCount}");
-                if (_pulling || _downloadingTaskCount >= _maxDownloadThreadNumber)
+                var downloadingTaskCount = DownloadingTaskCount();
+                Logger.Debug($"Count:downing={downloadingTaskCount}, max={_maxDownloadThreadNumber}");
+                if (_pulling || downloadingTaskCount >= _maxDownloadThreadNumber)
                 {
-                    _messagePullAutoResetEvent.Reset();
+                    var threadDown = _messagePullAutoResetEvent.Reset();
+                    _messagePullAutoResetEvent.WaitOne();
+                    //Logger.Debug($"threadDown:{threadDown}=eventLock.Reset()");
                     continue;
                 }
 
                 Thread.Sleep(300);
-;
-                //_pulling = true;
-                var message = _context.Scheduler.Poll();
-                //_pulling = false;
 
-                if (message == null)
-                    message = _context.Scheduler.WaitUntillPoll();
+                var num = _maxDownloadThreadNumber - DownloadingTaskCount();
+                var messages = _context.Scheduler.Poll(num);
+
+                if (messages == null || !messages.Any())
+                {
+                    var message = _context.Scheduler.WaitUntillPoll();
+                    messages.Add(message);
+                }
                 _messagePullAutoResetEvent.Reset();
+                //Logger.Debug(message.Request.Url);
 
-                var cancelTokenSource = new CancellationTokenSource();
-                var token = cancelTokenSource.Token;
-                var downloadTask = Task.Factory.StartNew(async (state) => {
+                foreach (var item in messages)
+                {
+                    var cancelTokenSource = new CancellationTokenSource();
+                    var token = cancelTokenSource.Token;
+                    var downloadTask = Task.Factory.StartNew(async (state) => {
                         var taskState = state as DownloadTaskState;
                         if (taskState == null)
                             cancelTokenSource.Cancel();
                         token.ThrowIfCancellationRequested();
-                    await WorkingAsync(taskState.Request, token);
+                        await WorkingAsync(taskState.Request, token);
 
-                }, 
-                    new DownloadTaskState() { Context = _context, Request = message.Request },
-                    token
-                );
+                    },
+                        new DownloadTaskState() { Context = _context, Request = item.Request },
+                        token
+                    );
 
-                downloadTask.ContinueWith(t => {
-                    Downloaded(message.Request.Id);
-                });
+                    downloadTask.ContinueWith(t => {
+                        Downloaded(item.Request.Id);
+                    });
 
-                var taskItem = new TriggerTaskItem()
-                {
-                    Id = message.Request.Id,
-                    CancelTokenSource = cancelTokenSource,
-                    DownloadTask = downloadTask
-                };
+                    var taskItem = new TriggerTaskItem()
+                    {
+                        Id = item.Request.Id,
+                        CancelTokenSource = cancelTokenSource,
+                        DownloadTask = downloadTask
+                    };
 
-                _downloadTaskCollection.TryAdd(taskItem.Id, taskItem);
-                //_downloadTaskCount++;
-                Interlocked.Add(ref _downloadingTaskCount, 1);
+                    _downloadTaskCollection.TryAdd(taskItem.Id, taskItem);
+                }
             }
         }
 
@@ -114,6 +120,7 @@ namespace Plunder.Schedule
             if(delay > 0)
                 Thread.Sleep(delay);
             var downloader = _context.DownloaderFactory.Create(request, request.PageType);
+            request.Downloader = downloader.GetType().Name;
             await downloader.DownloadAsync(token)
                 .ContinueWith(t => {
                     if (t.IsCanceled)
@@ -139,8 +146,9 @@ namespace Plunder.Schedule
             _downloadTaskCollection.TryRemove(downTaskId, out taskItem);
 
             //_downloadTaskCount--
-            Interlocked.Add(ref _downloadingTaskCount, -1);
+            //Interlocked.Add(ref _downloadingTaskCount, -1);
             _messagePullAutoResetEvent.Set();
+            //Logger.Debug($"eventLock.Set()");
         }
     }
 }

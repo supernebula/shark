@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using Autofac;
 using Plunder.Storage.MongoDB;
 using System.Threading.Tasks;
+using Evol.MongoDB.Repository;
+using Plunder.Storage.MongoDB.Repositories;
 
 namespace PlunderConsole
 {
@@ -31,7 +33,13 @@ namespace PlunderConsole
         static void InitAppConfig()
         {
             var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterType<AccessRecordRepository>().As<AccessRecordRepository>();
             containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
+            containerBuilder.RegisterType<MongoDbContextProvider>().As<IMongoDbContextProvider>();
+            
+            var container = containerBuilder.Build();
+            var iocManager = new DefaultIocManager(container);
+            AppConfig.Init(iocManager);
         }
 
         static void LaunchEngine()
@@ -84,6 +92,7 @@ namespace PlunderConsole
         {
             var resultPipeline = new ResultItemPipeline();
             resultPipeline.RegisterModule(new ConsoleResultModule());
+            resultPipeline.RegisterModule(new MongoDBPipelineModule());
             return resultPipeline;
         }
     }

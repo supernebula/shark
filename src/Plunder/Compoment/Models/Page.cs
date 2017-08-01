@@ -18,6 +18,7 @@ namespace Plunder.Compoment.Models
 
         public string UriSign { get; set; }
 
+
         public string Content { get; set; }
 
         public bool IsFetched { get; set; }
@@ -29,6 +30,6 @@ namespace Plunder.Compoment.Models
 
         public DateTime CreateTime { get; set; }
 
-        
+
     }
 }

@@ -51,7 +51,7 @@ namespace Plunder.Plugin.Analyze
             doc.LoadHtml(response.Content);
             var newRequests = FindNewRequest(doc, request, @"[\s\S]*", "/Product/Details/");//todo: regexPattern
             List<ResultField> resultFields = null;
-            if (request.UrlType == UrlType.Extracting)
+            if (request.UrlType == UrlType.Target)
             {
                 resultFields = XpathSelect(doc, _fieldXPaths);
                 resultFields.Add(new ResultField() { Name = "Uri", Value = request.Url });
@@ -108,7 +108,7 @@ namespace Plunder.Plugin.Analyze
 
                 var urlTye = UrlType.Navigation;
                 if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
-                    urlTye = UrlType.Extracting;
+                    urlTye = UrlType.Target;
                 newRequests.Add(new Request(href) {UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType , Channel = TargetPageFlagValue });
             }
             return newRequests;

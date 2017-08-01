@@ -35,5 +35,7 @@ namespace Plunder.Compoment
         public HttpMethod HttpMethod { get; set; }
 
         public int RemainRetryCount { get; set; }
+
+        public string Downloader { get; set; }
     }
 }

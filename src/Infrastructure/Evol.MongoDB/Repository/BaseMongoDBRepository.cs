@@ -263,8 +263,6 @@ namespace Evol.MongoDB.Repository
         {
             if(item == null)
                 throw new ArgumentNullException(nameof(item));
-            if(string.IsNullOrWhiteSpace(item.Id))
-                throw new ArgumentNullException(nameof(item.Id));
 
             //IsUpsert = true, 没有记录则插入
             var updated = await Collection.ReplaceOneAsync(e => e.Id == item.Id, item, new UpdateOptions() {IsUpsert = true});
@@ -279,8 +277,8 @@ namespace Evol.MongoDB.Repository
         /// <returns></returns>
         public virtual async Task<bool> UpdateAsync(string id, UpdateDefinition<T> data)
         {
-            if (string.IsNullOrWhiteSpace(id))
-                throw new ArgumentNullException(nameof(id));
+            //if (string.IsNullOrWhiteSpace(id))
+            //    throw new ArgumentNullException(nameof(id));
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
@@ -296,8 +294,8 @@ namespace Evol.MongoDB.Repository
         /// <returns></returns>
         public virtual async Task<bool> DeleteAsync(string id)
         {
-            if (string.IsNullOrWhiteSpace(id))
-                throw new ArgumentNullException(nameof(id));
+            //if (string.IsNullOrWhiteSpace(id))
+            //    throw new ArgumentNullException(nameof(id));
             var deleted = await Collection.DeleteOneAsync(e => e.Id == id);
             return deleted != null && deleted.DeletedCount > 0;
         }

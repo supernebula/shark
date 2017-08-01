@@ -14,7 +14,7 @@ namespace Plunder.Plugin.QueryEntries
     public interface IQueryEntry<T, TKey> : IQueryEntry
     {
 
-        Task<T> FindAsync(string id);
+        Task<T> FindAsync(Guid id);
 
         Task<T> FindOneAsync(Expression<Func<T, bool>> predicate);
 

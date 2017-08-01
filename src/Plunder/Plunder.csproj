@@ -76,7 +76,7 @@
     <Compile Include="Download\~IDownloaderOld.cs" />
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />
     <Compile Include="Schedule\Filter\IDuplicateFilter.cs" />
-    <Compile Include="Compoment\Models\AccessLog.cs" />
+    <Compile Include="Compoment\Models\AccessRecord.cs" />
     <Compile Include="Compoment\Models\Page.cs" />
     <Compile Include="Pipeline\IProducerModule.cs" />
     <Compile Include="Schedule\ConsumerBroker.cs" />
