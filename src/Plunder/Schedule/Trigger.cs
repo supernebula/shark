@@ -59,16 +59,16 @@ namespace Plunder.Schedule
                     break;
                 if (!_first)
                 {
-                    _messagePullAutoResetEvent.WaitOne();
-                    _first = false;
+                    if(_messagePullAutoResetEvent.WaitOne())
+                        _first = false;
                 }
 
                 var downloadingNumber = DownloadingTaskCount();
 
                 if (_pulling || downloadingNumber >= _maxDownloadThreadNumber)
                 {
-                    _messagePullAutoResetEvent.Reset();
-                    continue;
+                    if(_messagePullAutoResetEvent.Reset())
+                        continue;
                 }
 
                 Thread.Sleep(500);
