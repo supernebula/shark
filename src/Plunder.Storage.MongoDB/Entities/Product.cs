@@ -18,7 +18,7 @@ namespace Plunder.Storage.MongoDB.Entities
 
         public List<string> PicUrl { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public string Description { get; set; }
 

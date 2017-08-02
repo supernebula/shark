@@ -31,8 +31,8 @@ namespace Plunder.Storage.MongoDB
                 if (!string.IsNullOrWhiteSpace(picUrl))
                     picUrls = new List<string> { picUrl };
 
-                decimal price = 0;
-                decimal.TryParse(result.Data.FirstOrDefault(e => e.Name == "Price")?.Value, out price);
+                double price = 0;
+                double.TryParse(result.Data.FirstOrDefault(e => e.Name == "Price")?.Value, out price);
 
                 var productRepos = AppConfig.Current.IocManager.GetService<ProductRepository>();
                 await productRepos.AddAsync(new Product()
