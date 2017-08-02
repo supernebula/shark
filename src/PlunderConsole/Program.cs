@@ -14,6 +14,7 @@ using Plunder.Storage.MongoDB;
 using System.Threading.Tasks;
 using Evol.MongoDB.Repository;
 using Plunder.Storage.MongoDB.Repositories;
+using Plunder.Plugin.Filter;
 
 namespace PlunderConsole
 {
@@ -68,8 +69,8 @@ namespace PlunderConsole
 
         static IMonitorableScheduler InitScheduler()
         {
-            var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
-            //var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379, true);
+            //var bloomFilter = new MemoryBloomFilter<string>(1000 * 10, 1000 * 10 * 20);
+            var bloomFilter = new RedisBloomFilter<string>(1000 * 10, 1000 * 10 * 20, "127.0.0.1", 6379, true);
             var scheduler = new SequenceScheduler(bloomFilter);
             return scheduler;
         }
