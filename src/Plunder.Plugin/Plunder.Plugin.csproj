@@ -81,13 +81,10 @@
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\MultiAreaConsoleModule.cs" />
     <Compile Include="Pipeline\FileModule.cs" />
-    <Compile Include="Pipeline\AccessRepositoryModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryEntries\IAccessLogQueryEntry.cs" />
-    <Compile Include="QueryEntries\IPageQueryEntry.cs" />
     <Compile Include="QueryEntries\IQueryEntry.cs" />
     <Compile Include="Repositories\IAccessLogRepository.cs" />
-    <Compile Include="Repositories\IPageRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Resource\UsashopcnSlector.Designer.cs">
       <AutoGen>True</AutoGen>

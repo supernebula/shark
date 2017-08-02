@@ -8,6 +8,14 @@ namespace Plunder.Compoment.Models
     {
         public Guid Id { get; set; }
 
+        public string SiteId { get; set; }
+
+        public string Channel { get; set; }
+
+        public string Topic { get; set; }
+
+        public string HttpMethod { get; set; }
+
         public string Domian { get; set; }
 
         public string Url { get; set; }

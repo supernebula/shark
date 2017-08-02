@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
-    <Compile Include="Compoment\~HtmlType.cs" />
     <Compile Include="Core\IDownloaderFactory.cs" />
     <Compile Include="Core\IPageAnalyzerFactory.cs" />
     <Compile Include="Core\IResultItemPipeline.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />
     <Compile Include="Schedule\Filter\IDuplicateFilter.cs" />
     <Compile Include="Compoment\Models\AccessRecord.cs" />
-    <Compile Include="Compoment\Models\Page.cs" />
     <Compile Include="Pipeline\IProducerModule.cs" />
     <Compile Include="Schedule\ConsumerBroker.cs" />
     <Compile Include="Core\IConsumer.cs" />
