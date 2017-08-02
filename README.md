@@ -2,7 +2,7 @@
 
 可配置、插件化的爬虫引擎，二次开发框架
 
-## 组成：
+## Modules：
 
 Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Storage
 
