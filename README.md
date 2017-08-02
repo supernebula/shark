@@ -18,3 +18,7 @@ Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer�
 | Visualize        | 2017.9             |
 | Fully functional | Q4.2017            |
 | Cloud            | Planning           |
+
+##### Author
+
+supernebula@live.cn
