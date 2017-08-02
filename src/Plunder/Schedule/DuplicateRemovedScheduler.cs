@@ -40,7 +40,7 @@ namespace Plunder.Schedule
             engineContext.DownloaderFactory,
             engineContext.ResultPipeline,
             engineContext.PageAnalyzerFactory);
-            _trigger = new Trigger(_currentContext, 10);
+            _trigger = new Trigger(_currentContext, 1000);
         }
 
         public RequestMessage WaitUntillPoll()
@@ -99,6 +99,7 @@ namespace Plunder.Schedule
         {
             if (_duplicateFilter.Contains(message.Request.Url))
             {
+                //Logger.Info($"Duplicated!");
                 return true;
             }
                 

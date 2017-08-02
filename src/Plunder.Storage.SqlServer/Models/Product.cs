@@ -14,7 +14,7 @@ namespace Plunder.Storage.SqlServer.Models
 
         public double Price { get; set; }
 
-        public string PicUri { get; set; }
+        public string PicUrl { get; set; }
 
         public string Uri { get; set; }
 

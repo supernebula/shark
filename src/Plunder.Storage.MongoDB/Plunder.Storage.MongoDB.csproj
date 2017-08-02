@@ -61,16 +61,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\AccessRecordEntity.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="MongoDbContextProvider.cs" />
-    <Compile Include="~MongoPipelineModule2.cs" />
+    <Compile Include="ProductPipelineModule.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="MongoDBPipelineModule.cs" />
     <Compile Include="PlunderMongoDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryEntries\AccessRecordQueryEntry.cs" />
     <Compile Include="QueryEntries\~PageQueryEntry.cs" />
     <Compile Include="Repositories\AccessRecordRepository.cs" />
-    <Compile Include="Repositories\~PageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Evol.MongoDB\Evol.MongoDB.csproj">

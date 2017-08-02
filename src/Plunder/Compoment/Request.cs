@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using Plunder.Util;
 using Plunder.Download;
+using System;
 
 namespace Plunder.Compoment
 {
@@ -10,6 +11,7 @@ namespace Plunder.Compoment
         {
             Url = url;
             Id = HashUtil.Md5(url);
+            Domain = (new Uri(url)).Authority;
             HttpMethod = HttpMethod.Get;
             DelaySecond = 3;
         }
@@ -22,7 +24,7 @@ namespace Plunder.Compoment
 
         public string Channel { get; set; }
 
-        public string Domain { get; set; }
+        public string Domain { get; private set; }
 
         public string Url { get; private set; }
 

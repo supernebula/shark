@@ -34,6 +34,7 @@ namespace PlunderConsole
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<AccessRecordRepository>().As<AccessRecordRepository>();
+            containerBuilder.RegisterType<ProductRepository>().As<ProductRepository>();
             containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
             containerBuilder.RegisterType<MongoDbContextProvider>().As<IMongoDbContextProvider>();
             
@@ -93,6 +94,7 @@ namespace PlunderConsole
             var resultPipeline = new ResultItemPipeline();
             resultPipeline.RegisterModule(new ConsoleResultModule());
             resultPipeline.RegisterModule(new MongoDBPipelineModule());
+            resultPipeline.RegisterModule(new ProductPipelineModule());
             return resultPipeline;
         }
     }

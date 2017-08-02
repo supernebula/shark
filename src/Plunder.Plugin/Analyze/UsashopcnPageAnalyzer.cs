@@ -36,7 +36,7 @@ namespace Plunder.Plugin.Analyze
             Site = SiteConfiguration.Instance.GetSite(SiteId);
             _fieldXPaths = new Dictionary<string, string> {
                 { "Title","//*[@id=\"p_mid\"]/div[2]/h2"},
-                { "PicUri","//img[@id=\"productImage\"]/@src"},
+                { "PicUrl","//img[@id=\"productImage\"]/@src"},
                 { "Price","//*[@id=\"p_mid\"]/div[2]/div[1]/div[2]/span" },
                 { "Description","//*[@id=\"intro_0\"]"}
             }.Select(e => new FieldSelector() { FieldName = e.Key, Selector = e.Value }).ToList();
@@ -103,8 +103,8 @@ namespace Plunder.Plugin.Analyze
                 if(!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                //if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("/Product/List/", StringComparison.CurrentCultureIgnoreCase) < 0)
-                //    continue;
+                if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("/Product/List/", StringComparison.CurrentCultureIgnoreCase) < 0)
+                    continue;
 
                 var urlTye = UrlType.Navigation;
                 if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)

@@ -17,7 +17,7 @@ namespace Plunder.Storage.SqlServer.Maps
             this.Property(e => e.Title).IsRequired().HasMaxLength(100).HasColumnName("Title");
             this.Property(e => e.Description).IsOptional().HasMaxLength(8000);
             this.Property(e => e.Price).IsRequired().HasColumnAnnotation("商品价格", "value");
-            this.Property(e => e.PicUri).IsOptional().HasMaxLength(300);
+            this.Property(e => e.PicUrl).IsOptional().HasMaxLength(300);
             this.Property(e => e.Uri).IsRequired().HasMaxLength(300);
             this.Property(e => e.CommentCount).IsRequired();
             this.Property(e => e.SiteName).IsRequired().HasMaxLength(100);
