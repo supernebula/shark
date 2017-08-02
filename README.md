@@ -14,9 +14,9 @@ Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer�
 | ---------------- |:------------------:|
 | Core             | Released           |
 | Storage          | Released           |
-| Configurable     | 2017.8             |
-| Visualize        | 2017.9             |
-| Fully functional | Q4.2017            |
+| Configurable     | 2017／8            |
+| Visualize        | 2017／9            |
+| Fully functional | Q4 2017            |
 | Cloud            | Planning           |
 
 #### Author
