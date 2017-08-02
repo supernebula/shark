@@ -15,4 +15,4 @@ Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer�
 | Configurable     | 2017.8             |
 | Visualize        | 2017.9             |
 | Fully functional | Q4.2017            |
-| Cloud            | Q4.2017            |
+| Cloud            | Planning           |
