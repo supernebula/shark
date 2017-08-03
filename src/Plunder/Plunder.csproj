@@ -38,6 +38,7 @@
       <HintPath>..\..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
@@ -54,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="Compoment\DataType.cs" />
     <Compile Include="Compoment\ExtractField.cs" />
     <Compile Include="Compoment\ExtractRule.cs" />
     <Compile Include="Compoment\Subject.cs" />

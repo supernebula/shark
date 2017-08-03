@@ -12,6 +12,8 @@ namespace Plunder.Compoment
 
         public string Title { get; set; }
 
+        public ExtractRule Rule { get; set; }
+
         public bool IsMatch(string url)
         {
             throw new NotImplementedException();
