@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Evol.Common;
 
-namespace Plunder.Storage
+namespace Plunder.Schedule.Filter
 {
     /// <summary>
     /// 内存仓储

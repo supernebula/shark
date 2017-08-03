@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Evol.MongoDB.Repository;
 using Plunder.Storage.MongoDB.Repositories;
 using Plunder.Plugin.Filter;
+using Plunder.Configuration;
 
 namespace PlunderConsole
 {

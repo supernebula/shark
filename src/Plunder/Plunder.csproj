@@ -54,11 +54,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppConfig.cs" />
-    <Compile Include="Compoment\DataType.cs" />
-    <Compile Include="Compoment\ExtractField.cs" />
-    <Compile Include="Compoment\ExtractRule.cs" />
+    <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Compoment\Models\Cookie.cs" />
+    <Compile Include="Compoment\Models\HttpProxy.cs" />
+    <Compile Include="Compoment\Models\UserAgent.cs" />
+    <Compile Include="Compoment\Values\DataType.cs" />
+    <Compile Include="Compoment\Models\ExtractField.cs" />
+    <Compile Include="Compoment\Models\ExtractRule.cs" />
     <Compile Include="Compoment\Subject.cs" />
+    <Compile Include="Compoment\Values\HttpProxyType.cs" />
+    <Compile Include="Configuration\Providers\ICookieProvider.cs" />
+    <Compile Include="Configuration\Providers\IExtractRuleProvider.cs" />
+    <Compile Include="Configuration\Providers\IHttpProxyProvider.cs" />
+    <Compile Include="Configuration\Providers\IUserAgentProvider.cs" />
     <Compile Include="Core\IDownloaderFactory.cs" />
     <Compile Include="Core\IPageAnalyzerFactory.cs" />
     <Compile Include="Core\IResultItemPipeline.cs" />
@@ -76,8 +84,7 @@
     <Compile Include="PageAnalyzerFactory.cs" />
     <Compile Include="Process\Analyze\FieldSelector.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
-    <Compile Include="Compoment\UrlType.cs" />
-    <Compile Include="Download\~IDownloaderOld.cs" />
+    <Compile Include="Compoment\Values\UrlType.cs" />
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />
     <Compile Include="Schedule\Filter\IDuplicateFilter.cs" />
     <Compile Include="Compoment\Models\AccessRecord.cs" />
@@ -89,8 +96,8 @@
     <Compile Include="Schedule\SchedulerContext.cs" />
     <Compile Include="Schedule\Trigger.cs" />
     <Compile Include="Schedule\TriggerTaskItem.cs" />
-    <Compile Include="Storage\MemoryDuplicateFilter.cs" />
-    <Compile Include="Storage\MemoryStorage.cs" />
+    <Compile Include="Schedule\Filter\MemoryDuplicateFilter.cs" />
+    <Compile Include="Schedule\Filter\MemoryStorage.cs" />
     <Compile Include="Compoment\PageResult.cs" />
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Download\UserAgentCollection.cs" />
@@ -122,15 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Log\" />
+    <Folder Include="Storage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="NLog.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

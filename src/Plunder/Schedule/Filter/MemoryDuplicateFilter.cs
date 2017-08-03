@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Plunder.Schedule.Filter;
 using Evol.Common;
 
-namespace Plunder.Storage
+namespace Plunder.Schedule.Filter
 {
     /// <summary>
     ///内存重复过滤器

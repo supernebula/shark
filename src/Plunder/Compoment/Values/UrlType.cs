@@ -1,22 +1,25 @@
-﻿using System;
+﻿using System.ComponentModel;
 
 namespace Plunder.Compoment
 {
     public enum UrlType
     {
         /// <summary>
-        /// 入口页
+        /// 入口Url
         /// </summary>
+        [Description("入口Url")]
         Entry = 0,
 
         /// <summary>
-        /// 导航页url，可以直接或间接跳转到目标页
+        /// 导航Url
         /// </summary>
+        [Description("导航Url")]
         Navigation = 1,
 
         /// <summary>
-        /// 目标页，抽取数据
+        /// 目标Url
         /// </summary>
+        [Description("目标Url")]
         Target = 2
     }
 }

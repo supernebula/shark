@@ -1,4 +1,5 @@
 ﻿using Evol.MongoDB.Repository;
+using Plunder.Configuration;
 
 namespace Plunder.Storage.MongoDB
 {

@@ -8,6 +8,7 @@ using Plunder.Pipeline;
 using Plunder.Storage.MongoDB.Repositories;
 using Plunder.Compoment.Models;
 using Evol.Utilities.Hash;
+using Plunder.Configuration;
 
 namespace Plunder.Storage.MongoDB
 {

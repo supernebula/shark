@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Microsoft.Owin.Diagnostics;
 using Owin;
+using Microsoft.Owin.Builder;
 
 namespace Plunder.WebHost
 {
     public class ConsoleStartup
     {
-        public void Configuration(IAppBuilder appBuilder)
+        public void Configuration(AppBuilder appBuilder)
         {
             HttpConfiguration config = new HttpConfiguration();
             config.Routes.MapHttpRoute(
-                    name : "DefaultApi",
+                    name: "DefaultApi",
                     routeTemplate: "api/{controller}/{action}/{id}",
-                    defaults:new { controller = "Home", action = "Default", id = RouteParameter.Optional}
+                    defaults: new { controller = "Home", action = "Default", id = RouteParameter.Optional }
                 );
 
-            appBuilder.UseWebApi(config);
+            ////appBuilder.UseWebApi(config);
             appBuilder.UseWelcomePage(new WelcomePageOptions());
 
             appBuilder.Run(context =>
