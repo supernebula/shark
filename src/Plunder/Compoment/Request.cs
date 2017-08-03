@@ -39,5 +39,7 @@ namespace Plunder.Compoment
         public int RemainRetryCount { get; set; }
 
         public string Downloader { get; set; }
+
+        public Subject Subject { get; set; }
     }
 }
