@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Plunder.Compoment
 {
@@ -18,7 +13,7 @@ namespace Plunder.Compoment
         /// <summary>
         /// 整数
         /// </summary>
-        [Description("整数")]
+        [Description("数字")]
         Integer = 1,
 
         /// <summary>
