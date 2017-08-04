@@ -11,7 +11,7 @@
   <Class Name="Plunder.Compoment.Models.Cookie" Collapsed="true">
     <Position X="12.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Compoment\Models\Cookie.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -25,7 +25,7 @@
   <Class Name="Plunder.Compoment.Models.UserAgent" Collapsed="true">
     <Position X="10.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Compoment\Models\UserAgent.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -305,6 +305,13 @@
       <FileName>Util\RandomUtil.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Plunder.Configuration.ConfigManager" Collapsed="true">
+    <Position X="16" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAEAACACAAgAAEAAAAAAAAAAAAAAAAAAAAAgEAA=</HashCode>
+      <FileName>Configuration\ConfigManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="Plunder.Download.PageType" Collapsed="true">
     <Position X="9" Y="6.75" Width="1.5" />
     <TypeIdentifier>
@@ -527,6 +534,13 @@
     <TypeIdentifier>
       <HashCode>AQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAA=</HashCode>
       <FileName>Download\DownloadStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plunder.Compoment.Values.DeviceType" Collapsed="true">
+    <Position X="16" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Values\DeviceType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Microsoft YaHei UI" Size="9" />
