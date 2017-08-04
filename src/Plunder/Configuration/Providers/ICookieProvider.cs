@@ -7,5 +7,7 @@ namespace Plunder.Configuration.Providers
     public interface ICookieProvider
     {
         IEnumerable<Cookie> GetAll(Guid siteId);
+
+        Cookie GetAll(Guid siteId, string key);
     }
 }

@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compoment\Values\DeviceType.cs" />
     <Compile Include="Configuration\AppConfig.cs" />
     <Compile Include="Compoment\Models\Cookie.cs" />
     <Compile Include="Compoment\Models\HttpProxy.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Compoment\Models\ExtractRule.cs" />
     <Compile Include="Compoment\Subject.cs" />
     <Compile Include="Compoment\Values\HttpProxyType.cs" />
+    <Compile Include="Configuration\ConfigManager.cs" />
     <Compile Include="Configuration\Providers\ICookieProvider.cs" />
     <Compile Include="Configuration\Providers\IExtractRuleProvider.cs" />
     <Compile Include="Configuration\Providers\IHttpProxyProvider.cs" />
