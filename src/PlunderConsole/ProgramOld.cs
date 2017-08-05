@@ -29,10 +29,10 @@
 //            _engine = new Engine(new SequenceScheduler(bloomFilter));
 //            var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
 //            _engine.RegisterDownloader(downloaders);
-//            _engine.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+//            _engine.RegisterPageAnalyzer<DevTestPageAnalyzer>(DevTestPageAnalyzer.SiteId);
 //            _engine.RegisterResultPipeModule(new ConsoleResultModule());
 
-//            _engine.Start(WebPageType.Static, SiteIndex.Usashopcn, "http://www.usashopcn.com/");
+//            _engine.Start(WebPageType.Static, SiteIndex.DevTest, "http://www.devtest.com/");
 
 //            var statusTimer = new Timer(engine => { Console.WriteLine(((Engine) engine).RunStatusInfo()); }, _engine, 0, 2000);
 //        }

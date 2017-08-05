@@ -31,10 +31,10 @@ namespace PlunderTestConsole
             //////var downloaders = new List<IDownloader> { new FakeDownloader(4) };
             //var downloaders = new List<IDownloader> { new HttpClientDownloader(4) };
             //_engine.RegisterDownloader(downloaders);
-            //_engine.RegisterPageAnalyzer<UsashopcnPageAnalyzer>(UsashopcnPageAnalyzer.SiteId);
+            //_engine.RegisterPageAnalyzer<DevTestPageAnalyzer>(DevTestPageAnalyzer.SiteId);
             //_engine.RegisterResultPipeModule(new MultiAreaConsoleModule(500, 0, 400, 500, true, true));
 
-            //_engine.Start(WebPageType.Static, SiteIndex.Usashopcn, GetUrls());
+            //_engine.Start(WebPageType.Static, SiteIndex.DevTest, GetUrls());
 
             //var statusTimer = new Timer(engine =>
             //{
@@ -50,8 +50,7 @@ namespace PlunderTestConsole
             var urls = new List<string>();
             for (int i = 0; i < 1; i++)
             {
-                urls.Add("http://www.usashopcn.com/Product/Details/120039?num=" + i);
-                //urls.Add("https://detail.tmall.com/item.htm?spm=a223v.7914393.2320796782.3.Eih3aS&id=529389366427&abbucket=_AB-M972_B17&acm=03683.1003.1.670563&aldid=vlaSgHMR&abtest=_AB-LR972-PR972&scm=1003.1.03683.ITEM_529389366427_670563&pos=3&nummmmmm=" + i);
+                urls.Add("http://www.devtest.com/artice/item/120039?num=" + i);
             
             }
 

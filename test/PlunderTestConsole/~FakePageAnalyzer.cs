@@ -19,7 +19,7 @@
 //        public string TargetPageFlag => PageTagValue;
 //        public Site Site { get; }
 
-//        public const string SiteIdValue = SiteIndex.Usashopcn;
+//        public const string SiteIdValue = SiteIndex.DevTest;
 
 //        public string PageTagValue = "product.detail";
 
@@ -37,8 +37,8 @@
 
 //            request = new Request()
 //            {
-//                SiteId = SiteIndex.Usashopcn,
-//                Url = @"http://www.usashopcn.com/Product/Details/127824",
+//                SiteId = SiteIndex.DevTest,
+//                Url = @"http://www.devtest.com/arc/item/127824",
 //                HttpMethod = HttpMethod.Get,
 //                RemainRetryCount = 0
 //            };

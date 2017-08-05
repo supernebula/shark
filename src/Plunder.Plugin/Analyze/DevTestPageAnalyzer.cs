@@ -16,11 +16,11 @@ using NLog;
 
 namespace Plunder.Plugin.Analyze
 {
-    public class UsashopcnPageAnalyzer : IPageAnalyzer
+    public class DevTestPageAnalyzer : IPageAnalyzer
     {
-        private ILogger Logger = LogManager.GetLogger("usashopcnAnalyzer");
+        private ILogger Logger = LogManager.GetLogger("devTestAnalyzer");
 
-        public const string SiteIdValue = SiteIndex.Usashopcn;
+        public const string SiteIdValue = SiteIndex.DevTest;
 
         public const string TargetPageFlagValue = "product.detail" ;
         public Site Site { get; }
@@ -31,7 +31,7 @@ namespace Plunder.Plugin.Analyze
 
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
 
-        public UsashopcnPageAnalyzer()
+        public DevTestPageAnalyzer()
         {
             Site = SiteConfiguration.Instance.GetSite(SiteId);
             _fieldXPaths = new Dictionary<string, string> {
