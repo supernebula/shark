@@ -38,6 +38,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evol.Common", "src\Infrastr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.WebHost", "src\OwinWebHost\Plunder.WebHost.csproj", "{51C5442C-2A70-453D-80B9-430C468AF076}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Setting", "src\Plunder.Setting\Plunder.Setting.csproj", "{A558F45B-693E-4CFA-9646-27741E502B17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +82,10 @@ Global
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51C5442C-2A70-453D-80B9-430C468AF076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A558F45B-693E-4CFA-9646-27741E502B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A558F45B-693E-4CFA-9646-27741E502B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A558F45B-693E-4CFA-9646-27741E502B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A558F45B-693E-4CFA-9646-27741E502B17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{C8B100E1-5A17-40B9-8621-B5DA6C0F1FEC} = {F9C3819E-D428-49D0-8498-58CB3592A70B}
 		{14ED23EB-FE69-4C9B-A0D0-470CB1CCF04C} = {F9C3819E-D428-49D0-8498-58CB3592A70B}
 		{51C5442C-2A70-453D-80B9-430C468AF076} = {B7D3A961-A753-43C7-856F-E844C585613F}
+		{A558F45B-693E-4CFA-9646-27741E502B17} = {B7D3A961-A753-43C7-856F-E844C585613F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B08FE77A-6189-479A-A2CF-7C086236A09F}

@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compoment\Models\Domain.cs" />
     <Compile Include="Compoment\Values\DeviceType.cs" />
     <Compile Include="Configuration\AppConfig.cs" />
     <Compile Include="Compoment\Models\Cookie.cs" />
