@@ -11,6 +11,9 @@ namespace Plunder.Compoment
 
         public List<ExtractField> Fields { get; set; }
 
+        public virtual List<ExtractRule> ChildRuleId { get; set; }
+
+
         public bool IsMatch(string url, string htmlContent = null)
         {
             throw new NotImplementedException();

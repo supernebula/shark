@@ -72,6 +72,10 @@
     <Compile Include="ApiControllers\DomainController.cs" />
     <Compile Include="ApiControllers\HomeController.cs" />
     <Compile Include="ApiControllers\ValuesController.cs" />
+    <Compile Include="Compoment\DomainEntity.cs" />
+    <Compile Include="Compoment\ExtractFieldEntity.cs" />
+    <Compile Include="Compoment\ExtractRuleEntity.cs" />
+    <Compile Include="Compoment\HttpProxyEntity.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -80,6 +84,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Plunder\Plunder.csproj">
+      <Project>{00d14a01-8e50-4f73-ae88-6a1180777f88}</Project>
+      <Name>Plunder</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

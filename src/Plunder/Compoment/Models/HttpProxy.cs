@@ -18,5 +18,7 @@ namespace Plunder.Compoment.Models
         public string ResponseSecond { get; set; }
 
         public string LastVerifyTime { get; set; }
+
+        public string Source { get; set; }
     }
 }
