@@ -4,6 +4,6 @@
 
 Configurable, pluginable crawler engine, secondary development framework.Completion 70%.
 
--## Modules：
+## Modules：
 
- Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Configuration
+Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Configuration
