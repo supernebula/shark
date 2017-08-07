@@ -41,9 +41,9 @@ namespace Plunder.Test.Download
         [TestMethod]
         public void ScreenshotTest()
         {
-            var url = "http://www.bing.com";
+            var url = "http://www.jd.com";
             var driver2 = new PhantomJSDriver();
-            driver2.Manage().Window.Size = new Size(1440, 900);
+            driver2.Manage().Window.Size = new Size(1440, 9000);
             driver2.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(10);
             driver2.Manage().Timeouts().AsynchronousJavaScript = TimeSpan.FromSeconds(10);
             driver2.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);

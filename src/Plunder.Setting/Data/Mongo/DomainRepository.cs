@@ -1,13 +1,13 @@
-﻿using Plunder.Compoment;
+﻿using Plunder.Setting.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Plunder.Setting.Compoment
+namespace Plunder.Setting.Data.Mongo
 {
-    public class ExtractRuleEntity : ExtractRule
+    public class DomainRepository : IDomainRepository
     {
     }
 }
