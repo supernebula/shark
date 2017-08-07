@@ -104,6 +104,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Evol.Common\Evol.Common.csproj">
+      <Project>{14ED23EB-FE69-4C9B-A0D0-470CB1CCF04C}</Project>
+      <Name>Evol.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Evol.MongoDB\Evol.MongoDB.csproj">
       <Project>{C8B100E1-5A17-40B9-8621-B5DA6C0F1FEC}</Project>
       <Name>Evol.MongoDB</Name>
