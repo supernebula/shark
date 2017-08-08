@@ -1,9 +1,13 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
+using Microsoft.Owin;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
 using Owin;
 using Swashbuckle.Application;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -13,13 +17,32 @@ using System.Web.Http;
 
 namespace Plunder.Setting
 {
-    public class Startup
+    public partial class Startup
     {
         // This code configures Web API. The Startup class is specified as a type
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder app)
         {
-            var builder = new ContainerBuilder();
+            ConfigStaticFile(app);
+
+            //var relativePath = string.Format(@"..{0}..{0}", Path.DirectorySeparatorChar);
+            //string contentPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
+
+            //app.UseFileServer(new FileServerOptions()
+            //{
+            //    RequestPath = PathString.Empty,
+            //    FileSystem = new PhysicalFileSystem(Path.Combine(contentPath, @"wwwroot")),
+            //});
+
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    RequestPath = new PathString("/wwwroot"),
+            //    FileSystem = new PhysicalFileSystem(Path.Combine(contentPath, @"wwwroot"))
+            //});
+       
+
+
+        var builder = new ContainerBuilder();
             // STANDARD WEB API SETUP:
 
             // Get your HttpConfiguration. In OWIN, you'll create one
@@ -50,11 +73,8 @@ namespace Plunder.Setting
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(config);
             app.UseWebApi(config);
-       
 
-
-
-        Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Green;
             app.UseWebApi(config);
             app.Use((context, next) =>
             {

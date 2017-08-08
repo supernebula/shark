@@ -1,4 +1,5 @@
-﻿using Plunder.Setting.Models;
+﻿using Plunder.Setting.Data.Interfaces;
+using Plunder.Setting.Models;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -8,13 +9,35 @@ namespace Plunder.Setting.ApiControllers
     [RoutePrefix("Domain")]
     public class DomainController : ApiController
     {
+
+        IDomainQuery _domainQuery;
+
+        IDomainRepository _domainRepository;
+
+        public DomainController(IDomainQuery domainQuery, IDomainRepository domainRepository)
+        {
+            _domainQuery = domainQuery;
+            _domainRepository = domainRepository;
+        }
+
         /// <summary>
         /// 获取域列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("Get")]
         public async Task<DomainEntity> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// 获取指定域
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<DomainEntity> Get(Guid id)
         {
             throw new NotImplementedException();
         }

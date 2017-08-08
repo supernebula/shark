@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Plunder.Setting.Data.Interfaces
 {
-    interface IDomainQuery
+    public interface IDomainQuery
     {
     }
 }
