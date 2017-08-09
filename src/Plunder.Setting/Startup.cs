@@ -53,17 +53,19 @@ namespace Plunder.Setting
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+                
+            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.ApiControllers) };
             config.Routes.MapHttpRoute(
                 name: "DefaultApi2",
                 routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );
+            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.ApiControllers) };
+
             config.Routes.MapHttpRoute(
                 name: "Default",
-                routeTemplate: "/{controller}/{action}",
+                routeTemplate: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional }
-            );
+            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.Controllers) };
 
 
             // Register your Web API controllers.

@@ -24,12 +24,13 @@ namespace Plunder.Setting
                 //var response = client.GetAsync(baseAddress + "api/values").Result;
                 //Console.WriteLine(response);
                 //Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-                
+                System.Diagnostics.Process.Start(baseAddress);
+
+                Console.ReadLine();
+
             }
 
-            System.Diagnostics.Process.Start(baseAddress);
 
-            Console.ReadLine();
         }
 
     }
