@@ -7,3 +7,8 @@ Configurable, pluginable crawler engine, secondary development framework. Comple
 ## Modules：
 
 Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Configuration
+
+## License
+
+Apache License, Version 2.0
+_&lt;<http://www.apache.org/licenses/>&gt;_
