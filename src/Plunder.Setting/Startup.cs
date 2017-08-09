@@ -55,7 +55,7 @@ namespace Plunder.Setting
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional , namespaces = new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace } }
+                defaults: new { id = RouteParameter.Optional }
             );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace };
 
             //config.Routes.MapHttpRoute(
@@ -66,14 +66,11 @@ namespace Plunder.Setting
             //);
 
             config.Routes.MapHttpRoute(
-                name: "Default",
-                routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional, namespaces = new string[] { typeof(Plunder.Setting.Controllers.Domain2Controller).Namespace } }
+                name: "DefaultUI",
+                routeTemplate: "ui/{controller}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional }
             );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace };
 
-            config.Services.Replace(typeof(IHttpControllerSelector), new OldNamespaceHttpControllerSelector(config));
-
-            var ns = typeof(Plunder.Setting.Controllers.Domain2Controller).Namespace;
 
             // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());

@@ -2,6 +2,7 @@
 
 namespace Plunder.Setting.ApiControllers
 {
+    [RoutePrefix("api/Home")]
     public class HomeController : ApiController
     {
         public string Index()

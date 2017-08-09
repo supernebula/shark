@@ -16,9 +16,11 @@ using System.Net.Http.Headers;
 
 namespace Plunder.Setting.Controllers
 {
-    public class Domain2Controller : ApiController
+    [RoutePrefix("ui/Domain")]
+    public class DomainController : ApiController
     {
         [HttpGet]
+        [Route("Index")]
         public HttpResponseMessage Index()
         {
             string template = "Hello @Model.Name! Welcome to Web API and Razor!";
