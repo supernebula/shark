@@ -101,6 +101,7 @@
     <Compile Include="ApiControllers\ExtractRuleController.cs" />
     <Compile Include="ApiControllers\HomeController.cs" />
     <Compile Include="ApiControllers\ValuesController.cs" />
+    <Compile Include="Controllers\DomianController.cs" />
     <Compile Include="Data\Interfaces\IDomainQuery.cs" />
     <Compile Include="Data\Interfaces\IDomainRepository.cs" />
     <Compile Include="Data\Mongo\DomainQuery.cs" />
