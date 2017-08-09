@@ -14,6 +14,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
+using Plunder.Setting.Core.Http;
 
 namespace Plunder.Setting
 {
@@ -49,24 +51,29 @@ namespace Plunder.Setting
             // rather than using GlobalConfiguration.
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-                
-            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.ApiControllers) };
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi2",
-                routeTemplate: "api/{controller}/{action}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.ApiControllers) };
+                defaults: new { id = RouteParameter.Optional , namespaces = new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace } }
+            );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace };
+
+            //config.Routes.MapHttpRoute(
+            //    name: "DefaultApi2",
+            //    routeTemplate: "api/{controller}/{action}/{id}",
+            //    defaults: new { id = RouteParameter.Optional },
+            //    namespaces: new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace }
+            //);
 
             config.Routes.MapHttpRoute(
                 name: "Default",
                 routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional }
-            ).DataTokens["Namespaces"] = new string[] { nameof(Plunder.Setting.Controllers) };
+                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional ,namespaces = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace } }
+            );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace };
 
+            config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
+
+            var ns = typeof(Plunder.Setting.Controllers.DomainController).Namespace;
 
             // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());

@@ -11,19 +11,31 @@ using RazorEngine.Compilation;
 using RazorEngine.Templating;
 using RazorEngine.Text;
 using RazorEngine.Configuration;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace Plunder.Setting.Controllers
 {
-    public class DomainViewController : ApiController
+    public class DomainController : ApiController
     {
         [HttpGet]
-        public HttpContent Index()
+        public HttpResponseMessage Index()
         {
             string template = "Hello @Model.Name! Welcome to Web API and Razor!";
             //string result = RazEngine.Razor.Compile(template, new { Name = "World" });
             var result = RazEngine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
 
-            return new StringContent(result, System.Text.Encoding.UTF8, "text/html");
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+
+            httpResponseMessage.Content = new StringContent(result);
+
+            MediaTypeHeaderValue mediaTypeHeaderValue = new MediaTypeHeaderValue("text/html");
+
+            mediaTypeHeaderValue.CharSet = System.Text.Encoding.UTF8.WebName;
+
+            httpResponseMessage.Content.Headers.ContentType = mediaTypeHeaderValue;
+
+            return httpResponseMessage;
         }
     }
 }

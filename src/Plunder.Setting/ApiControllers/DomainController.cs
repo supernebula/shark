@@ -6,18 +6,29 @@ using System.Web.Http;
 
 namespace Plunder.Setting.ApiControllers
 {
-    [RoutePrefix("Domain")]
+    [RoutePrefix("api/Domain")]
     public class DomainController : ApiController
     {
 
-        IDomainQuery _domainQuery;
+        //IDomainQuery _domainQuery;
 
-        IDomainRepository _domainRepository;
+        //IDomainRepository _domainRepository;
 
-        public DomainController(IDomainQuery domainQuery, IDomainRepository domainRepository)
+        //public DomainController(IDomainQuery domainQuery, IDomainRepository domainRepository)
+        //{
+        //    _domainQuery = domainQuery;
+        //    _domainRepository = domainRepository;
+        //}
+
+        /// <summary>
+        /// 获取域列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Index")]
+        public Task<string> Index()
         {
-            _domainQuery = domainQuery;
-            _domainRepository = domainRepository;
+            return Task.FromResult("API/Domain/Index");
         }
 
         /// <summary>
@@ -37,7 +48,7 @@ namespace Plunder.Setting.ApiControllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<DomainEntity> Get(Guid id)
+        public async Task<DomainEntity> Get(Guid? id)
         {
             throw new NotImplementedException();
         }
@@ -78,7 +89,7 @@ namespace Plunder.Setting.ApiControllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<DomainEntity> Delete(Guid id)
+        public async Task<DomainEntity> Delete(Guid? id)
         {
             throw new NotImplementedException();
         }
