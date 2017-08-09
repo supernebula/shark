@@ -16,7 +16,7 @@ using System.Net.Http.Headers;
 
 namespace Plunder.Setting.Controllers
 {
-    public class DomainController : ApiController
+    public class Domain2Controller : ApiController
     {
         [HttpGet]
         public HttpResponseMessage Index()

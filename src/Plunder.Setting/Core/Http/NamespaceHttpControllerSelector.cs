@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Plunder.Setting.Core.Http.Dispatcher;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -15,82 +18,231 @@ using System.Web.Http.Routing;
 namespace Plunder.Setting.Core.Http
 {
     /// <summary>
-    /// <see cref="https://aspnet.codeplex.com/SourceControl/changeset/view/dd207952fa86#Samples/WebApi/NamespaceControllerSelector/NamespaceHttpControllerSelector.cs"/>
+    /// Copy form <see cref="System.Web.Http.Dispatcher.DefaultHttpControllerSelector "/>, Add namespace support
     /// </summary>
-    public class NamespaceHttpControllerSelector : DefaultHttpControllerSelector
+    public class NamespaceHttpControllerSelector : IHttpControllerSelector
     {
-        private const string NamespaceRouteVariableName = "namespaces";
+        public static readonly string ControllerSuffix = "Controller";
+
+        private const string ControllerKey = "controller";
+
         private readonly HttpConfiguration _configuration;
-        private readonly Lazy<ConcurrentDictionary<string, Type>> _apiControllerCache;
+        private readonly HttpControllerTypeCache _controllerTypeCache;
+        private readonly Lazy<ConcurrentDictionary<string, HttpControllerDescriptor>> _controllerInfoCache;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultHttpControllerSelector"/> class.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
         public NamespaceHttpControllerSelector(HttpConfiguration configuration)
-            : base(configuration)
         {
-            _configuration = configuration;
-            _apiControllerCache = new Lazy<ConcurrentDictionary<string, Type>>(
-                new Func<ConcurrentDictionary<string, Type>>(InitializeApiControllerCache));
-        }
-
-        private ConcurrentDictionary<string, Type> InitializeApiControllerCache()
-        {
-            IAssembliesResolver assembliesResolver = this._configuration.Services.GetAssembliesResolver();
-            var types = this._configuration.Services.GetHttpControllerTypeResolver()
-                .GetControllerTypes(assembliesResolver).ToDictionary(t => t.FullName, t => t);
-
-            return new ConcurrentDictionary<string, Type>(types);
-        }
-
-        public IEnumerable<string> GetControllerFullName(HttpRequestMessage request, string controllerName)
-        {
-            object namespaceName;
-            var data = request.GetRouteData();
-            IEnumerable<string> keys = _apiControllerCache.Value.ToDictionary<KeyValuePair<string, Type>, string, Type>(t => t.Key,
-                    t => t.Value, StringComparer.CurrentCultureIgnoreCase).Keys.ToList();
-
-            if (!data.Values.TryGetValue(NamespaceRouteVariableName, out namespaceName))
+            if (configuration == null)
             {
-                return from k in keys
-                       where k.EndsWith(string.Format(".{0}{1}", controllerName,
-                       DefaultHttpControllerSelector.ControllerSuffix), StringComparison.CurrentCultureIgnoreCase)
-                       select k;
+                //throw Error.ArgumentNull("configuration");
+                throw new ArgumentNullException("configuration");
             }
 
-            string[] namespaces = (string[])namespaceName;
-            return from n in namespaces
-                   join k in keys on string.Format("{0}.{1}{2}", n, controllerName,
-                   DefaultHttpControllerSelector.ControllerSuffix).ToLower() equals k.ToLower()
-                   select k;
+            _controllerInfoCache = new Lazy<ConcurrentDictionary<string, HttpControllerDescriptor>>(InitializeControllerInfoCache);
+            _configuration = configuration;
+            _controllerTypeCache = new HttpControllerTypeCache(_configuration);
         }
 
-        public override HttpControllerDescriptor SelectController(HttpRequestMessage request)
+        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Caller is responsible for disposing of response instance.")]
+        public virtual HttpControllerDescriptor SelectController(HttpRequestMessage request)
         {
-            Type type;
             if (request == null)
             {
+                //throw Error.ArgumentNull("request");
                 throw new ArgumentNullException("request");
             }
-            string controllerName = this.GetControllerName(request);
-            if (string.IsNullOrEmpty(controllerName))
+
+            IHttpRouteData routeData = request.GetRouteData();
+            HttpControllerDescriptor controllerDescriptor;
+            if (routeData != null)
             {
-                throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    string.Format("无法通过API路由匹配到您所请求的URI '{0}'",
-                    new object[] { request.RequestUri })));
-            }
-            IEnumerable<string> fullNames = GetControllerFullName(request, controllerName).ToList();
-            if (fullNames.Count() == 0)
-            {
-                throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound,
-                        string.Format("无法通过API路由匹配到您所请求的URI '{0}'",
-                        new object[] { request.RequestUri })));
+                controllerDescriptor = GetDirectRouteController(routeData);
+                if (controllerDescriptor != null)
+                {
+                    return controllerDescriptor;
+                }
             }
 
-            if (this._apiControllerCache.Value.TryGetValue(fullNames.First(), out type))
+            string controllerName = GetControllerName(request);
+            if (String.IsNullOrEmpty(controllerName))
             {
-                return new HttpControllerDescriptor(_configuration, controllerName, type);
+                //throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound,
+                //    Error.Format(SRResources.ResourceNotFound, request.RequestUri),
+                //    Error.Format(SRResources.ControllerNameNotFound, request.RequestUri)
+                //    ));
+
+                throw new HttpResponseException(request.CreateErrorResponse(
+                        HttpStatusCode.NotFound,
+                        $"ResourceNotFound:{request.RequestUri}",
+                        new HttpRequestException($"ControllerNameNotFound:{request.RequestUri}"))
+                    );
             }
-            throw new HttpResponseException(request.CreateErrorResponse(HttpStatusCode.NotFound,
-                string.Format("无法通过API路由匹配到您所请求的URI '{0}'",
-                new object[] { request.RequestUri })));
+
+            if (_controllerInfoCache.Value.TryGetValue(controllerName, out controllerDescriptor))
+            {
+                return controllerDescriptor;
+            }
+
+            ICollection<Type> matchingTypes = _controllerTypeCache.GetControllerTypes(controllerName);
+
+            // ControllerInfoCache is already initialized.
+            Contract.Assert(matchingTypes.Count != 1);
+
+            if (matchingTypes.Count == 0)
+            {
+                // no matching types
+                //throw new HttpResponseException(request.CreateErrorResponse(
+                //    HttpStatusCode.NotFound,
+                //    Error.Format(SRResources.ResourceNotFound, request.RequestUri),
+                //    Error.Format(SRResources.DefaultControllerFactory_ControllerNameNotFound, controllerName)));
+
+                throw new HttpResponseException(request.CreateErrorResponse(
+                    HttpStatusCode.NotFound,
+                    $"ResourceNotFound:{request.RequestUri}",
+                    new HttpRequestException($"DefaultControllerFactory_ControllerNameNotFound, controllerName:{controllerName}"))
+                );
+            }
+            else
+            {
+                // multiple matching types
+                throw CreateAmbiguousControllerException(request.GetRouteData().Route, controllerName, matchingTypes);
+            }
+        }
+
+        public virtual IDictionary<string, HttpControllerDescriptor> GetControllerMapping()
+        {
+            return _controllerInfoCache.Value.ToDictionary(c => c.Key, c => c.Value, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public virtual string GetControllerName(HttpRequestMessage request)
+        {
+            if (request == null)
+            {
+                //throw Error.ArgumentNull("request");
+                throw new ArgumentNullException("request");
+            }
+
+            IHttpRouteData routeData = request.GetRouteData();
+            if (routeData == null)
+            {
+                return null;
+            }
+
+            // Look up controller in route data
+            string controllerName = null;
+            routeData.Values.TryGetValue(ControllerKey, out controllerName);
+            return controllerName;
+        }
+
+        // If routeData is from an attribute route, get the controller that can handle it. 
+        // Else return null. Throws an exception if multiple controllers match
+        private static HttpControllerDescriptor GetDirectRouteController(IHttpRouteData routeData)
+        {
+            CandidateAction[] candidates = routeData.GetDirectRouteCandidates();
+            if (candidates != null)
+            {
+                // Set the controller descriptor for the first action descriptor
+                Contract.Assert(candidates.Length > 0);
+                Contract.Assert(candidates[0].ActionDescriptor != null);
+
+                HttpControllerDescriptor controllerDescriptor = candidates[0].ActionDescriptor.ControllerDescriptor;
+
+                // Check that all other candidate action descriptors share the same controller descriptor
+                for (int i = 1; i < candidates.Length; i++)
+                {
+                    CandidateAction candidate = candidates[i];
+                    if (candidate.ActionDescriptor.ControllerDescriptor != controllerDescriptor)
+                    {
+                        // We've found an ambiguity (multiple controllers matched)
+                        throw CreateDirectRouteAmbiguousControllerException(candidates);
+                    }
+                }
+
+                return controllerDescriptor;
+            }
+
+            return null;
+        }
+
+        private static Exception CreateDirectRouteAmbiguousControllerException(CandidateAction[] candidates)
+        {
+            Contract.Assert(candidates != null);
+            Contract.Assert(candidates.Length > 1);
+
+            HashSet<Type> matchingTypes = new HashSet<Type>();
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                matchingTypes.Add(candidates[i].ActionDescriptor.ControllerDescriptor.ControllerType);
+            }
+
+            // we need to generate an exception containing all the controller types
+            StringBuilder typeList = new StringBuilder();
+            foreach (Type matchedType in matchingTypes)
+            {
+                typeList.AppendLine();
+                typeList.Append(matchedType.FullName);
+            }
+
+            return Error.InvalidOperation(SRResources.DirectRoute_AmbiguousController, typeList, Environment.NewLine);
+        }
+
+        private static Exception CreateAmbiguousControllerException(IHttpRoute route, string controllerName, ICollection<Type> matchingTypes)
+        {
+            Contract.Assert(route != null);
+            Contract.Assert(controllerName != null);
+            Contract.Assert(matchingTypes != null);
+
+            // Generate an exception containing all the controller types
+            StringBuilder typeList = new StringBuilder();
+            foreach (Type matchedType in matchingTypes)
+            {
+                typeList.AppendLine();
+                typeList.Append(matchedType.FullName);
+            }
+
+            string errorMessage = Error.Format(SRResources.DefaultControllerFactory_ControllerNameAmbiguous_WithRouteTemplate, controllerName, route.RouteTemplate, typeList, Environment.NewLine);
+            return new InvalidOperationException(errorMessage);
+        }
+
+        private ConcurrentDictionary<string, HttpControllerDescriptor> InitializeControllerInfoCache()
+        {
+            var result = new ConcurrentDictionary<string, HttpControllerDescriptor>(StringComparer.OrdinalIgnoreCase);
+            var duplicateControllers = new HashSet<string>();
+            Dictionary<string, ILookup<string, Type>> controllerTypeGroups = _controllerTypeCache.Cache;
+
+            foreach (KeyValuePair<string, ILookup<string, Type>> controllerTypeGroup in controllerTypeGroups)
+            {
+                string controllerName = controllerTypeGroup.Key;
+
+                foreach (IGrouping<string, Type> controllerTypesGroupedByNs in controllerTypeGroup.Value)
+                {
+                    foreach (Type controllerType in controllerTypesGroupedByNs)
+                    {
+                        if (result.Keys.Contains(controllerName))
+                        {
+                            duplicateControllers.Add(controllerName);
+                            break;
+                        }
+                        else
+                        {
+                            result.TryAdd(controllerName, new HttpControllerDescriptor(_configuration, controllerName, controllerType));
+                        }
+                    }
+                }
+            }
+
+            foreach (string duplicateController in duplicateControllers)
+            {
+                HttpControllerDescriptor descriptor;
+                result.TryRemove(duplicateController, out descriptor);
+            }
+
+            return result;
         }
     }
+
 }

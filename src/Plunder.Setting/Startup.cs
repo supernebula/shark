@@ -68,12 +68,12 @@ namespace Plunder.Setting
             config.Routes.MapHttpRoute(
                 name: "Default",
                 routeTemplate: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional ,namespaces = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace } }
+                defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional ,namespaces = new string[] { typeof(Plunder.Setting.Controllers.Domain2Controller).Namespace } }
             );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace };
 
-            config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
+            //config.Services.Replace(typeof(IHttpControllerSelector), new NamespaceHttpControllerSelector(config));
 
-            var ns = typeof(Plunder.Setting.Controllers.DomainController).Namespace;
+            var ns = typeof(Plunder.Setting.Controllers.Domain2Controller).Namespace;
 
             // Register your Web API controllers.
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
