@@ -20,29 +20,35 @@ namespace Plunder.Setting.UIControllers
         [HttpGet]
         public IHttpActionResult Index()
         {
-            var templateKey = "domainui.index";
-            string template = "Hello @Model ! This is UI! Path:" + Request.RequestUri.AbsolutePath;
-            //string result = RazEngine.Razor.Compile(template, new { Name = "World" });
-            string result = null;
-            if (RazEngine.Razor.IsTemplateCached(templateKey, typeof(string)))
-                result = RazEngine.Razor.Run(templateKey, model: "Man");
-            else
-                result = RazEngine.Razor.RunCompile(template, "templateKey", null, "Man");
+            var route = this.ControllerContext.RequestContext.RouteData;
+
+            Microsoft.Owin.FileSystems.PhysicalFileSystem 
+
+            return null;
+
+            //var templateKey = "domainui.index";
+            //string template = "Hello @Model ! This is UI! Path:" + Request.RequestUri.AbsolutePath;
+            ////string result = RazEngine.Razor.Compile(template, new { Name = "World" });
+            //string result = null;
+            //if (RazEngine.Razor.IsTemplateCached(templateKey, typeof(string)))
+            //    result = RazEngine.Razor.Run(templateKey, model: "Man");
+            //else
+            //    result = RazEngine.Razor.RunCompile(template, "templateKey", null, "Man");
 
 
-            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-            var viewPath = this.RequestContext.
+            //var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+            //var viewPath = this.RequestContext.
 
-            httpResponseMessage.Content = new StringContent(result);
+            //httpResponseMessage.Content = new StringContent(result);
 
 
-            MediaTypeHeaderValue mediaTypeHeaderValue = new MediaTypeHeaderValue("text/html");
+            //MediaTypeHeaderValue mediaTypeHeaderValue = new MediaTypeHeaderValue("text/html");
 
-            mediaTypeHeaderValue.CharSet = System.Text.Encoding.UTF8.WebName;
+            //mediaTypeHeaderValue.CharSet = System.Text.Encoding.UTF8.WebName;
 
-            httpResponseMessage.Content.Headers.ContentType = mediaTypeHeaderValue;
+            //httpResponseMessage.Content.Headers.ContentType = mediaTypeHeaderValue;
 
-            return httpResponseMessage;
+            //return httpResponseMessage;
         }
 
 

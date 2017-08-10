@@ -25,6 +25,7 @@ namespace Plunder.Setting
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder app)
         {
+
             //ConfigStaticFile(app);
 
         var builder = new ContainerBuilder();

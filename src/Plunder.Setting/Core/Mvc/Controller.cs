@@ -58,11 +58,11 @@ namespace Plunder.Setting.Core.Mvc
 
             return new ViewResult
             {
-                ViewName = viewName,
-                MasterName = masterName,
-                ViewData = ViewData,
-                TempData = TempData,
-                ViewEngineCollection = ViewEngineCollection
+                //ViewName = viewName,
+                //MasterName = masterName,
+                //ViewData = ViewData,
+                //TempData = TempData,
+                //ViewEngineCollection = ViewEngineCollection
             };
         }
     }
