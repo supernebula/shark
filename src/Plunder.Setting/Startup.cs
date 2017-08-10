@@ -25,24 +25,7 @@ namespace Plunder.Setting
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder app)
         {
-            ConfigStaticFile(app);
-
-            //var relativePath = string.Format(@"..{0}..{0}", Path.DirectorySeparatorChar);
-            //string contentPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), relativePath);
-
-            //app.UseFileServer(new FileServerOptions()
-            //{
-            //    RequestPath = PathString.Empty,
-            //    FileSystem = new PhysicalFileSystem(Path.Combine(contentPath, @"wwwroot")),
-            //});
-
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    RequestPath = new PathString("/wwwroot"),
-            //    FileSystem = new PhysicalFileSystem(Path.Combine(contentPath, @"wwwroot"))
-            //});
-       
-
+            //ConfigStaticFile(app);
 
         var builder = new ContainerBuilder();
             // STANDARD WEB API SETUP:
@@ -53,23 +36,16 @@ namespace Plunder.Setting
             HttpConfiguration config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
+                name: "Default_Api",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
-            );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace };
-
-            //config.Routes.MapHttpRoute(
-            //    name: "DefaultApi2",
-            //    routeTemplate: "api/{controller}/{action}/{id}",
-            //    defaults: new { id = RouteParameter.Optional },
-            //    namespaces: new string[] { typeof(Plunder.Setting.ApiControllers.DomainController).Namespace }
-            //);
+            );
 
             config.Routes.MapHttpRoute(
-                name: "DefaultUI",
+                name: "Default_UI",
                 routeTemplate: "ui/{controller}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = RouteParameter.Optional }
-            );//.DataTokens["namespace"] = new string[] { typeof(Plunder.Setting.Controllers.DomainController).Namespace };
+            );
 
 
             // Register your Web API controllers.

@@ -101,7 +101,7 @@
     <Compile Include="ApiControllers\ExtractRuleController.cs" />
     <Compile Include="ApiControllers\HomeController.cs" />
     <Compile Include="ApiControllers\ValuesController.cs" />
-    <Compile Include="Controllers\DomainController.cs" />
+    <Compile Include="UIControllers\DomainUIController.cs" />
     <Compile Include="Core\Http\Dispatcher\HttpControllerTypeCache.cs" />
     <Compile Include="Core\Http\NamespaceHttpControllerSelector.cs" />
     <Compile Include="Core\Http\HttpRouteCollectionExtensions.cs" />
@@ -118,6 +118,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="UIControllers\HomeUIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

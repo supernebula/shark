@@ -28,7 +28,7 @@ namespace Plunder.Setting.ApiControllers
         [Route("Index")]
         public Task<string> Index()
         {
-            return Task.FromResult("API/Domain/Index");
+            return Task.FromResult("This is API");
         }
 
         /// <summary>

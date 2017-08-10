@@ -1,29 +1,20 @@
-﻿using RazorEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using System.Web.Http;
 using RazEngine = RazorEngine.Engine;
-using RazorEngine.Compilation;
 using RazorEngine.Templating;
-using RazorEngine.Text;
-using RazorEngine.Configuration;
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace Plunder.Setting.Controllers
+namespace Plunder.Setting.UIControllers
 {
     [RoutePrefix("ui/Domain")]
-    public class DomainController : ApiController
+    public class DomainUIController : ApiController
     {
         [HttpGet]
         [Route("Index")]
         public HttpResponseMessage Index()
         {
-            string template = "Hello @Model.Name! Welcome to Web API and Razor!";
+            string template = "Hello @Model.Name! This is UI!";
             //string result = RazEngine.Razor.Compile(template, new { Name = "World" });
             var result = RazEngine.Razor.RunCompile(template, "templateKey", null, new { Name = "World" });
 
