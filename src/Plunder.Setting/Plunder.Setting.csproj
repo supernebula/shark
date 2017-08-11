@@ -101,20 +101,20 @@
     <Compile Include="ApiControllers\ExtractRuleController.cs" />
     <Compile Include="ApiControllers\HomeController.cs" />
     <Compile Include="ApiControllers\ValuesController.cs" />
-    <Compile Include="Core\Extensions\DictionaryExtensions.cs" />
-    <Compile Include="Core\Http\HtmlActionResult.cs" />
-    <Compile Include="Core\Mvc\Controller.cs" />
-    <Compile Include="Core\Mvc\IView.cs" />
-    <Compile Include="Core\Mvc\IViewEngine.cs" />
-    <Compile Include="Core\Mvc\RazorViewEngine.cs" />
-    <Compile Include="Core\Mvc\ViewEngineResult.cs" />
-    <Compile Include="Core\Mvc\ViewLocation.cs" />
-    <Compile Include="Core\Mvc\ViewResult.cs" />
-    <Compile Include="UIControllers\DomainUIController.cs" />
-    <Compile Include="Core\Http\Dispatcher\HttpControllerTypeCache.cs" />
-    <Compile Include="Core\Http\~NamespaceHttpControllerSelector.cs" />
-    <Compile Include="Core\Http\~HttpRouteCollectionExtensions.cs" />
-    <Compile Include="Core\Http\~OldNamespaceHttpControllerSelector.cs" />
+    <Compile Include="~Core\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="~Core\Http\HtmlActionResult.cs" />
+    <Compile Include="~Core\Mvc\Controller.cs" />
+    <Compile Include="~Core\Mvc\IView.cs" />
+    <Compile Include="~Core\Mvc\IViewEngine.cs" />
+    <Compile Include="~Core\Mvc\RazorViewEngine.cs" />
+    <Compile Include="~Core\Mvc\ViewEngineResult.cs" />
+    <Compile Include="~Core\Mvc\ViewLocation.cs" />
+    <Compile Include="~Core\Mvc\ViewResult.cs" />
+    <Compile Include="~UIControllers\DomainUIController.cs" />
+    <Compile Include="~Core\Http\Dispatcher\HttpControllerTypeCache.cs" />
+    <Compile Include="~Core\Http\~NamespaceHttpControllerSelector.cs" />
+    <Compile Include="~Core\Http\~HttpRouteCollectionExtensions.cs" />
+    <Compile Include="~Core\Http\~OldNamespaceHttpControllerSelector.cs" />
     <Compile Include="Data\Interfaces\IDomainQuery.cs" />
     <Compile Include="Data\Interfaces\IDomainRepository.cs" />
     <Compile Include="Data\Mongo\DomainQuery.cs" />
@@ -127,15 +127,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="UIControllers\HomeUIController.cs" />
+    <Compile Include="~UIControllers\HomeUIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="App_Start\Startup.StaticFile.cs" />
     <None Include="packages.config" />
-    <None Include="Views\HomeUI\Index.cshtml" />
-    <None Include="Views\Web.config" />
-    <None Include="Views\_ViewStart.cshtml" />
+    <None Include="~Views\HomeUI\Index.cshtml" />
+    <None Include="~Views\Web.config" />
+    <None Include="~Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Evol.Common\Evol.Common.csproj">
@@ -155,7 +155,9 @@
       <Name>Plunder</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UI\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="wwwroot\index.html" />
   </ItemGroup>
