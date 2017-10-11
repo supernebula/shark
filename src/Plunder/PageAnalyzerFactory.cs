@@ -1,7 +1,9 @@
 ﻿using Plunder.Core;
 using Plunder.Process.Analyze;
 using System;
+using System.Linq;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Plunder
 {
@@ -28,6 +30,12 @@ namespace Plunder
             else
                 _analyzerThunkDic.TryAdd(key, analyzerThunk);
         }
+
+        public void RegisterByConfig(IEnumerable<string> configFiles)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public IPageAnalyzer Create(string siteId, string topic)
         {

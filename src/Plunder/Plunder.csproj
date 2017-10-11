@@ -86,8 +86,10 @@
     <Compile Include="Ioc\IIocServiceGetter.cs" />
     <Compile Include="PageAnalyzerFactory.cs" />
     <Compile Include="Process\Analyze\FieldSelector.cs" />
+    <Compile Include="Process\Analyze\IPageAnalyzeConfig.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\Values\UrlType.cs" />
+    <Compile Include="Process\Analyze\PageAnalyzeConfig.cs" />
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />
     <Compile Include="Schedule\Filter\IDuplicateFilter.cs" />
     <Compile Include="Compoment\Models\AccessRecord.cs" />

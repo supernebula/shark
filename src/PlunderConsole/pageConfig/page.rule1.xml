@@ -1,0 +1,29 @@
+﻿<xml>
+  <tableName>Product</tableName>
+  <topic>product.detail</topic>
+  <urlRegex></urlRegex>
+  <navUrlRegex></navUrlRegex>
+  <targetUrlRegex></targetUrlRegex>
+  <rules>
+    <rule>
+      <fieldName>Title</fieldName>
+      <xPath>//*[@id=\"p_mid\"]/div[2]/h2</xPath>
+      <childs></childs>
+    </rule>
+    <rule>
+      <fieldName>PicUrl</fieldName>
+      <xPath>//img[@id=\"productImage\"]/@src</xPath>
+      <childs></childs>
+    </rule>
+    <rule>
+      <fieldName>Price</fieldName>
+      <xPath>//*[@id=\"p_mid\"]/div[2]/div[1]/div[2]/span</xPath>
+      <childs></childs>
+    </rule>
+    <rule>
+      <fieldName>Description</fieldName>
+      <xPath>//*[@id=\"intro_0\"]</xPath>
+      <childs></childs>
+    </rule>
+  </rules>
+</xml>
