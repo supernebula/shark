@@ -33,7 +33,7 @@ namespace Plunder
 
         public void RegisterByConfig(IEnumerable<string> configFiles)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); 
         }
 
 
