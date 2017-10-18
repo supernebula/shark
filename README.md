@@ -1,6 +1,8 @@
 # Plunder
 
-可配置、插件化的爬虫引擎，二次开发框架。version 0.5beta。
+可配置、插件化的爬虫引擎，二次开发框架；大数据累积项目。
+
+version 0.8beta.
 
 Configurable, pluginable crawler engine, secondary development framework. version 0.5beta.
 
