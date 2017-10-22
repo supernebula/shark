@@ -6,13 +6,13 @@
 
 Configurable, pluginable crawler engine, secondary development framework.
 
-## Version
-
-0.8 beta.
-
 ## Modules：
 
-Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Configuration
+Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer、ResultPipeline、Log、Configuration ...
+
+## Version
+
+0.8 beta
 
 ## License
 
