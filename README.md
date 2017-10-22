@@ -4,7 +4,11 @@
 
 支持单例、分布式部署。
 
-Configurable, pluginable crawler engine, secondary development framework. version 0.8beta.
+Configurable, pluginable crawler engine, secondary development framework.
+
+## Version
+
+0.8 beta.
 
 ## Modules：
 
@@ -13,4 +17,3 @@ Engine、Scheduler、ExcludeDuplicateFilter、Downloader、Analyzer、Producer�
 ## License
 
 Apache License, Version 2.0
-_&lt;<http://www.apache.org/licenses/>&gt;_
