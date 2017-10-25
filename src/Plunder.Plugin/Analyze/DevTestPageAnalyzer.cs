@@ -29,6 +29,8 @@ namespace Plunder.Plugin.Analyze
 
         public string TargetPageFlag => TargetPageFlagValue;
 
+        public string Topic => throw new NotImplementedException();
+
         private readonly IEnumerable<FieldSelector> _fieldXPaths;
 
         public DevTestPageAnalyzer()
@@ -68,7 +70,7 @@ namespace Plunder.Plugin.Analyze
                 Request = request,
                 Response = response,
                 NewRequests = newRequests,
-                Channel = Channel.Product,
+                Topic = Channel.Product,
                 Data = resultFields,
                 //Topic = Site.Topic
             };
@@ -109,7 +111,7 @@ namespace Plunder.Plugin.Analyze
                 var urlTye = UrlType.Navigation;
                 if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
                     urlTye = UrlType.Target;
-                newRequests.Add(new Request(href) {UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType , Channel = TargetPageFlagValue });
+                newRequests.Add(new Request(href) {UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType , Topic = TargetPageFlagValue });
             }
             return newRequests;
         }
@@ -127,7 +129,7 @@ namespace Plunder.Plugin.Analyze
             var fields = new List<ResultField>().ToList();
             foreach (var selector in selectors)
             {
-                if(String.IsNullOrWhiteSpace(selector.Selector))
+                if (String.IsNullOrWhiteSpace(selector.Selector))
                     continue;
                 var node = doc.DocumentNode.SelectSingleNode(selector.Selector);
                 if (node.Name == "img")
@@ -136,10 +138,12 @@ namespace Plunder.Plugin.Analyze
                     fields.Add(new ResultField { Name = selector.FieldName, Value = src });
                     continue;
                 }
-                    
+
                 fields.Add(new ResultField { Name = selector.FieldName, Value = node == null ? null : node.InnerText.Trim() });
             }
             return fields;
         }
+
+
     }
 }

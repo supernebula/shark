@@ -13,7 +13,7 @@ namespace Plunder.Compoment
 
         public IEnumerable<Request> NewRequests { get; set; }
 
-        public string Channel { get; set; }
+        public string Topic { get; set; }
 
         public IEnumerable<ResultField> Data { get; set; }
 
@@ -24,7 +24,7 @@ namespace Plunder.Compoment
                 //Topic = topic,
                 Request = request,
                 Response = response,
-                Channel = channel
+                Topic = channel
             };
 
         }

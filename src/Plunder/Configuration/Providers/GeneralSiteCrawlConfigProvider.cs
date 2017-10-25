@@ -16,7 +16,7 @@ namespace Plunder.Configuration.Providers
 
         }
 
-        public IEnumerable<SiteCrawlConfig> All()
+        public List<SiteCrawlConfig> All()
         {
             var configs = new List<SiteCrawlConfig>();
             var files = Directory.GetFiles(xmlConfigFolder);
@@ -38,6 +38,11 @@ namespace Plunder.Configuration.Providers
             var all = All();
             var item = all.FirstOrDefault(e => e.SiteId == siteId && e.Topic == topic);
             return item;
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

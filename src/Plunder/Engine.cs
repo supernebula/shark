@@ -82,7 +82,7 @@ namespace Plunder
                 var seed = new RequestMessage()
                 {
                     //Topic = topic,
-                    Request = new Request(url) { SiteId = siteId, PageType = PageType.Static, Channel = "product.detail" }
+                    Request = new Request(url) { SiteId = siteId, PageType = PageType.Static, Topic = "product.detail" }
                 };
                 seeds.Add(seed);
             }

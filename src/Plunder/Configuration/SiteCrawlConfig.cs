@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Plunder.Process.Analyze
+namespace Plunder.Configuration
 {
     [XmlRoot("siteCrawlConfig")]
     public class SiteCrawlConfig
@@ -57,7 +57,10 @@ namespace Plunder.Process.Analyze
     public class FieldRule
     {
         [XmlArray("name")]
-        public string FieldName { get; set; }
+        public string Name { get; set; }
+
+        [XmlArray("remark")]
+        public string Remark { get; set; }
 
         [XmlArray("xPath")]
         public string XPath { get; set; }

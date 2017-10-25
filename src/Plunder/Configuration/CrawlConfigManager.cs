@@ -16,7 +16,7 @@ namespace Plunder.Configuration
             iocManager = ioc;
         }
 
-        public SiteCrawlConfig GetCrawlConfig(string siteId, string topic)
+        public SiteCrawlConfig GetConfig(string siteId, string topic)
         {
             var provider = iocManager.GetService<ISiteCrawlConfigProvider>();
             var config = provider.Get(siteId, topic);

@@ -92,7 +92,7 @@
     <Compile Include="Ioc\IIocServiceGetter.cs" />
     <Compile Include="PageAnalyzerFactory.cs" />
     <Compile Include="Process\Analyze\FieldSelector.cs" />
-    <Compile Include="Process\Analyze\SiteCrawlConfig.cs" />
+    <Compile Include="Configuration\SiteCrawlConfig.cs" />
     <Compile Include="Process\Analyze\IPageAnalyzer.cs" />
     <Compile Include="Compoment\Values\UrlType.cs" />
     <Compile Include="Schedule\Filter\IBloomFilter.cs" />

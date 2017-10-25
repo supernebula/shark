@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Plunder.Configuration.Providers
 {
-    interface ISiteCrawlConfigProvider
+    interface ISiteCrawlConfigProvider : IDisposable
     {
-        IEnumerable<SiteCrawlConfig> All();
+        List<SiteCrawlConfig> All();
 
         SiteCrawlConfig Get(string SiteId, string topic);
     }

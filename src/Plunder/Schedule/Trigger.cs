@@ -133,7 +133,7 @@ namespace Plunder.Schedule
                     Logger.Debug("Downloaded:" + t.Result.Request.Url);
 #endif
 
-                        var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Channel);
+                        var pageAnalyzer = _context.PageAnalyzerFactory.Create(t.Result.Request.SiteId, t.Result.Request.Topic);
                     var pageResult = pageAnalyzer.Analyze(t.Result);
                     _context.ResultPipeline.Inject(pageResult);
                 });

@@ -1,6 +1,6 @@
 ﻿<siteCrawlConfig>
   <siteId>usashopcn</siteId>
-  <site>usashopcn</site>
+  <siteName>usashopcn</siteName>
   <domain>www.usashopcn.com</domain>
   <topic>product.detail</topic>
 
@@ -35,29 +35,34 @@
       <urlMatch>start:http://www.usashopcn.com/Product/Details</urlMatch>
       <fields>
         <field>
-          <key>ProductId</key>
-          <name>编号</name>
+          <name>ProductId</name>
+          <remark>编号</remark>
           <xPath></xPath>
+          <FixedValue></FixedValue>
         </field>
         <field>
-          <key>Title</key>
-          <name>名称</name>
+          <name>Title</name>
+          <remark>名称</remark>
           <xPath>//*[@id=\"p_mid\"]/div[2]/h2</xPath>
+          <FixedValue></FixedValue>
         </field>
         <field>
-          <key>PicUrl</key>
-          <name>图片</name>
+          <name>PicUrl</name>
+          <remark>图片</remark>
           <xPath>//img[@id=\"productImage\"]/@src</xPath>
+          <FixedValue></FixedValue>
         </field>
         <field>
-          <key>Price</key>
-          <name>价格</name>
+          <name>Price</name>
+          <remark>价格</remark>
           <xPath>//*[@id=\"p_mid\"]/div[2]/div[1]/div[2]/span</xPath>
+          <FixedValue></FixedValue>
         </field>
         <field>
-          <key>Description</key>
-          <name>描述</name>
+          <name>Description</name>
+          <remark>描述</remark>
           <xPath>//*[@id=\"intro_0\"]</xPath>
+          <FixedValue></FixedValue>
           <childs></childs>
         </field>
       </fields>
