@@ -1,4 +1,5 @@
 ﻿<siteCrawlConfig>
+  <siteId>usashopcn</siteId>
   <site>usashopcn</site>
   <domain>www.usashopcn.com</domain>
   <topic>product.detail</topic>
@@ -26,29 +27,36 @@
   <targetPages>
     <page>
       <collectKey>Product</collectKey>
+      <name>商品详情</name>
       <!--type: static、dynamic、file -->
       <!--static:静态网页, dynamic:动态脚本网页, file:文件 -->
       <type>static</type>
-      <name>商品详情</name>
+
       <urlMatch>start:http://www.usashopcn.com/Product/Details</urlMatch>
       <fields>
         <field>
-          <name>Title</name>
+          <key>ProductId</key>
+          <name>编号</name>
+          <xPath></xPath>
+        </field>
+        <field>
+          <key>Title</key>
+          <name>名称</name>
           <xPath>//*[@id=\"p_mid\"]/div[2]/h2</xPath>
-          <childs></childs>
         </field>
         <field>
-          <name>PicUrl</name>
+          <key>PicUrl</key>
+          <name>图片</name>
           <xPath>//img[@id=\"productImage\"]/@src</xPath>
-          <childs></childs>
         </field>
         <field>
-          <name>Price</name>
+          <key>Price</key>
+          <name>价格</name>
           <xPath>//*[@id=\"p_mid\"]/div[2]/div[1]/div[2]/span</xPath>
-          <childs></childs>
         </field>
         <field>
-          <name>Description</name>
+          <key>Description</key>
+          <name>描述</name>
           <xPath>//*[@id=\"intro_0\"]</xPath>
           <childs></childs>
         </field>

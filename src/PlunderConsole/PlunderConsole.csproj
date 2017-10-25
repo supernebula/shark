@@ -70,7 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="pageConfig\page.rule1.xml" />
+    <Content Include="crawlConfig\usash.crawl.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="App.config" />
     <Content Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

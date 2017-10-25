@@ -34,6 +34,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Library\Evol.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Evol.Utilities">
+      <HintPath>..\..\Library\Evol.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -66,9 +69,12 @@
     <Compile Include="Compoment\Subject.cs" />
     <Compile Include="Compoment\Values\HttpProxyType.cs" />
     <Compile Include="Configuration\ConfigManager.cs" />
+    <Compile Include="Configuration\CrawlConfigManager.cs" />
+    <Compile Include="Configuration\Providers\GeneralSiteCrawlConfigProvider.cs" />
     <Compile Include="Configuration\Providers\ICookieProvider.cs" />
     <Compile Include="Configuration\Providers\IExtractRuleProvider.cs" />
     <Compile Include="Configuration\Providers\IHttpProxyProvider.cs" />
+    <Compile Include="Configuration\Providers\ISiteCrawlConfigProvider.cs" />
     <Compile Include="Configuration\Providers\IUserAgentProvider.cs" />
     <Compile Include="Core\IDownloaderFactory.cs" />
     <Compile Include="Core\IPageAnalyzerFactory.cs" />

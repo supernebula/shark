@@ -6,6 +6,9 @@ namespace Plunder.Process.Analyze
     [XmlRoot("siteCrawlConfig")]
     public class SiteCrawlConfig
     {
+        [XmlElement("siteId")]
+        public string SiteId { get; set; }
+
         [XmlElement("site")]
         public string Site { get; set; }
 

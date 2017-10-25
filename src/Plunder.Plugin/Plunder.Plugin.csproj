@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analyze\DevTestPageAnalyzer.cs" />
+    <Compile Include="Analyze\GeneralPageAnalyzer.cs" />
     <Compile Include="Compoment\Channel.cs" />
     <Compile Include="Compoment\SiteConfiguration.cs" />
     <Compile Include="Compoment\SiteIndex.cs" />
