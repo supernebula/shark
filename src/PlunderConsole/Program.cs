@@ -50,7 +50,7 @@ namespace PlunderConsole
             var options = BuildOptions();
             _engine = new Engine(options);
             //_engine.Start(new List<RequestMessage> { new RequestMessage() {  } }); //添加起始链接
-            _engine.Start("www.devtest.com", "http://www.devtest.com/artice/item/?category=162"); //添加起始链接
+            _engine.Start("www.plant.csdb.cn", "http://www.plant.csdb.cn/names?page=0"); //添加起始链接
         }
 
         static EngineOptions BuildOptions()
@@ -87,6 +87,7 @@ namespace PlunderConsole
         {
             var factory = new PageAnalyzerFactory();
             factory.Register(DevTestPageAnalyzer.SiteIdValue, DevTestPageAnalyzer.TargetPageFlagValue, () => new DevTestPageAnalyzer());
+            factory.Register(PlantCsdbPageAnalyzer.SiteIdValue, PlantCsdbPageAnalyzer.TargetPageFlagValue, () => new PlantCsdbPageAnalyzer());
             return factory;
         }
 

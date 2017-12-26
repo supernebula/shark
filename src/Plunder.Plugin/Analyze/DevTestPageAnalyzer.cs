@@ -18,7 +18,7 @@ namespace Plunder.Plugin.Analyze
 {
     public class DevTestPageAnalyzer : IPageAnalyzer
     {
-        private ILogger Logger = LogManager.GetLogger("devTestAnalyzer");
+        private ILogger Logger = LogManager.GetLogger(nameof(DevTestPageAnalyzer));
 
         public const string SiteIdValue = SiteIndex.DevTest;
 

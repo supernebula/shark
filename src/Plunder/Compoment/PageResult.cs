@@ -17,6 +17,8 @@ namespace Plunder.Compoment
 
         public IEnumerable<ResultField> Data { get; set; }
 
+        public IEnumerable<IEnumerable<ResultField>> GroupData { get; set; }
+
         public static PageResult EmptyResponse(/*string topic, */Request request, Response response, string channel)
         {
             return new PageResult

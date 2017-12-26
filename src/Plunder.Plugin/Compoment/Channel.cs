@@ -9,5 +9,6 @@ namespace Plunder.Plugin.Compoment
     public static class Channel
     {
         public const string Product = "product";
+        public const string Plant = "plant";
     }
 }

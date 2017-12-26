@@ -50,6 +50,25 @@ namespace Plunder.Plugin.Compoment
             site.RetrySleepMilliseconds = 10000;
             site.TimeOut = 3000;
             sites.Add(site.Id, site);
+
+            //植物名录
+            var site2 = Site.NewDefault;
+            site2.Id = SiteIndex.PlantCsdb;
+            //site.Topic = PageType.Static;
+            site2.IndexUrl = "http://www.plant.csdb.cn/";
+            site2.Domain = "www.plant.csdb.cn";
+            site2.EnableHttpProxy = false;
+            site2.Name = "中国植物主题数据库";
+            site2.UserAgent = UserAgentCollection.RandomUserAgent().Value;
+            site2.Charset = "utf-8";
+            site2.SleepMilliseconds = 200;
+            site2.RetryTimes = 1;
+            site2.AllowedRetryCount = 1;
+            site2.CycleRetryTimes = 1;
+            site2.RetrySleepMilliseconds = 10000;
+            site2.TimeOut = 3000;
+            sites.Add(site2.Id, site2);
+
             return sites;
         }
     }
