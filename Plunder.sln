@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F9C3819E-D428-49D0-8498-58CB3592A70B}"
 EndProject
@@ -16,7 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F45B5A7A-FBEA-439B-A2BC-D9FB6A18FC8C}"
 	ProjectSection(SolutionItems) = preProject
 		DuplicateAssert.txt = DuplicateAssert.txt
-		C:\Users\LM\Desktop\Plunder.vsdx = C:\Users\LM\Desktop\Plunder.vsdx
+		..\..\..\..\LM\Desktop\Plunder.vsdx = ..\..\..\..\LM\Desktop\Plunder.vsdx
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B7D3A961-A753-43C7-856F-E844C585613F}"
@@ -40,6 +40,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.WebHost", "src\OwinWebHost\Plunder.WebHost.csproj", "{51C5442C-2A70-453D-80B9-430C468AF076}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plunder.Setting", "src\Plunder.Setting\Plunder.Setting.csproj", "{A558F45B-693E-4CFA-9646-27741E502B17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "document", "document", "{AC077E58-F0C1-46C8-B440-0C9E947FDD1C}"
+	ProjectSection(SolutionItems) = preProject
+		document\shark_class_design_allInOne.EAP = document\shark_class_design_allInOne.EAP
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

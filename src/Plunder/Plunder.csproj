@@ -112,7 +112,6 @@
     <Compile Include="Compoment\Response.cs" />
     <Compile Include="Download\UserAgentCollection.cs" />
     <Compile Include="IPool.cs" />
-    <Compile Include="IQueue.cs" />
     <Compile Include="Pipeline\IResultPipelineModule.cs" />
     <Compile Include="Pipeline\DefaultMomeryProducerModule.cs" />
     <Compile Include="Pipeline\ResultItemPipeline.cs" />
