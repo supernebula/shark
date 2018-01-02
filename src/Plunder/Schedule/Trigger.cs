@@ -128,6 +128,11 @@ namespace Plunder.Schedule
                         Logger.Debug("Download Task Canceled:" + t.Exception?.Message);
                         return;
                     }
+
+                    if (t.Exception != null)
+                    {
+                        Logger.Debug("Error:" + t.Exception.Message + ", innerEx:" + t.Exception.InnerException?.Message);
+                    }
                         
 #if DEBUG
                     Logger.Debug("Downloaded:" + t.Result.Request.Url);

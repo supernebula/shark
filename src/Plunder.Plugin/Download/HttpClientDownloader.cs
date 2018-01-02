@@ -53,8 +53,19 @@ namespace Plunder.Plugin.Download
             var watch = new Stopwatch();
             _httpClient.Timeout = TimeSpan.FromSeconds(5);
 
+            HttpResponseMessage result;
+
             watch.Start();
-            var result = await _httpClient.GetAsync(Request.Url, token);
+            try
+            {
+                result = await _httpClient.GetAsync(Request.Url, token);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
             watch.Stop();
             _elapsed = watch.Elapsed.Milliseconds;
             var resposne = new Response();

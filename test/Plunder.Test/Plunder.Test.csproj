@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Analyze\SelectorTest.cs" />
     <Compile Include="Download\PhantomJsTest.cs" />
+    <Compile Include="Download\HttpDownTest.cs" />
     <Compile Include="Pipeline\ConsoleModule.cs" />
     <Compile Include="Pipeline\DataResult.cs" />
     <Compile Include="Pipeline\DbModule.cs" />
