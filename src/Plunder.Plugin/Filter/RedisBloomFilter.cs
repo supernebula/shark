@@ -133,13 +133,13 @@ namespace Plunder.Plugin.Filter
 
         public void Clear()
         {
-            var beforeCount = Database.StringBitCount("_bitSetKey");
-            Database.KeyDelete(_bitSetKey);
-            var afterCount = Database.StringBitCount("_bitSetKey");
-            var originalColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"RedisBloomFilter, 清理前{beforeCount}, 清理后{afterCount}");
-            Console.ForegroundColor = originalColor;
+            //var beforeCount = Database.StringBitCount("_bitSetKey");
+            //Database.KeyDelete(_bitSetKey);
+            //var afterCount = Database.StringBitCount("_bitSetKey");
+            //var originalColor = Console.ForegroundColor;
+            //Console.ForegroundColor = ConsoleColor.Yellow;
+            //Console.WriteLine($"RedisBloomFilter, 清理前{beforeCount}, 清理后{afterCount}");
+            //Console.ForegroundColor = originalColor;
         }
 
         #endregion

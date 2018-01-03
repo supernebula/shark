@@ -37,6 +37,8 @@ namespace PlunderConsole
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<AccessRecordRepository>().As<AccessRecordRepository>();
             containerBuilder.RegisterType<ProductRepository>().As<ProductRepository>();
+            containerBuilder.RegisterType<PlantRepository>().As<PlantRepository>();
+            
             containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
             containerBuilder.RegisterType<MongoDbContextProvider>().As<IMongoDbContextProvider>();
             
@@ -87,7 +89,7 @@ namespace PlunderConsole
         {
             var factory = new PageAnalyzerFactory();
             factory.Register(DevTestPageAnalyzer.SiteIdValue, DevTestPageAnalyzer.TargetPageFlagValue, () => new DevTestPageAnalyzer());
-            factory.Register(PlantCsdbPageAnalyzer.SiteIdValue, PlantCsdbPageAnalyzer.TargetPageFlagValue, () => new PlantCsdbPageAnalyzer());
+            factory.Register(PlantCsdbListPageAnalyzer.SiteIdValue, PlantCsdbListPageAnalyzer.TargetPageFlagValue, () => new PlantCsdbListPageAnalyzer());
             return factory;
         }
 
@@ -95,8 +97,10 @@ namespace PlunderConsole
         {
             var resultPipeline = new ResultItemPipeline();
             resultPipeline.RegisterModule(new ConsoleResultModule());
-            resultPipeline.RegisterModule(new MongoDBPipelineModule());
-            resultPipeline.RegisterModule(new ProductPipelineModule());
+            resultPipeline.RegisterModule(new PlantCollectPipelineModule());
+            
+            //resultPipeline.RegisterModule(new MongoDBPipelineModule());
+            //resultPipeline.RegisterModule(new ProductPipelineModule());
             return resultPipeline;
         }
     }

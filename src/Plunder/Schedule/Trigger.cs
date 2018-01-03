@@ -63,11 +63,11 @@ namespace Plunder.Schedule
                 {
                     var threadDown = _messagePullAutoResetEvent.Reset();
                     _messagePullAutoResetEvent.WaitOne();
-                    //Logger.Debug($"threadDown:{threadDown}=eventLock.Reset()");
+                    Logger.Debug($"threadDown:{threadDown}=eventLock.Reset()");
                     continue;
                 }
 
-                Thread.Sleep(300);
+                //Thread.Sleep(10);
 
                 var num = _maxDownloadThreadNumber - DownloadingTaskCount();
                 var messages = _context.Scheduler.Poll(num);
@@ -76,9 +76,10 @@ namespace Plunder.Schedule
                 {
                     var message = _context.Scheduler.WaitUntillPoll();
                     messages.Add(message);
+                    Logger.Debug(message.Request.Url);
                 }
                 _messagePullAutoResetEvent.Reset();
-                //Logger.Debug(message.Request.Url);
+     
 
                 foreach (var item in messages)
                 {
@@ -89,6 +90,7 @@ namespace Plunder.Schedule
                         if (taskState == null)
                             cancelTokenSource.Cancel();
                         token.ThrowIfCancellationRequested();
+                        //Thread.Sleep(10);
                         await WorkingAsync(taskState.Request, token);
 
                     },

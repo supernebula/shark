@@ -15,9 +15,9 @@ using Site = Plunder.Compoment.Site;
 using NLog;
 namespace Plunder.Plugin.Analyze
 {
-    public class PlantCsdbPageAnalyzer : IPageAnalyzer
+    public class PlantCsdbListPageAnalyzer : IPageAnalyzer
     {
-        private ILogger Logger = LogManager.GetLogger(nameof(PlantCsdbPageAnalyzer));
+        private ILogger Logger = LogManager.GetLogger(nameof(PlantCsdbListPageAnalyzer));
 
         public const string SiteIdValue = SiteIndex.PlantCsdb;
 
@@ -27,12 +27,13 @@ namespace Plunder.Plugin.Analyze
 
         public string SiteId => SiteIdValue;
 
-        public string Topic => throw new NotImplementedException();
+        public string Topic => "plantnames.list";
 
         public string TargetPageFlag => TargetPageFlagValue;
 
-        public PlantCsdbPageAnalyzer()
+        public PlantCsdbListPageAnalyzer()
         {
+            Site = SiteConfiguration.Instance.GetSite(SiteId);
         }
 
 
@@ -76,15 +77,15 @@ namespace Plunder.Plugin.Analyze
                 var tr = trs[i - 1];
                 var latinName = tr.SelectNodes("td[1]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
                 var namer = tr.SelectNodes("td[2]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
-                var name = tr.SelectNodes("td[2]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
                 var zhName = tr.SelectNodes("td[3]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
                 var locality = tr.SelectNodes("td[4]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
 
                 plant.Add(new ResultField { Name = "LatinName", Value = latinName });
                 plant.Add(new ResultField { Name = "Namer", Value = namer });
-                plant.Add(new ResultField { Name = "Name", Value = name });
                 plant.Add(new ResultField { Name = "ZhName", Value = zhName });
                 plant.Add(new ResultField { Name = "Locality", Value = locality });
+                var listUrl = "http://www.plant.csdb.cn/taxonpage?sname=" + latinName.Replace(" ", "%20");
+                plant.Add(new ResultField { Name = "ListUrl", Value = listUrl });
                 group.Add(plant);
             }
 

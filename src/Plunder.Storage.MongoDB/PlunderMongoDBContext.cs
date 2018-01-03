@@ -4,7 +4,7 @@ namespace Plunder.Storage.MongoDB
 {
     public class PlunderMongoDBContext : NamedMongoDbContext
     {
-        public PlunderMongoDBContext():base("mongodb://127.0.0.1/plunder")
+        public PlunderMongoDBContext():base("mongodb://127.0.0.1/plantCollect")
         {
         }
     }

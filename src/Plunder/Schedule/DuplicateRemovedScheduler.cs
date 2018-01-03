@@ -40,7 +40,7 @@ namespace Plunder.Schedule
             engineContext.DownloaderFactory,
             engineContext.ResultPipeline,
             engineContext.PageAnalyzerFactory);
-            _trigger = new Trigger(_currentContext, 1);
+            _trigger = new Trigger(_currentContext, 50);
         }
 
         public RequestMessage WaitUntillPoll()
@@ -99,7 +99,7 @@ namespace Plunder.Schedule
         {
             if (_duplicateFilter.Contains(message.Request.Url))
             {
-                //Logger.Info($"Duplicated!");
+                Logger.Info($"Duplicated!");
                 return true;
             }
                 
@@ -112,7 +112,11 @@ namespace Plunder.Schedule
             return await Task.Run(() =>
             {
                 if (IsDuplicate(message))
+                {
+                    Logger.Info($"Duplicated!");
                     return false;
+                }
+                    
                 return Queue.TryAdd(message);
             });
         }
