@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Plunder.Compoment.Models.AccessRecord" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAACAAAgEgAABAAAAoAAAIAAAANAAgAQKEAAACAAAAA=</HashCode>
+      <FileName>Compoment\Models\AccessRecord.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Compoment.Models.Cookie" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Compoment\Models\Cookie.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Models.Domain" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Compoment\Models\Domain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Models.HttpProxy" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAgAAIAAAAAIAAAEACAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Compoment\Models\HttpProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Models.UserAgent" Collapsed="true">
+    <Position X="10.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Models\UserAgent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.ExtractField" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAJAAMQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Models\ExtractField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.ExtractRule" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAg=</HashCode>
+      <FileName>Compoment\Models\ExtractRule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.PageResult" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAABAAAAAAACAAAAAIAAAgBAAAAAAACAAAAA=</HashCode>
+      <FileName>Compoment\PageResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.ResultField" Collapsed="true">
+    <Position X="17.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Compoment\PageResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Request" Collapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAEAIAAAAAAIAAAIAAAgBAAgAACAAAgCAAAAA=</HashCode>
+      <FileName>Compoment\Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Response" Collapsed="true">
+    <Position X="16" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAADAQAgAQAAAAAgAoAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Site" Collapsed="true">
+    <Position X="12.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQCAAAAAgAQAAIAgAAAAQQACgAABEIEEABKEAgAAAA=</HashCode>
+      <FileName>Compoment\Site.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Compoment.Subject" Collapsed="true">
+    <Position X="16" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAEAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Subject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.AppConfig" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAgAAAAAAAAACAAAAAAAgAAQAAAAAGBACgAAA=</HashCode>
+      <FileName>Configuration\AppConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.ConfigManager" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAEAACACAAgAAEAAAAAAAAAAAAAAAAAAAAAgEAA=</HashCode>
+      <FileName>Configuration\ConfigManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.CrawlConfigManager" Collapsed="true">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAABAA=</HashCode>
+      <FileName>Configuration\CrawlConfigManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.SiteCrawlConfig" Collapsed="true">
+    <Position X="14.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAMAAAgAAAAAAAAAAAAgAAAEAAAAAAACAAAAA=</HashCode>
+      <FileName>Configuration\SiteCrawlConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.TargetPage" Collapsed="true">
+    <Position X="17.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAQQACAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Configuration\SiteCrawlConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.FieldRule" Collapsed="true">
+    <Position X="12.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Configuration\SiteCrawlConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Configuration.Providers.GeneralSiteCrawlConfigProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACAAAABAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\GeneralSiteCrawlConfigProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Download.DownloaderBuilder" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\DownloaderBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Download.DownloadTaskState" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\DownloadTaskState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Download.UserAgentCollection" Collapsed="true">
+    <Position X="12.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAEAAAAAAABAA=</HashCode>
+      <FileName>Download\UserAgentCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Download.KeyValuePairListExtension" Collapsed="true">
+    <Position X="12.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\UserAgentCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Download.Proxy.HttpProxy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAACAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\Proxy\HttpProxy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Download.Proxy.HttpProxyPool" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Download\Proxy\HttpProxyPool.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.DownloaderFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAASAAAABAEAAAAAAAAAAgAA=</HashCode>
+      <FileName>DownloaderFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Engine" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAyIAAAAAAAgAAAAEAEQAAAAAACAAQAAEAAI=</HashCode>
+      <FileName>Engine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.EngineContext" Collapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAgAAAAEAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EngineContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.EngineMonitor" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhBAAAAAAAAAEAAAAAAAAAMAABgAAAAAAAAAAAAA=</HashCode>
+      <FileName>EngineMonitor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.EngineOptions" Collapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAgAAAAEAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EngineOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.PageAnalyzerFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICAAAAAAAAAAAAAAAAAAAAQAAAARAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>PageAnalyzerFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Pipeline.DefaultMomeryProducerModule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIgIAAAAAAAAAQAAEAAAAAAIAACAAAAAAA=</HashCode>
+      <FileName>Pipeline\DefaultMomeryProducerModule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Pipeline.ResultItemPipeline" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAACAAAAAAAAAQAQBgAAAAAAAAI=</HashCode>
+      <FileName>Pipeline\ResultItemPipeline.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Process.Analyze.FieldSelector" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Process\Analyze\FieldSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Process.Selector.XPathSelector" Collapsed="true">
+    <Position X="14.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Process\Selector\XPathSelector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.DuplicateRemovedScheduler" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAJBIAACIAAAAAQAAAgAAAQAIACAAUYAAAEAABSAA=</HashCode>
+      <FileName>Schedule\DuplicateRemovedScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Plunder.Schedule.PriorityScheduler" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\PriorityScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.RequestMessage" Collapsed="true">
+    <Position X="14.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAACEAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\RequestMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.SchedulerContext" Collapsed="true">
+    <Position X="9" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAgAAAAEAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\SchedulerContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.SequenceScheduler" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\SequenceScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.Trigger" Collapsed="true">
+    <Position X="19.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAABBCIABAAAAAAEAAggEAAAAAAAoAIAAAAAABA=</HashCode>
+      <FileName>Schedule\Trigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.TriggerTaskItem" Collapsed="true">
+    <Position X="9" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQACAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Schedule\TriggerTaskItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Schedule.Filter.MemoryBloomFilter&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIGAAAAAAIAEgAAAAAEAAAAAAAABCAAABAAAAIQAIA=</HashCode>
+      <FileName>Schedule\Filter\MemoryBloomFilter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Schedule.Filter.MemoryDuplicateFilter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Schedule\Filter\MemoryDuplicateFilter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Schedule.Filter.SimpleItem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Schedule\Filter\MemoryDuplicateFilter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Plunder.Schedule.Filter.MemoryStorage&lt;T, TKey&gt;" Collapsed="true">
+    <Position X="17.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAYEAAAAAAAAAAAAAIAAQAAAAQEIAAAAQAAAQAAQSAA=</HashCode>
+      <FileName>Schedule\Filter\MemoryStorage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Util.HashUtil" Collapsed="true">
+    <Position X="17.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Util\HashUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plunder.Util.RandomUtil" Collapsed="true">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Util\RandomUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Plunder.Download.PageType" Collapsed="true">
+    <Position X="9" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQAAAAAAAAAAABAAAAAAAAAAABAAAEAQAAAAAAAAA=</HashCode>
+      <FileName>Download\PageType.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Plunder.Download.UserAgent" Collapsed="true">
+    <Position X="10.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Download\UserAgent.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="Plunder.Configuration.Providers.ICookieProvider" Collapsed="true">
+    <Position X="10.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\ICookieProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Configuration.Providers.IExtractRuleProvider" Collapsed="true">
+    <Position X="16" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\IExtractRuleProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Configuration.Providers.IHttpProxyProvider" Collapsed="true">
+    <Position X="17.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\IHttpProxyProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Configuration.Providers.ISiteCrawlConfigProvider" Collapsed="true">
+    <Position X="14.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\ISiteCrawlConfigProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Configuration.Providers.IUserAgentProvider" Collapsed="true">
+    <Position X="16" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Configuration\Providers\IUserAgentProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Core.IConsumer" Collapsed="true">
+    <Position X="9" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Core\IConsumer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Core.IDownloaderFactory" Collapsed="true">
+    <Position X="14.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IDownloaderFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Core.IPageAnalyzerFactory" Collapsed="true">
+    <Position X="10.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAQAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IPageAnalyzerFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Core.IProducer" Collapsed="true">
+    <Position X="14.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IProducer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Core.IResultItemPipeline" Collapsed="true">
+    <Position X="9" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAQAAAgAAAAAAAAI=</HashCode>
+      <FileName>Core\IResultItemPipeline.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Download.IDownloader" Collapsed="true">
+    <Position X="12.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAECAAQAAAAKAAAAAAAAAAAggAACAAAAAAAAAA=</HashCode>
+      <FileName>Download\IDownloader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.IPool" Collapsed="true">
+    <Position X="12.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPool.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.IQueue&lt;T&gt;" Collapsed="true">
+    <Position X="17.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IQueue.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Ioc.IIocManager" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ioc\IIocManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Ioc.IIocServiceGetter" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Ioc\IIocServiceGetter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Pipeline.IProducerModule" Collapsed="true">
+    <Position X="16" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Pipeline\IProducerModule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Pipeline.IResultPipelineModule" Collapsed="true">
+    <Position X="10.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgIAAAAAAAAAQAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Pipeline\IResultPipelineModule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Process.Analyze.IPageAnalyzer" Collapsed="true">
+    <Position X="9" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAIAgAAAgAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Process\Analyze\IPageAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Process.Selector.ISelector" Collapsed="true">
+    <Position X="12.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Process\Selector\ISelector.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IMessage&lt;T&gt;">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\IMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IMessage">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAIAgAAAAAEAAACAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Schedule\IMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IMonitorableBroker" Collapsed="true">
+    <Position X="19.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\IMonitorableBroker.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IMonitorableScheduler" Collapsed="true">
+    <Position X="3.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIBAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Schedule\IMonitorableScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IRequestMessageProvider" Collapsed="true">
+    <Position X="19.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAI=</HashCode>
+      <FileName>Schedule\IRequestMessageProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.IScheduler" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAACAAAAAAQAAAAAAAAAAACAAAAAAAAAAACAA=</HashCode>
+      <FileName>Schedule\IScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.Filter.IBloomFilter&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAgAAAAAEAAAAAAAAACAAABAAAAAQAAA=</HashCode>
+      <FileName>Schedule\Filter\IBloomFilter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Plunder.Schedule.Filter.IDuplicateFilter&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Schedule\Filter\IDuplicateFilter.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Plunder.Compoment.DataType" Collapsed="true">
+    <Position X="9" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAASAAAAQAgAAAAIQAAQAAACAAABgQDDAAACgAAAwA=</HashCode>
+      <FileName>Compoment\Values\DataType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plunder.Compoment.UrlType" Collapsed="true">
+    <Position X="16" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Compoment\Values\UrlType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plunder.Compoment.Values.DeviceType" Collapsed="true">
+    <Position X="10.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Values\DeviceType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plunder.Compoment.Values.HttpProxyType" Collapsed="true">
+    <Position X="14.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAEAAAAAAAABAAAAAAAIAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Compoment\Values\HttpProxyType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Plunder.Download.DownloadStatus" Collapsed="true">
+    <Position X="12.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAA=</HashCode>
+      <FileName>Download\DownloadStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
