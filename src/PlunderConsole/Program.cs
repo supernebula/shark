@@ -28,6 +28,7 @@ namespace PlunderConsole
         static Engine _engine;
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             InitAppConfig();
             LaunchEngine();
         }
@@ -38,7 +39,8 @@ namespace PlunderConsole
             containerBuilder.RegisterType<AccessRecordRepository>().As<AccessRecordRepository>();
             containerBuilder.RegisterType<ProductRepository>().As<ProductRepository>();
             containerBuilder.RegisterType<PlantRepository>().As<PlantRepository>();
-            
+            containerBuilder.RegisterType<PlantPhotoRepository>().As<PlantPhotoRepository>();
+
             containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
             containerBuilder.RegisterType<MongoDbContextProvider>().As<IMongoDbContextProvider>();
             
@@ -90,17 +92,16 @@ namespace PlunderConsole
             var factory = new PageAnalyzerFactory();
             factory.Register(DevTestPageAnalyzer.SiteIdValue, DevTestPageAnalyzer.TargetPageFlagValue, () => new DevTestPageAnalyzer());
             factory.Register(PlantCsdbListPageAnalyzer.SiteIdValue, PlantCsdbListPageAnalyzer.TargetPageFlagValue, () => new PlantCsdbListPageAnalyzer());
+            factory.Register(PlantCsdbPhotoPageAnalyzer.SiteIdValue, PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue, () => new PlantCsdbPhotoPageAnalyzer());
             return factory;
         }
 
         static ResultItemPipeline InitResultItemPipeline()
         {
             var resultPipeline = new ResultItemPipeline();
-            resultPipeline.RegisterModule(new ConsoleResultModule());
+           // resultPipeline.RegisterModule(new ConsoleResultModule());
             resultPipeline.RegisterModule(new PlantCollectPipelineModule());
             
-            //resultPipeline.RegisterModule(new MongoDBPipelineModule());
-            //resultPipeline.RegisterModule(new ProductPipelineModule());
             return resultPipeline;
         }
     }

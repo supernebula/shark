@@ -13,7 +13,7 @@ namespace Plunder.Compoment
             Id = HashUtil.Md5(url);
             Domain = (new Uri(url)).Authority;
             HttpMethod = HttpMethod.Get;
-            DelaySecond = 3;
+            DelaySecond = 0;
         }
 
         public int DelaySecond { get; set; }

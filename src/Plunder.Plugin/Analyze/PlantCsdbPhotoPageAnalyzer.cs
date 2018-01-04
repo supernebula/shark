@@ -21,19 +21,25 @@ namespace Plunder.Plugin.Analyze
 
         public const string SiteIdValue = SiteIndex.PlantCsdb;
 
-        public const string TargetPageFlagValue = "plantnames.list";
+        public const string TargetPageFlagValue = "plantname.detail";
 
         public Site Site { get; }
 
         public string SiteId => SiteIdValue;
 
-        public string Topic => "plantnames.list";
+        public string Topic => "plantname.detail";
 
         public string TargetPageFlag => TargetPageFlagValue;
+
+        private readonly FieldSelector latinSelector;
+
+        private readonly FieldSelector thumbImgUrlSelector;
 
         public PlantCsdbPhotoPageAnalyzer()
         {
             Site = SiteConfiguration.Instance.GetSite(SiteId);
+            latinSelector = new FieldSelector() { FieldName = "LatinName", Selector = "//*[@id=\"content\"]/h1" };
+            thumbImgUrlSelector = new FieldSelector() { FieldName = "ThumbImgUrl", Selector = "//*[@id=\"quicktabs_tabpage__fourth\"]/a/img" };
         }
 
 
@@ -43,100 +49,80 @@ namespace Plunder.Plugin.Analyze
             var request = response.Request;
             var doc = new HtmlDocument();
             if (string.IsNullOrWhiteSpace(response.Content))
-                return PageResult.EmptyResponse(/*Site.Topic,*/ request, response, Channel.Product);
+                return PageResult.EmptyResponse(/*Site.Topic,*/ request, response, Topic);
             doc.LoadHtml(response.Content);
-            var rsultFields = FindList(doc);
 
-            var newRequests = FindNewRequest(doc, request, @"[\s\S]*", "names?page=");
+            var resultGroup = new List<IEnumerable<ResultField>>();
+            if (request.UrlType == UrlType.Target)
+            {
+                var imgFields = XpathSelectImage(doc, thumbImgUrlSelector);
+                if (imgFields != null)
+                {
+                    foreach (var item in imgFields)
+                    {
+                        var resultFields = new List<ResultField>();
+                        var latinField = XpathSelectLatinName(doc, latinSelector);
+                        var thumbUrl = item.Value;
+                        var normalUrl = thumbUrl.Replace("Thumbnail", "Normal");
+                        var thumbPath = (new Uri(thumbUrl)).AbsolutePath;
+                        var normalPath = (new Uri(normalUrl)).AbsolutePath;
 
-            var group = FindList(doc);
+                        resultFields.Add(new ResultField() { Name = "LatinName", Value = latinField?.Value ?? string.Empty });
+                        resultFields.Add(new ResultField() { Name = "ThumbImgUrl", Value = thumbUrl });
+                        resultFields.Add(new ResultField() { Name = "NormalImgUrl", Value = normalUrl });
+                        resultFields.Add(new ResultField() { Name = "SourceSite", Value = Site.Domain });
+                        resultFields.Add(new ResultField() { Name = "ThumbPath", Value = thumbPath });
+                        resultFields.Add(new ResultField() { Name = "NormalPath", Value = normalPath });
+
+                        resultGroup.Add(resultFields);
+                    }
+                }
+            }
 
             var pageResult = new PageResult
             {
                 Request = request,
                 Response = response,
-                NewRequests = newRequests,
-                Topic = Channel.Plant,
-                GroupData = group,
-                //Topic = Site.Topic
+                NewRequests = null,
+                Topic = Topic,
+                GroupData = resultGroup
             };
             return pageResult;
         }
 
-        private IEnumerable<IEnumerable<ResultField>> FindList(HtmlDocument doc)
+        private ResultField XpathSelectLatinName(HtmlDocument doc, FieldSelector latinSelector)
         {
-            var group = new List<IEnumerable<ResultField>>();
-
-            var table = doc.DocumentNode.SelectNodes("//*[@id=\"content\"]/div[2]/div/div[1]/table");
-
-            var tableNode = table.First();
-            var trs = tableNode.SelectNodes("tr");
-            for (int i = 1; i <= trs.Count; i++)
-            {
-                var plant = new List<ResultField>();
-                var tr = trs[i - 1];
-                var latinName = tr.SelectNodes("td[1]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
-                var namer = tr.SelectNodes("td[2]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
-                var zhName = tr.SelectNodes("td[3]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
-                var locality = tr.SelectNodes("td[4]").FirstOrDefault()?.InnerText.Trim() ?? string.Empty;
-
-                plant.Add(new ResultField { Name = "LatinName", Value = latinName });
-                plant.Add(new ResultField { Name = "Namer", Value = namer });
-                plant.Add(new ResultField { Name = "ZhName", Value = zhName });
-                plant.Add(new ResultField { Name = "Locality", Value = locality });
-                var listUrl = "http://www.plant.csdb.cn/taxonpage?sname=" + latinName.Replace(" ", "%20");
-                plant.Add(new ResultField { Name = "ListUrl", Value = listUrl });
-                group.Add(plant);
-            }
-
-            return group;
-        }
-
-        private IEnumerable<Request> FindNewRequest(HtmlDocument doc, Request request, string newUrlPattern, string extractUrlPattern)
-        {
-            if (String.IsNullOrWhiteSpace(extractUrlPattern))
+            if (String.IsNullOrWhiteSpace(latinSelector.Selector))
                 return null;
-            var newRegex = new Regex(newUrlPattern, RegexOptions.IgnoreCase);
-            //var extractRegex = new Regex(extractUrlPattern, RegexOptions.IgnoreCase);
-            var newRequests = new List<Request>();
-            var dominRegex = new Regex(@"(?<=http://)[\w\.]+[^/]", RegexOptions.IgnoreCase);
-
-            var linkNodes = doc.DocumentNode.SelectNodes("//a[@href]");
-            if (linkNodes == null)
-                return newRequests;
-
-            foreach (HtmlNode link in linkNodes)
-            {
-                var href = link.GetAttributeValue("href", String.Empty).Trim();
-                href = AbsoluteUrl(href);
-                if (request.Url.Equals(href.Trim(), StringComparison.CurrentCultureIgnoreCase))
-                    continue;
-                if (String.IsNullOrWhiteSpace(href) || !href.StartsWith("http"))
-                    continue;
-                if (!String.IsNullOrWhiteSpace(newUrlPattern) && !newRegex.IsMatch(href))
-                    continue;
-                if (href.Equals(request.Url))
-                    continue;
-                if (!dominRegex.Match(href).Value.Contains(Site.Domain))
-                    continue;
-                //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                if (href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) < 0)
-                    continue;
-
-                var urlTye = UrlType.Navigation;
-                //if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
-                //    urlTye = UrlType.Target;
-                newRequests.Add(new Request(href) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = TargetPageFlagValue });
-            }
-            return newRequests;
+            var node = doc.DocumentNode.SelectSingleNode(latinSelector.Selector);
+            var field = new ResultField { Name = latinSelector.Selector, Value = node == null ? null : node.InnerText.Trim() };
+            return field;
         }
 
-        private string AbsoluteUrl(string url)
+
+        private List<ResultField> XpathSelectImage(HtmlDocument doc, FieldSelector imgSelector)
         {
-            if (url.StartsWith("http", StringComparison.CurrentCultureIgnoreCase))
-                return url;
-            return (new Uri(new Uri(String.Format("http://{0}/", Site.Domain)), url)).AbsoluteUri;
-        }
+            var fields = new List<ResultField>().ToList();
+            if (String.IsNullOrWhiteSpace(imgSelector.Selector))
+                return null;
+            var nodes = doc.DocumentNode.SelectNodes(imgSelector.Selector);
+            if (nodes == null)
+                return null;
+            foreach (var node in nodes)
+            {
+                if (node.Name == "img")
+                {
+                    var src = node.Attributes["src"] != null ? node.Attributes["src"].Value : string.Empty;
+                    fields.Add(new ResultField { Name = imgSelector.FieldName, Value = src });
+                    continue;
+                }
 
+                fields.Add(new ResultField { Name = imgSelector.FieldName, Value = node == null ? null : node.InnerText.Trim() });
+            }
+
+
+
+            return fields;
+        }
     }
 }

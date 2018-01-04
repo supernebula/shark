@@ -28,5 +28,21 @@ namespace Plunder.Compoment
         public int Elapsed { get; set; }
 
         public Type DownloaderType { get; set; }
+
+        public Exception Exception { get; set; }
+
+        public static Response Error(Request req, string message, Type downloaderType, Exception ex)
+        {
+            var res = new Response()
+            {
+                Request = req,
+                HttpStatusCode = HttpStatusCode.InternalServerError,
+                IsSuccessCode = false,
+                ReasonPhrase = message,
+                DownloaderType = downloaderType,
+                Exception = ex
+            };
+            return res;
+        }
     }
 }

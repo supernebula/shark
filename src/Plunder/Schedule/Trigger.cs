@@ -58,12 +58,12 @@ namespace Plunder.Schedule
                 }
 
                 var downloadingTaskCount = DownloadingTaskCount();
-                Logger.Debug($"Count:downing={downloadingTaskCount}, max={_maxDownloadThreadNumber}");
+                Logger.Debug($"Count:downing={downloadingTaskCount}, Max DownThead={_maxDownloadThreadNumber}");
                 if (_pulling || downloadingTaskCount >= _maxDownloadThreadNumber)
                 {
                     var threadDown = _messagePullAutoResetEvent.Reset();
                     _messagePullAutoResetEvent.WaitOne();
-                    Logger.Debug($"threadDown:{threadDown}=eventLock.Reset()");
+                    Logger.Debug($"DowningThread:{threadDown}=eventLock.Reset()");
                     continue;
                 }
 
@@ -78,7 +78,7 @@ namespace Plunder.Schedule
                     messages.Add(message);
                     Logger.Debug(message.Request.Url);
                 }
-                _messagePullAutoResetEvent.Reset();
+                //_messagePullAutoResetEvent.Reset();
      
 
                 foreach (var item in messages)
@@ -98,9 +98,9 @@ namespace Plunder.Schedule
                         token
                     );
 
-                    downloadTask.ContinueWith(t => {
-                        Downloaded(item.Request.Id);
-                    });
+                    //downloadTask.ContinueWith(t => {
+                    //    Downloaded(item.Request.Id);
+                    //});
 
                     var taskItem = new TriggerTaskItem()
                     {
@@ -125,6 +125,9 @@ namespace Plunder.Schedule
             request.Downloader = downloader.GetType().Name;
             await downloader.DownloadAsync(token)
                 .ContinueWith(t => {
+                    Downloaded(t.Result.Request.Id);
+                    return t.Result;
+                }).ContinueWith(t => {
                     if (t.IsCanceled)
                     {
                         Logger.Debug("Download Task Canceled:" + t.Exception?.Message);

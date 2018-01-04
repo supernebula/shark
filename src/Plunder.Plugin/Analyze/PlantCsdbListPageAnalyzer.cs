@@ -43,7 +43,7 @@ namespace Plunder.Plugin.Analyze
             var request = response.Request;
             var doc = new HtmlDocument();
             if (string.IsNullOrWhiteSpace(response.Content))
-                return PageResult.EmptyResponse(/*Site.Topic,*/ request, response, Channel.Product);
+                return PageResult.EmptyResponse(/*Site.Topic,*/ request, response, Topic);
             doc.LoadHtml(response.Content);
             var rsultFields = FindList(doc);
 
@@ -56,7 +56,7 @@ namespace Plunder.Plugin.Analyze
                 Request = request,
                 Response = response,
                 NewRequests = newRequests,
-                Topic = Channel.Plant,
+                Topic = Topic,
                 GroupData = group,
                 //Topic = Site.Topic
             };
@@ -68,7 +68,8 @@ namespace Plunder.Plugin.Analyze
             var group = new List<IEnumerable<ResultField>>();
 
             var table = doc.DocumentNode.SelectNodes("//*[@id=\"content\"]/div[2]/div/div[1]/table");
-
+            if (table == null)
+                return null;
             var tableNode = table.First();
             var trs = tableNode.SelectNodes("tr");
             for (int i = 1; i <= trs.Count; i++)
@@ -120,14 +121,35 @@ namespace Plunder.Plugin.Analyze
                 if (!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                if (href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) < 0)
+                if (href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) >= 0 && href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) >= 0)
+                {
+                    newRequests.Add(new Request(href) { UrlType = UrlType.Navigation, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = TargetPageFlagValue });
+                    continue;
+                }
+
+
+                if (href.IndexOf("taxonpage?sname=", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("taxonpage?sname=", StringComparison.CurrentCultureIgnoreCase) < 0)
                     continue;
 
-                var urlTye = UrlType.Navigation;
-                //if (href.IndexOf("/Product/Details/", StringComparison.CurrentCultureIgnoreCase) != -1)
-                //    urlTye = UrlType.Target;
-                newRequests.Add(new Request(href) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = TargetPageFlagValue });
+                
+                var urlTye = UrlType.Target;
+                var uri = new Uri(href);
+                //http://www.plant.csdb.cn/taxonpage?sname=Citrus%20aurantium%20cv.%20Goutou%20cheng
+                //去掉cv.右侧的拼音名称，只保留左侧的拉丁名称
+                var separateIndex = uri.Query.IndexOf("cv.");
+                if (separateIndex <= 0)
+                {
+                    newRequests.Add(new Request(href) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
+                    continue;
+                }
+
+                var queryStr = uri.Query.Substring(0, separateIndex).Trim();
+                var realHref = uri.OriginalString + queryStr;
+                newRequests.Add(new Request(realHref) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
             }
+
+
+
             return newRequests;
         }
 
