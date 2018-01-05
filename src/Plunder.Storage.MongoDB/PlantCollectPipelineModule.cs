@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,17 @@ namespace Plunder.Storage.MongoDB
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
 
-                var client = new HttpClient();
+
+                var cookieContainer = new CookieContainer() { };
+                cookieContainer.Add(new Cookie("AspxAutoDetectCookieSupport", "1", "/", "www.cfh.ac.cn"));
+                cookieContainer.Add(new Cookie("CFH_Cookie", "up3qxgfuwnzdtu2jz1d0xbbt", "/", "www.cfh.ac.cn"));
+                cookieContainer.Add(new Cookie("Hm_lpvt_17100a428da6da3b4e5da32712ca72c3", "1515035043", "/", "www.cfh.ac.cn"));
+                cookieContainer.Add(new Cookie("Hm_lvt_17100a428da6da3b4e5da32712ca72c3", "1513049753", "/", "www.cfh.ac.cn"));
+                cookieContainer.Add(new Cookie("Hm_lvt_17100a428da6da3b4e5da32712ca72c3", "1515035043", "/", "www.cfh.ac.cn"));
+                var httpClientHandler = new HttpClientHandler { CookieContainer = cookieContainer };
+                httpClientHandler.UseCookies = true;
+
+                var client = new HttpClient(httpClientHandler);
                 var stream = await client.GetStreamAsync(imgUrl);
 
                 using (var fs = new FileStream(filePath, FileMode.Create))
