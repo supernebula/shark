@@ -136,7 +136,7 @@ namespace Plunder.Schedule
 
                     if (t.Exception != null)
                     {
-                        Logger.Debug("Error:" + t.Exception.Message + ", innerEx:" + t.Exception.InnerException?.Message);
+                        Logger.Debug("Error:" + t.Exception.Message + ", innerEx:" + t.Exception.InnerException?.Message + "\r\n InterEx:" + t.Exception.InnerException?.InnerException.Message + "\r\n InterEx:" + t.Exception.InnerException?.InnerException?.InnerException.Message + "\r\n StackTrace:" + t.Exception.InnerException.StackTrace);
                     }
                         
 #if DEBUG

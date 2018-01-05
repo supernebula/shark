@@ -121,31 +121,30 @@ namespace Plunder.Plugin.Analyze
                 if (!dominRegex.Match(href).Value.Contains(Site.Domain))
                     continue;
                 //var urlTye = extractRegex.IsMatch(href) ? UrlType.Extracting : UrlType.Navigation;
-                if (href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) >= 0 && href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) >= 0)
+                if (href.IndexOf("names?page=", StringComparison.CurrentCultureIgnoreCase) >= 0)
                 {
                     newRequests.Add(new Request(href) { UrlType = UrlType.Navigation, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = TargetPageFlagValue });
                     continue;
                 }
 
 
-                if (href.IndexOf("taxonpage?sname=", StringComparison.CurrentCultureIgnoreCase) < 0 && href.IndexOf("taxonpage?sname=", StringComparison.CurrentCultureIgnoreCase) < 0)
+                if (href.IndexOf("taxonpage?sname=", StringComparison.CurrentCultureIgnoreCase) < 0)
                     continue;
 
-                
-                var urlTye = UrlType.Target;
+
                 var uri = new Uri(href);
                 //http://www.plant.csdb.cn/taxonpage?sname=Citrus%20aurantium%20cv.%20Goutou%20cheng
                 //去掉cv.右侧的拼音名称，只保留左侧的拉丁名称
                 var separateIndex = uri.Query.IndexOf("cv.");
                 if (separateIndex <= 0)
                 {
-                    newRequests.Add(new Request(href) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
+                    newRequests.Add(new Request(href) { UrlType = UrlType.Target, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
                     continue;
                 }
 
                 var queryStr = uri.Query.Substring(0, separateIndex).Trim();
                 var realHref = uri.OriginalString + queryStr;
-                newRequests.Add(new Request(realHref) { UrlType = urlTye, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
+                newRequests.Add(new Request(realHref) { UrlType = UrlType.Target, SiteId = request.SiteId, HttpMethod = request.HttpMethod, PageType = request.PageType, Topic = PlantCsdbPhotoPageAnalyzer.TargetPageFlagValue });
             }
 
 

@@ -37,18 +37,25 @@ namespace Plunder.Storage.MongoDB
 
                 if (result.Topic == "plantnames.list")
                 {
-                    var groups = result.GroupData?.ToList();
-                    if (groups == null)
+                    if (result.GroupData == null)
+                        return;
+                    var groups = result.GroupData.ToList();
+                    if (!groups.Any())
                         groups = new List<IEnumerable<ResultField>>();
                     if (result.Data != null)
                         groups.Add(result.Data);
                     var plantRepos = AppConfig.Current.IocManager.GetService<PlantRepository>();
 
                     groups.ForEach(async e => {
+                        var latinName = e.SingleOrDefault(z => z.Name == "LatinName")?.Value ?? string.Empty;
+                        var exitItem = await plantRepos.FindOneAsync(i => i.LatinName == latinName);
+                        if (exitItem != null)
+                            return;
+
                         await plantRepos.AddAsync(new Plant()
                         {
                             Id = Guid.NewGuid(),
-                            LatinName = e.SingleOrDefault(z => z.Name == "LatinName")?.Value ?? string.Empty,
+                            LatinName = latinName,
                             ZhName = e.SingleOrDefault(z => z.Name == "ZhName")?.Value ?? string.Empty,
                             Namer = e.SingleOrDefault(z => z.Name == "Namer")?.Value ?? string.Empty,
                             Locality = e.SingleOrDefault(z => z.Name == "Locality")?.Value ?? string.Empty,
@@ -80,6 +87,10 @@ namespace Plunder.Storage.MongoDB
                         var normalPath = e.SingleOrDefault(z => z.Name == "NormalPath")?.Value;
                         var thumbLocalPath = await SaveImageAsync(thumbPath, thumbUrl);
                         var normalLocalPath = await SaveImageAsync(normalPath, normalUrl);
+
+                        var exitItem = await plantPhotoRepos.FindOneAsync(i => i.ThumbUrl == thumbUrl);
+                        if (exitItem != null)
+                            return;
 
                         await plantPhotoRepos.AddAsync(new PlantPhoto()
                         {
@@ -132,21 +143,33 @@ namespace Plunder.Storage.MongoDB
                 var client = new HttpClient(httpClientHandler);
                 var stream = await client.GetStreamAsync(imgUrl);
 
-                using (var fs = new FileStream(filePath, FileMode.Create))
-                {
-                    using (var ms = new MemoryStream())
+                await Task.Run(() => {
+                    try
                     {
-                        stream.CopyTo(ms);
-                        if (ms.CanSeek)
-                            ms.Seek(0, SeekOrigin.Begin);
-                        var buffer = new byte[ms.Length];
-                        ms.Read(buffer, 0, buffer.Length);
-                        fs.Write(buffer, 0, buffer.Length);
-                        Logger.Debug("保存图片:" + filePath);
+                        using (var fs = new FileStream(filePath, FileMode.Create))
+                        {
+                            using (var ms = new MemoryStream())
+                            {
+                                stream.CopyTo(ms);
+                                if (ms.CanSeek)
+                                    ms.Seek(0, SeekOrigin.Begin);
+                                var buffer = new byte[ms.Length];
+                                ms.Read(buffer, 0, buffer.Length);
+                                fs.Write(buffer, 0, buffer.Length);
+                                Logger.Debug("保存图片:" + filePath);
+                            }
+                        }
                     }
-                }
+                    catch (Exception ex)
+                    {
+
+                        throw ex;
+                    }
+                });
 
                 return fileRelatPath;
+
+
                 //using (var imageFs = System.Drawing.Image.FromStream(stream, false, true))
                 //{
                 //    imageFs.Save(filePath);

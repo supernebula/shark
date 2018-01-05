@@ -54,7 +54,25 @@ namespace PlunderConsole
             var options = BuildOptions();
             _engine = new Engine(options);
             //_engine.Start(new List<RequestMessage> { new RequestMessage() {  } }); //添加起始链接
-            _engine.Start("www.plant.csdb.cn", "http://www.plant.csdb.cn/names?page=0"); //添加起始链接
+
+            var seekUrls = new List<string>();
+
+            for (int i = 1; i <= 1000; i++)
+            {
+                seekUrls.Add("http://www.plant.csdb.cn/names?page=" + i);
+            }
+
+            //var seekUrls = new string[] {
+            //    "http://www.plant.csdb.cn/names?page=10",
+            //    "http://www.plant.csdb.cn/names?page=199",
+            //    "http://www.plant.csdb.cn/names?page=1005",
+            //    "http://www.plant.csdb.cn/names?page=4095",
+            //    "http://www.plant.csdb.cn/names?page=5731",
+            //    "http://www.plant.csdb.cn/names?page=6321",
+            //    "http://www.plant.csdb.cn/names?page=7277",
+
+            //};
+            _engine.Start("www.plant.csdb.cn", seekUrls.ToArray()); //添加起始链接
         }
 
         static EngineOptions BuildOptions()
