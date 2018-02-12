@@ -35,11 +35,12 @@ namespace Plunder.Plugin.Analyze
             _fieldSelectors.Add(new FieldSelector() { FieldName = "JobName", Selector = "/html/body/div[2]/div/div[1]/div/span" });
             _fieldSelectors.Add(new FieldSelector() { FieldName = "Salary", Selector = "/html/body/div[2]/div/div[1]/dd/p[1]/span[1]" });
             _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_detail\"]/dd[1]/p" });
-            _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_detail\"]/dd[2]/div" });
-            _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_detail\"]/dd[3]/div[1]" });
-            _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_company\"]/dd/ul/li[3]" });
-            _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_company\"]/dd/ul/li[4]/a[@href]" });
-            _fieldSelectors.Add(new FieldSelector() { FieldName = "Lightspot", Selector = "//*[@id=\"job_detail\"]/dd[1]/p" });
+
+            _fieldSelectors.Add(new FieldSelector() { FieldName = "PositionInfo", Selector = "//*[@id=\"job_detail\"]/dd[2]/div" });
+            _fieldSelectors.Add(new FieldSelector() { FieldName = "Address", Selector = "//*[@id=\"job_detail\"]/dd[3]/div[1]" });
+            _fieldSelectors.Add(new FieldSelector() { FieldName = "Company", Selector = "//*[@id=\"job_company\"]/dd/ul/li[3]" });
+            _fieldSelectors.Add(new FieldSelector() { FieldName = "SiteUrl", Selector = "//*[@id=\"job_company\"]/dd/ul/li[4]/a[@href]" });
+
         }
 
 
@@ -57,6 +58,10 @@ namespace Plunder.Plugin.Analyze
                 var resultField = XpathSelectLatinName(doc, selector);
                 result.Add(resultField);
             }
+
+            var salary = result.SingleOrDefault(e => e.Name == "Salary")?.Value;
+            var minSalary = salary.Split('-')?.FirstOrDefault()?.Replace("k", "")?.Trim();
+            var maxSalary = salary.Split('-')?.LastOrDefault()?.Replace("k", "")?.Trim();
 
             var pageResult = new PageResult
             {

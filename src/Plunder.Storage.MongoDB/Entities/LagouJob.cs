@@ -7,11 +7,13 @@ namespace Plunder.Storage.MongoDB.Entities
     {
         public Guid Id { get; set; }
 
-        public string industry { get; set;}
+        public string PositionId { get; set; }
 
-        public string financing { get; set; }
+        public string Industry { get; set;}
 
-        public int StaffNumber { get; set; }
+        public string Financing { get; set; }
+
+        public string StaffNumber { get; set; }
 
         public string SiteUrl { get; set; }
 

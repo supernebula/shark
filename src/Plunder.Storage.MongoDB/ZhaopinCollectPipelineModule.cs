@@ -46,31 +46,47 @@ namespace Plunder.Storage.MongoDB
                         groups.Add(result.Data);
 
 
-                    var plantPhotoRepos = AppConfig.Current.IocManager.GetService<PlantPhotoRepository>();
+                    var repos = AppConfig.Current.IocManager.GetService<ZhaopinJobRepository>();
+                    var positionId = result.Data.SingleOrDefault(z => z.Name == "PositionId")?.Value ?? string.Empty;
+                    var industry = result.Data.SingleOrDefault(z => z.Name == "Industry")?.Value ?? string.Empty;
+                    var financing = result.Data.SingleOrDefault(z => z.Name == "Financing")?.Value ?? string.Empty;
 
-                    groups.ForEach(async e => {
+                    var staffNumber = result.Data.SingleOrDefault(z => z.Name == "StaffNumber")?.Value ?? string.Empty;
+                    var siteUrl = result.Data.SingleOrDefault(z => z.Name == "SiteUrl")?.Value ?? string.Empty;
+                    var site = result.Data.SingleOrDefault(z => z.Name == "Site")?.Value ?? string.Empty;
+                    var city = result.Data.SingleOrDefault(z => z.Name == "City")?.Value ?? string.Empty;
+                    var title = result.Data.SingleOrDefault(z => z.Name == "Title")?.Value ?? string.Empty;
+                    var minSalaryStr = result.Data.SingleOrDefault(z => z.Name == "MinSalary")?.Value;
+                    var minSalary = 0;
+                    Int32.TryParse(minSalaryStr, out minSalary);
+                    var maxSalaryStr = result.Data.SingleOrDefault(z => z.Name == "MaxSalary")?.Value;
+                    var maxSalary = 0;
+                    Int32.TryParse(maxSalaryStr, out maxSalary);
+                    var workYear = result.Data.SingleOrDefault(z => z.Name == "WorkYear")?.Value;
+                    var education = result.Data.SingleOrDefault(z => z.Name == "Education")?.Value;
+                    var positionInfo = result.Data.SingleOrDefault(z => z.Name == "PositionInfo")?.Value;
+                    var address = result.Data.SingleOrDefault(z => z.Name == "Address")?.Value;
 
-                        var latinName = e.SingleOrDefault(z => z.Name == "LatinName")?.Value ?? string.Empty;
-                        var sourceSite = e.SingleOrDefault(z => z.Name == "SourceSite")?.Value ?? string.Empty;
+                    await repos.DeleteByAsync(e => e.PositionId == positionId);
 
-                        var thumbUrl = e.SingleOrDefault(z => z.Name == "ThumbImgUrl")?.Value ?? string.Empty;
-                        var thumbPath = e.SingleOrDefault(z => z.Name == "ThumbPath")?.Value;
-                        var normalUrl = e.SingleOrDefault(z => z.Name == "NormalImgUrl")?.Value;
-                        var normalPath = e.SingleOrDefault(z => z.Name == "NormalPath")?.Value;
-
-                        var exitItem = await plantPhotoRepos.FindOneAsync(i => i.ThumbUrl == thumbUrl);
-                        if (exitItem != null)
-                            return;
-
-                        await plantPhotoRepos.AddAsync(new PlantPhoto()
-                        {
-                            Id = Guid.NewGuid(),
-                            LatinName = latinName,
-                            SourceSite = sourceSite,
-                            ThumbUrl = thumbUrl ?? string.Empty,
-                            NormalUrl = normalUrl,
-                            CreateTime = DateTime.Now
-                        });
+                    await repos.AddAsync(new LagouJob()
+                    {
+                        Id = Guid.NewGuid(),
+                        PositionId = positionId,
+                        Industry = industry,
+                        Financing = financing,
+                        StaffNumber = staffNumber,
+                        SiteUrl = site,
+                        Site = site,
+                        City = city,
+                        Title = title,
+                        MinSalary = minSalary,
+                        MaxSalary = maxSalary,
+                        WorkYear = workYear,
+                        Education = education,
+                        PositionInfo = positionId,
+                        Address = address,
+                        CreateTime = DateTime.Now
                     });
                 }
 
