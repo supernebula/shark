@@ -74,6 +74,23 @@ namespace Plunder
 
         }
 
+        public void Start(IEnumerable<Request> seedRequests)
+        {
+            try
+            {
+                if (seedRequests == null || !seedRequests.Any())
+                    throw new ArgumentNullException(nameof(seedRequests));
+                SeekRequests.AddRange(seedRequests.Select(e => new RequestMessage() { Request = e }));
+                Run();
+            }
+            catch (Exception ex)
+            {
+                var exStr = $"\r\n[Exception]:{ex.Message}\r\n{ex.InnerException?.InnerException}";
+                Logger.Error(exStr);
+            }
+
+        }
+
         public void Start(/*string topic, */string siteId, params string[] urls)
         {
             var seeds = new List<RequestMessage>();

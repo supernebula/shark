@@ -69,6 +69,24 @@ namespace Plunder.Plugin.Compoment
             site2.TimeOut = 3000;
             sites.Add(site2.Id, site2);
 
+            //植物名录
+            var site3 = Site.NewDefault;
+            site3.Id = SiteIndex.PlantCsdb;
+            //site.Topic = PageType.Static;
+            site3.IndexUrl = "https://www.lagou.com/";
+            site3.Domain = "www.lagou.com";
+            site3.EnableHttpProxy = false;
+            site3.Name = "拉钩网";
+            site3.UserAgent = UserAgentCollection.RandomUserAgent().Value;
+            site3.Charset = "utf-8";
+            site3.SleepMilliseconds = 200;
+            site3.RetryTimes = 1;
+            site3.AllowedRetryCount = 1;
+            site3.CycleRetryTimes = 1;
+            site3.RetrySleepMilliseconds = 10000;
+            site3.TimeOut = 3000;
+            sites.Add(site2.Id, site2);
+
             return sites;
         }
     }

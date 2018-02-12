@@ -65,8 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultIoCManager.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Program_csdb.cs" />
     <Compile Include="ProgramOld.cs" />
+    <Compile Include="Program_ZhaoPin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

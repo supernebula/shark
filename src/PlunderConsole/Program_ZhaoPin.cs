@@ -20,7 +20,7 @@ using Plunder.Configuration;
 namespace PlunderConsole
 {
 
-    public class Program
+    public class Program_csdb
     {
 
 
@@ -37,13 +37,12 @@ namespace PlunderConsole
         {
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<AccessRecordRepository>().As<AccessRecordRepository>();
-            containerBuilder.RegisterType<ProductRepository>().As<ProductRepository>();
-            containerBuilder.RegisterType<PlantRepository>().As<PlantRepository>();
+            containerBuilder.RegisterType<ZhaopinJobRepository>().As<ZhaopinJobRepository>();
             containerBuilder.RegisterType<PlantPhotoRepository>().As<PlantPhotoRepository>();
 
             containerBuilder.RegisterType<PlunderMongoDBContext>().As<PlunderMongoDBContext>();
             containerBuilder.RegisterType<MongoDbContextProvider>().As<IMongoDbContextProvider>();
-            
+
             var container = containerBuilder.Build();
             var iocManager = new DefaultIocManager(container);
             AppConfig.Init(iocManager);
@@ -53,26 +52,26 @@ namespace PlunderConsole
         {
             var options = BuildOptions();
             _engine = new Engine(options);
-            //_engine.Start(new List<RequestMessage> { new RequestMessage() {  } }); //添加起始链接
 
-            var seekUrls = new List<string>();
-
-            for (int i = 1; i <= 1000; i++)
+            var requests = new List<Request>();
+            var siteId = "www.lagou.com";
+            for (int i = 1; i < 6; i++)
             {
-                seekUrls.Add("http://www.plant.csdb.cn/names?page=" + i);
+                var formData = new Dictionary<string, object> { { "first", false }, { "pn", i}, { "kd", "技术总监" }, };
+
+                 var url = @"https://www.lagou.com/jobs/positionAjax.json?px=default&city={}&needAddtionalResult=false&isSchoolJob=0";
+                var request = new Request(url) {
+                    SiteId = siteId,
+                    PageType = PageType.Static,
+                    Topic = "plantnames.list",
+                    FormData = formData
+
+                };
+                requests.Add(request);
+                
             }
 
-            //var seekUrls = new string[] {
-            //    "http://www.plant.csdb.cn/names?page=10",
-            //    "http://www.plant.csdb.cn/names?page=199",
-            //    "http://www.plant.csdb.cn/names?page=1005",
-            //    "http://www.plant.csdb.cn/names?page=4095",
-            //    "http://www.plant.csdb.cn/names?page=5731",
-            //    "http://www.plant.csdb.cn/names?page=6321",
-            //    "http://www.plant.csdb.cn/names?page=7277",
-
-            //};
-            _engine.Start("www.plant.csdb.cn", seekUrls.ToArray()); //添加起始链接
+            _engine.Start(requests); //添加起始请求
         }
 
         static EngineOptions BuildOptions()
@@ -117,9 +116,9 @@ namespace PlunderConsole
         static ResultItemPipeline InitResultItemPipeline()
         {
             var resultPipeline = new ResultItemPipeline();
-           // resultPipeline.RegisterModule(new ConsoleResultModule());
+            // resultPipeline.RegisterModule(new ConsoleResultModule());
             resultPipeline.RegisterModule(new PlantCollectPipelineModule());
-            
+
             return resultPipeline;
         }
     }

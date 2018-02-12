@@ -68,6 +68,7 @@
     <Compile Include="Entities\Plant.cs" />
     <Compile Include="Entities\PlantPhoto.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="Entities\LagouJob.cs" />
     <Compile Include="MongoDbContextProvider.cs" />
     <Compile Include="PlantCollectPipelineModule.cs" />
     <Compile Include="ProductPipelineModule.cs" />
@@ -80,6 +81,9 @@
     <Compile Include="QueryEntries\AccessRecordQueryEntry.cs" />
     <Compile Include="QueryEntries\~PageQueryEntry.cs" />
     <Compile Include="Repositories\AccessRecordRepository.cs" />
+    <Compile Include="Repositories\ZhaopinJobRepository.cs" />
+    <Compile Include="ZhaopinCollectPipelineModule.cs" />
+    <Compile Include="ZhaopinMongoDBContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Evol.MongoDB\Evol.MongoDB.csproj">

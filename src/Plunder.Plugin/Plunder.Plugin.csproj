@@ -64,6 +64,8 @@
     <Compile Include="Analyze\GeneralPageAnalyzer.cs" />
     <Compile Include="Analyze\PlantCsdbListPageAnalyzer.cs" />
     <Compile Include="Analyze\PlantCsdbPhotoPageAnalyzer.cs" />
+    <Compile Include="Analyze\ZhaopinLagouJobPageAnalyzer.cs" />
+    <Compile Include="Analyze\ZhaopinLagouListPageAnalyzer.cs" />
     <Compile Include="Compoment\Channel.cs" />
     <Compile Include="Compoment\SiteConfiguration.cs" />
     <Compile Include="Compoment\SiteIndex.cs" />

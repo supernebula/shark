@@ -2,12 +2,22 @@
 using Plunder.Util;
 using Plunder.Download;
 using System;
+using System.Collections.Generic;
 
 namespace Plunder.Compoment
 {
     public class Request
     {
         public Request(string url)
+        {
+            Url = url;
+            Id = HashUtil.Md5(url);
+            Domain = (new Uri(url)).Authority;
+            HttpMethod = HttpMethod.Get;
+            DelaySecond = 0;
+        }
+
+        public Request(string url, KeyValuePair<string,object> formData)
         {
             Url = url;
             Id = HashUtil.Md5(url);
@@ -27,6 +37,8 @@ namespace Plunder.Compoment
         public string Domain { get; private set; }
 
         public string Url { get; private set; }
+
+        public Dictionary<string, object> FormData { get; set; }
 
         public PageType PageType { get; set; }
 
