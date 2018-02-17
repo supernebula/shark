@@ -71,7 +71,7 @@ namespace Plunder.Plugin.Compoment
 
             //植物名录
             var site3 = Site.NewDefault;
-            site3.Id = SiteIndex.PlantCsdb;
+            site3.Id = SiteIndex.Lagou;
             //site.Topic = PageType.Static;
             site3.IndexUrl = "https://www.lagou.com/";
             site3.Domain = "www.lagou.com";
@@ -85,7 +85,7 @@ namespace Plunder.Plugin.Compoment
             site3.CycleRetryTimes = 1;
             site3.RetrySleepMilliseconds = 10000;
             site3.TimeOut = 3000;
-            sites.Add(site2.Id, site2);
+            sites.Add(site3.Id, site3);
 
             return sites;
         }

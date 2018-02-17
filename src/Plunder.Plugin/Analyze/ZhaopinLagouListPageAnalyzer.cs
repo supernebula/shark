@@ -77,7 +77,7 @@ namespace Plunder.Plugin.Analyze
     {
         private ILogger Logger = LogManager.GetLogger(nameof(ZhaopinLagouListPageAnalyzer));
 
-        public const string SiteIdValue = SiteIndex.PlantCsdb;
+        public const string SiteIdValue = SiteIndex.Lagou;
 
         public const string TargetPageFlagValue = "lagou.list";
 

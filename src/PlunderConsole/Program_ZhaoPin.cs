@@ -16,6 +16,7 @@ using Evol.MongoDB.Repository;
 using Plunder.Storage.MongoDB.Repositories;
 using Plunder.Plugin.Filter;
 using Plunder.Configuration;
+using System.Web;
 
 namespace PlunderConsole
 {
@@ -58,12 +59,12 @@ namespace PlunderConsole
             for (int i = 1; i < 6; i++)
             {
                 var formData = new Dictionary<string, object> { { "first", false }, { "pn", i}, { "kd", "技术总监" }, };
-
-                 var url = @"https://www.lagou.com/jobs/positionAjax.json?px=default&city={}&needAddtionalResult=false&isSchoolJob=0";
+                var city = HttpUtility.UrlEncode("杭州");
+                 var url = @"https://www.lagou.com/jobs/positionAjax.json?px=default&city=" + city + "&needAddtionalResult=false&isSchoolJob=0" + "&pn=" + i;
                 var request = new Request(url) {
                     SiteId = siteId,
                     PageType = PageType.Static,
-                    Topic = "plantnames.list",
+                    Topic = "lagou.list",
                     FormData = formData
 
                 };

@@ -49,15 +49,17 @@ namespace Plunder.Plugin.Download
 
         public async Task<Response> DownloadAsync(CancellationToken token)
         {
-            _httpClient = HttpClientBuilder.GetClient(Request);
-            var watch = new Stopwatch();
-            _httpClient.Timeout = TimeSpan.FromSeconds(60);
 
-            HttpResponseMessage result;
-
-            watch.Start();
             try
             {
+                _httpClient = HttpClientBuilder.GetClient(Request);
+                var watch = new Stopwatch();
+                _httpClient.Timeout = TimeSpan.FromSeconds(60);
+
+                HttpResponseMessage result;
+
+                watch.Start();
+
                 result = await _httpClient.GetAsync(Request.Url, token);
                 watch.Stop();
                 _elapsed = watch.Elapsed.Milliseconds;
@@ -68,6 +70,8 @@ namespace Plunder.Plugin.Download
                 resposne.ReasonPhrase = result.ReasonPhrase;
                 if (!result.IsSuccessStatusCode)
                     return resposne;
+
+                //result.Headers
 
                 resposne.Content = await result.Content.ReadAsStringAsync();
                 resposne.StreamContent = await result.Content.ReadAsStreamAsync();
