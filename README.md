@@ -23,5 +23,3 @@ Apache License, Version 2.0
 ## Contact
 
 supnebula@gmail.com
-
-微信：SuperNebula
