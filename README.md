@@ -2,9 +2,7 @@
 
 (Plunder)
 
-可配置、插件化的爬虫引擎，二次开发框架；大数据累积项目。
-
-支持单例、分布式部署。
+可配置、插件化的爬虫引擎，二次开发框架, 仅用于研究学习。
 
 Configurable, pluginable crawler engine, secondary development framework.
 
