@@ -2,7 +2,7 @@
 
 (Plunder)
 
-可配置、插件化的爬虫引擎，二次开发框架, 仅用于研究学习。
+可配置、插件化的爬虫引擎，二次开发框架。仅用于研究学习，请遵守当地法律。
 
 Configurable, pluginable crawler engine, secondary development framework.
 
